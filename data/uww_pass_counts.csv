@@ -208,7 +208,7 @@ Hope Flying Dutchmen,UWW,Ripon Red Hawks,UW-Whitewater,2026-11-14,Ripon@UWWhitew
 Hope Flying Dutchmen,UWW,UW-Whitewater,Ripon Red Hawks,2026-11-14,Ripon@UWWhitewater,66,Half court,5 Out Motion,,False,0.0
 Hope Flying Dutchmen,UWW,UW-Whitewater,Ripon Red Hawks,2026-11-14,Ripon@UWWhitewater,67,Offensive rebound,,,False,0.0
 Hope Flying Dutchmen,UWW,Ripon Red Hawks,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,68,Transition,,,False,0.0
-Hope Flying Dutchmen,UWW,Ripon Red Hawks,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,69,Offensive rebound,,,False,
+Hope Flying Dutchmen,UWW,Ripon Red Hawks,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,69,Offensive rebound,,,False,2.0
 Hope Flying Dutchmen,UWW,Ripon Red Hawks,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,70,Offensive rebound,Motion,,False,0.0
 Hope Flying Dutchmen,UWW,Ripon Red Hawks,UW-Whitewater,2026-11-14,Ripon@UWWhitewater,71,Offensive rebound,,,False,1.0
 Hope Flying Dutchmen,UWW,UW-Whitewater,Ripon Red Hawks,2026-11-14,Ripon@UWWhitewater,74,Half court,Gold,,True,1.0
@@ -323,7 +323,7 @@ Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitew
 Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),31,Offensive rebound,,3.0,False,0.0
 Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),32,Offensive rebound,,3.0,False,
 Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),33,Offensive rebound,,3.0,False,0.0
-Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),42,Offensive rebound,,1.0,False,
+Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),42,Offensive rebound,,1.0,False,2.0
 Hope Flying Dutchmen,UWW,UW-Whitewater,Carroll (WI) Pioneers,2026-11-07,UWWhitewater@Carroll(WI),61,Offensive rebound,,,False,
 Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),64,Offensive rebound,,2.0,False,0.0
 Hope Flying Dutchmen,UWW,Carroll (WI) Pioneers,UW-Whitewater,2026-11-07,UWWhitewater@Carroll(WI),65,Offensive rebound,,,False,
@@ -487,6 +487,197 @@ Hope Flying Dutchmen,UWW,Elmhurst Bluejays,UW-Whitewater,2026-11-18,UWWhitewater
 Hope Flying Dutchmen,UWW,UW-Whitewater,Elmhurst Bluejays,2026-11-18,UWWhitewater@Elmhurst,223,Half court,Isolation,,False,0.0
 Hope Flying Dutchmen,UWW,Elmhurst Bluejays,UW-Whitewater,2026-11-18,UWWhitewater@Elmhurst,224,Half court,,,False,0.0
 Hope Flying Dutchmen,UWW,UW-Whitewater,Elmhurst Bluejays,2026-11-18,UWWhitewater@Elmhurst,225,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,1,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,2,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,4,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,5,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,6,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,7,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,8,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,9,,,,True,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,10,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,11,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,12,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,13,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,14,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,15,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,16,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,17,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,18,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,19,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,20,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,23,ATO,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,24,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,25,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,28,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,29,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,30,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,31,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,32,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,33,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,34,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,35,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,36,Transition,,,False,1.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,39,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,40,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,42,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,43,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,44,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,45,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,46,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,47,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,48,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,49,ATO,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,50,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,51,Transition,,,False,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,53,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,54,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,55,,,,True,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,59,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,61,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,62,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,63,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,64,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,65,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,66,ATO,,,False,1.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,69,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,70,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,73,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,74,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,75,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,76,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,77,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,78,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,81,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,84,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,85,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,86,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,87,Transition,,,False,1.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,90,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,91,,,,False,
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,93,ATO,,,False,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,94,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,95,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,96,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,97,,,,False,
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,98,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,99,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,100,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,103,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,104,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,105,,,,True,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,106,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,107,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,108,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,110,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,111,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,112,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,113,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,114,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,118,ATO,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,119,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,120,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,121,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,122,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,125,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,127,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,128,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,129,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,130,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,131,Transition,,,False,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,132,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,133,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,134,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,135,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,136,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,137,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,140,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,141,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,142,,,,False,
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,143,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,145,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,148,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,149,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,150,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,151,ATO,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,154,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,155,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,156,,,,True,1.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,157,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,160,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,162,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,163,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,166,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,167,,,,True,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,168,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,169,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,170,,,,False,
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,171,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,172,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,173,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,174,Transition,,,False,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,175,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,176,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,177,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,178,ATO,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,179,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,180,ATO,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,182,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,183,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,186,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,189,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,190,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,191,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,192,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,193,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,194,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,195,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,196,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,199,Transition,,,False,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,200,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,201,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,202,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,203,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,206,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,207,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,208,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,209,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,212,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,213,,,,False,
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,214,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,217,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,218,,,,False,
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,219,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,220,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,221,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,222,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,223,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,224,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,225,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,226,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,229,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,230,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,231,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,232,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,234,ATO,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,235,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,236,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,237,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,238,,,,False,
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,239,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,240,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,241,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,242,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,243,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,244,Transition,,,False,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,245,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,246,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,247,,,,False,3.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,248,,,,False,0.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,249,,,,True,0.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,250,Transition,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Anderson (IN) Ravens,2026-11-06,AndersonIND@Hope,251,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Anderson (IN) Ravens,Hope Flying Dutchmen,2026-11-06,AndersonIND@Hope,252,,,,False,1.0
 Hope Flying Dutchmen,Opponent,Franklin Grizzlies,Hope Flying Dutchmen,2026-11-07,Franklin@Hope,1,Opener,Spread Flair,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Franklin Grizzlies,2026-11-07,Franklin@Hope,2,Transition,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Franklin Grizzlies,2026-11-07,Franklin@Hope,3,Offensive rebound,,,False,
@@ -700,7 +891,7 @@ Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,31,Half court,pinch-clear,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,32,Half court,Motion,,True,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,35,Half court,DHO set,,True,0.0
-Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,36,Offensive rebound,,,False,
+Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,36,Offensive rebound,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,39,SLOB,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,40,Transition,,,False,2.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,41,Transition,,,False,0.0
@@ -741,21 +932,21 @@ Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,82,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,83,,,,False,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,84,,,,False,0.0
-Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,85,,,,False,
+Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,85,ATO,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,86,,,,True,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,87,,,,False,2.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,88,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,89,Transition,,,False,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,92,,,,True,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,93,,,,False,0.0
-Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,94,,,,False,1.0
+Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,94,,,,False,3.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,97,ATO,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,98,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,100,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,101,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,102,,,,False,2.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,103,,,,False,0.0
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,104,,,,False,
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,104,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,107,,,,False,
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,108,,,,False,2.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,109,,,,False,3.0
@@ -793,7 +984,7 @@ Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,152,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,153,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,155,ATO,,,False,0.0
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,156,,,,False,
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,156,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,159,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,160,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,161,,,,False,0.0
@@ -807,19 +998,19 @@ Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,174,ATO,,,False,2.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,177,,,,False,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,180,,,,False,0.0
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,181,,,,False,
+Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,181,,,,False,1.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,184,,,,False,3.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,185,,,,False,2.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,186,Transition,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,188,ATO,,,False,0.0
-Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,189,,,,False,
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,192,,,,False,
+Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,189,,,,False,2.0
+Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,192,,,,False,1.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,195,,,,False,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,198,,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,201,,,,False,0.0
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,202,,,,False,
+Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,202,,,,False,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,205,,,,False,0.0
-Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,Elmhurst Bluejays,2026-11-14,Elmhurst@Hope,206,,,,False,
+Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,206,,,,False,
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,209,Transition,,,False,0.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,210,,,,False,2.0
 Hope Flying Dutchmen,Opponent,Elmhurst Bluejays,Hope Flying Dutchmen,2026-11-14,Elmhurst@Hope,211,ATO,,,False,0.0
@@ -994,3 +1185,185 @@ Hope Flying Dutchmen,Opponent,North Central (IL) Cardinals,Hope Flying Dutchmen,
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,2026-11-17,Hope@NorthCentralIL,227,Transition,,,False,3.0
 Hope Flying Dutchmen,Opponent,North Central (IL) Cardinals,Hope Flying Dutchmen,2026-11-17,Hope@NorthCentralIL,229,ATO,,,False,0.0
 Hope Flying Dutchmen,Opponent,Hope Flying Dutchmen,North Central (IL) Cardinals,2026-11-17,Hope@NorthCentralIL,230,BLOB,BLOB Motion,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),1,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),2,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),3,,,,False,3.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),6,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),7,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),8,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),9,Transition,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),10,,,,True,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),11,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),12,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),13,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),14,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),15,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),16,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),17,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),18,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),19,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),21,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),22,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),23,,,,True,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),24,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),25,,,,False,3.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),26,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),27,,,,True,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),28,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),29,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),30,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),31,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),32,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),33,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),34,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),35,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),36,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),37,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),38,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),39,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),40,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),41,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),44,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),45,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),46,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),50,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),51,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),52,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),53,Transition,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),54,,,,False,3.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),55,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),56,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),57,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),60,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),61,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),62,,,,True,3.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),63,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),64,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),65,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),66,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),67,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),68,Transition,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),71,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),72,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),73,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),74,,,,True,3.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),75,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),76,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),77,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),80,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),81,,,,False,1.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),84,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),85,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),86,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),87,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),88,,,,True,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),89,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),91,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),92,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),93,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),94,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),95,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),97,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),98,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),99,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),100,Transition,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),101,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),102,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),103,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),104,,,,True,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),105,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),106,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),107,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),108,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),111,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),114,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),115,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),117,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),118,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),119,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),120,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),121,,,,True,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),122,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),125,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),126,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),127,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),128,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),129,,,,False,3.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),130,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),133,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),134,Transition,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),138,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),139,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),140,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),141,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),142,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),143,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),144,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),145,,,,True,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),146,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),147,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),148,Transition,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),149,Transition,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),152,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),153,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),154,,,,True,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),155,,,,True,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),156,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),157,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),160,,,,True,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),161,,,,True,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),162,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),163,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),164,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),165,Transition,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),168,,,,True,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),171,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),174,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),175,,,,True,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),177,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),178,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),179,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),180,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),181,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),182,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),185,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),186,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),187,Transition,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),188,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),189,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),192,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),193,,,,True,3.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),194,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),195,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),196,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),197,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),200,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),202,,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),203,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),206,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),209,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),212,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),216,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),217,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),218,,,,False,3.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),219,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),220,,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),221,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),222,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),225,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),226,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),227,,,,False,
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),228,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),229,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),230,,,,True,3.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),231,,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),232,Transition,,,False,2.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),233,,,,True,3.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),234,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),235,,,,False,0.0
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),237,Transition,,,False,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),239,,,,True,0.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),240,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),243,Transition,,,False,2.0
+Hope Flying Dutchmen,Banked,Washington (St. Louis) Bears,Gustavus Adolphus,2026-11-07,GustavusAdolphus@Wash(StLouis),244,,,,False,
+Hope Flying Dutchmen,Banked,Gustavus Adolphus,Washington (St. Louis) Bears,2026-11-07,GustavusAdolphus@Wash(StLouis),247,Transition,,,False,2.0
