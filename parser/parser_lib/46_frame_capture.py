@@ -2759,7 +2759,10 @@ def _syn_save_lineups(gid, bodies):
             if x.get("eventIid") is not None and x.get("clock") is not None:
                 _clk[x["eventIid"]] = max(_clk.get(x["eventIid"], -1), int(x["clock"]))
         nm = lambda L: ", ".join(str(p_.get("name") or "").strip() for p_ in (L or []) if p_.get("name"))
-        rows = [{"period": x.get("period"), "clock_s": (_clk[x.get("iid")] / 10.0) if x.get("iid") in _clk else None,
+        # CONFIRMED CHANGE (requested 11/22: click the play call -> the games it was run in -> watch the plays in Synergy):
+        # "iid" is Synergy's own id for the play. The play-by-play page's "watch" links are editor-web playlists whose
+        # expression is "iid eq <iid>", so with it a play can be opened straight in Synergy's video player.
+        rows = [{"iid": x.get("iid"), "period": x.get("period"), "clock_s": (_clk[x.get("iid")] / 10.0) if x.get("iid") in _clk else None,
                  "utc": x.get("utc"), "description": x.get("description"), "offense": (x.get("offense") or {}).get("name"),
                  "defense": (x.get("defense") or {}).get("name"), "offense_lineup": nm(x.get("offensiveLineup")),
                  "defense_lineup": nm(x.get("defensiveLineup"))} for x in _ev]
@@ -2877,6 +2880,42 @@ def _syn_lookup(wanted):
     return out
 
 
+def _syn_backfill_iids():
+    """CONFIRMED CHANGE (requested 11/22): Synergy's id for every play (events "iid") of every game whose clips we hold, saved
+    as the "iid" column of inputs/_bank/<game id>_lineups.csv. 47 (_syn_attach_iids) matches clips to them by description, so
+    the brief can open a play call's plays in Synergy's video player. A game whose file already has the column is skipped, so
+    this is one page load per game, once. SYNERGY_IID_LINKS = False turns it off; SYNERGY_IID_MAX_GAMES (15) caps a run."""
+    if not globals().get("SYNERGY_IID_LINKS", True) or not (globals().get("synergy_username") and globals().get("synergy_password")):
+        return
+    try:
+        cf = pd.read_csv(os.path.join(INPUT_DIR, "uww_clip_frames.csv"), usecols=["clip_game"], dtype=str, low_memory=False)
+    except Exception:
+        return
+    names = {str(x) for x in cf["clip_game"].dropna().unique()}
+    start = str(pd.Timestamp(int(globals().get("SEASON_START_YEAR") or uww_season_start_year), 8, 1).date())
+    today = str(pd.Timestamp.now().date())
+
+    def _has_iid(gid):
+        p_ = os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv")
+        if not os.path.exists(p_):
+            return False
+        try:
+            return "iid" in pd.read_csv(p_, nrows=0).columns
+        except Exception:
+            return False
+    want = [gid for gid, g in _syn_ids()["games"].items()
+            if g.get("name") in names and start <= str(g.get("date") or "") <= today and not _has_iid(gid)]
+    want = want[:int(globals().get("SYNERGY_IID_MAX_GAMES") or 15)]
+    if not want:
+        return
+    print(f"  [synergy] play ids (for the brief's 'watch in Synergy' links) still to fetch: {len(want)} game(s)", flush=True)
+
+    def _work(page):
+        return sum(bool(_syn_save_lineups(gid, _syn_capture(page, _SST_BOXSCORE.format(gid=gid)))) for gid in want)
+    n_ = run_in_fastscout_session(_work)
+    print(f"  [synergy] play ids saved for {n_} of {len(want)} game(s)", flush=True)
+
+
 def _syn_export_lineups():
     """CONFIRMED CHANGE (requested: fives for a coach-tagged Export.csv game with no video export, e.g. Calvin @ UW-Stout).
     Every coach-tagged export merged from the backup folder (this season) is looked up on Synergy's Games pages by its date
@@ -2990,6 +3029,10 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
         _syn_export_lineups()          # coach-tagged exports (no video): both fives from Synergy's game data
     except Exception as _sxe:
         print(f"  [synergy] export lineups skipped ({type(_sxe).__name__}: {_sxe})", flush=True)
+    try:
+        _syn_backfill_iids()           # Synergy's play ids, so a play call's plays can be opened in Synergy's video player
+    except Exception as _sie:
+        print(f"  [synergy] play ids skipped ({type(_sie).__name__}: {_sie})", flush=True)
     # banked games (BANK_GAMES -- a later opponent's game): captured whatever the run's date, like a hand-listed page
     try:
         _bank_resolve_fastscout()      # games given as a FastScout link (ADD_GAMES / BANK_GAMES): their Synergy ID (once)

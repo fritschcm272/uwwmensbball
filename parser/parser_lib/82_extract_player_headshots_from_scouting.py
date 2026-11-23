@@ -657,6 +657,44 @@ for _opp, _url in sorted(_pi2_sites.items()):
         })
         _rows_here += 1
     _got_here = 0
+    # CONFIRMED BUG (fixed 11/22; Corey: "The Hope player pictures are still not showing up in the briefs"). The first
+    # version looked for the headshot in each player's PROFILE page og:image. Sidearm's og:image is the site's logo
+    # (the saved page shows <meta name="og:image"> with no content at all), so every lookup quietly found nothing -- and
+    # the bare `except: continue` hid that. The headshots are on the ROSTER page itself, as lazy-loaded
+    # <img data-src="/images/2026/11/3/Miller_Brady.jpg?width=80" alt="Brady Miller - View Profile">. Read them from there,
+    # at a larger width (the page's 80 px thumbnail is too small for a card), and say why when one can't be fetched.
+    _imgs = {}
+    for _tag in _pi_re.findall(r"<img\b[^>]*>", _html):
+        _al = _pi_re.search(r'alt="([^"]*?)\s*-\s*View Profile"', _tag)
+        _sr = _pi_re.search(r'data-src="([^"]+)"', _tag) or _pi_re.search(r'\bsrc="([^"]+)"', _tag)
+        if _al and _sr and _pi2_key(_al.group(1)):
+            _imgs.setdefault(_pi2_key(_al.group(1)), _sr.group(1).replace("&amp;", "&"))
+    _fail_shown = 0
+    for _key_, _src_ in _imgs.items():
+        _nm = next((n for n in _pi2_need if _pi2_key(n) == _key_), None)
+        if _nm is None:
+            continue
+        _base = _pi2_urljoin(_url, _src_.split("?")[0])
+        _bytes = None
+        for _u in (_base + "?width=400&quality=90", _pi2_urljoin(_url, _src_), _base):
+            try:
+                _bytes = _pi2_get(_u)
+                break
+            except Exception as _e:
+                if _fail_shown < 3:
+                    print(f"  [roster site] {_nm}: {_u} -- {type(_e).__name__}: {_e}", flush=True)
+                    _fail_shown += 1
+        if not _bytes or len(_bytes) < 2000:
+            continue
+        _ext = "png" if _bytes[:8] == b"\x89PNG\r\n\x1a\n" else "jpg"
+        try:
+            with open(os.path.join(_PI_OUTPUT_DIR, f"{_nm}.{_ext}"), "wb") as _fh:
+                _fh.write(_bytes)
+        except OSError:
+            continue
+        _pi2_sources[_nm] = {"source": "team website", "detail": urlparse(_url).netloc, "opponent": _opp}
+        _pi2_need.pop(_nm, None)
+        _got_here += 1
     for _row in [r for r in _pi2_web_rows if r["opponent"] == _opp and r["profile_url"]]:
         if _row["name"] not in _pi2_need and not any(_pi2_key(_row["name"]) == _pi2_key(n) for n in _pi2_need):
             continue

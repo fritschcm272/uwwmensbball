@@ -3741,6 +3741,9 @@ PLAY_CALL_COLS = [
     # NEW: where play_situation came from (Tag / Play-by-play (timeout) / Synergy / Default) and the coverage
     # detail with defender names filled in from the jersey numbers.
     "situation_source", "coverage_defenders",
+    # NEW (11/22): Synergy's own game id and play id for the clip (_syn_attach_iids) -- the brief's "watch in Synergy" links.
+    # (a column missing from this list is reindexed away -- the Thiel "skipped" lesson)
+    "synergy_game_id", "synergy_iid",
     # NEW: the matched play-by-play event's event_order (links a clip to its play-by-play row)
     "pbp_event_order",
     # NEW: where this clip's captured frames are (frame-capture cell) and its place in the export -- the tag
@@ -4286,6 +4289,77 @@ try:
     play_calls = _syn_attach_lineups(play_calls)
 except Exception as _sle:
     print(f"  [synergy] lineups not worked out ({type(_sle).__name__}: {_sle})", flush=True)
+
+
+def _syn_attach_iids(df):
+    """CONFIRMED CHANGE (requested 11/22: "click on that opponent name ... auto-select the plays so they can be watched").
+    Every clip gets Synergy's game id and its play id ("iid", from inputs/_bank/<id>_lineups.csv -- 46 _syn_backfill_iids).
+    Matched by the Synergy description (the same string as synergy_string); identical descriptions in one game are told apart
+    by half + clock, else by order (clips and iids both run in game order), and no iid is given to two clips."""
+    for c_ in ("synergy_game_id", "synergy_iid"):
+        if c_ not in df.columns:
+            df[c_] = None
+        df[c_] = df[c_].astype(object)
+    try:
+        with open(os.path.join(INPUT_DIR, "_synergy_ids.json"), encoding="utf-8") as fh:
+            games = (json.load(fh) or {}).get("games") or {}
+    except Exception:
+        return df
+    _nd = lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower())
+    _flat = lambda x: re.sub(r"[^a-z]+", "", str(x).lower())
+    _per = lambda v: {"H1": 1, "H2": 2}.get(str(v), pd.to_numeric(str(v).replace("OT", ""), errors="coerce") + 2
+                                            if str(v).startswith("OT") else pd.to_numeric(v, errors="coerce"))
+    gd_all = pd.to_datetime(df["game_date"], errors="coerce").dt.strftime("%Y-%m-%d")
+    for gid, g in games.items():
+        lp = os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv")
+        if not os.path.exists(lp) or not g.get("date"):
+            continue
+        try:
+            L = pd.read_csv(lp, dtype={"iid": str, "description": str})
+        except Exception:
+            continue
+        if "iid" not in L.columns or L["iid"].isna().all():
+            continue
+        blob = _flat(f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}")
+        m = gd_all == g["date"]
+        if not m.any():
+            continue
+        okt = lambda t: bool(_bank_words_t(t)) and any(w in blob for w in _bank_words_t(t))
+        m &= pd.Series([okt(o) and (okt(d) if pd.notna(d) else True)
+                        for o, d in zip(df["offense_team"], df["defense_team"] if "defense_team" in df.columns else df["opponent"])],
+                       index=df.index)
+        if not m.any():
+            continue
+        L["_n"] = L["description"].map(_nd)
+        L["_i"] = pd.to_numeric(L["iid"], errors="coerce")
+        L = L.dropna(subset=["_i"]).sort_values("_i")
+        used, n_ok = set(), 0
+        sub = df[m].copy()
+        sub["_cn"] = pd.to_numeric(sub["clip_number"], errors="coerce")
+        for i in sub.sort_values("_cn").index:
+            r = df.loc[i]
+            c_ = L[(L["_n"] == _nd(r.get("synergy_string"))) & ~L["iid"].isin(used)]
+            if c_.empty:
+                continue
+            if len(c_) > 1:
+                pr_, ck_ = _per(r.get("period")), pd.to_numeric(r.get("time_remaining_seconds"), errors="coerce")
+                if pd.notna(pr_) and pd.notna(ck_):
+                    t_ = c_[pd.to_numeric(c_["period"], errors="coerce") == pr_].copy()
+                    t_["_d"] = (pd.to_numeric(t_["clock_s"], errors="coerce") - ck_).abs()
+                    t_ = t_[t_["_d"] <= 10].sort_values("_d")
+                    c_ = t_ if len(t_) else c_
+            hit = c_.iloc[0]
+            used.add(hit["iid"])
+            df.at[i, "synergy_game_id"], df.at[i, "synergy_iid"] = gid, str(hit["iid"])
+            n_ok += 1
+        print(f"  [synergy] {g['date']} {g.get('name')}: Synergy play ids -- {n_ok} of {int(m.sum())} clip(s) matched", flush=True)
+    return df
+
+
+try:
+    play_calls = _syn_attach_iids(play_calls)
+except Exception as _sie:
+    print(f"  [synergy] play ids not attached ({type(_sie).__name__}: {_sie})", flush=True)
 
 
 def _export_pbp_lineups(df):

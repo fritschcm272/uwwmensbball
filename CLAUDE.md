@@ -2755,3 +2755,209 @@ it lands on Analytics and carries the params) and to Synergy's breakdown page fo
 is corrected: a coach's answer is only ever questioned out loud. Traps: this section has no `json` import of
 its own (import it inside the function), and these helpers sit at 12-space indentation inside another
 function. `~/wmtest/mistag_t.py` renders it from the real clips.
+
+
+**RESOLVED (11/20): Hope vs North Central came through.** The 21:52 run exported it end to end -- Synergy
+Editor came to the front, Ctrl+E landed, `Hope@NorthCentralIL - Nov 17, 2026`, 230 clips (185 after free
+throws), the export box closed itself, 185 clips captured in 321 s -- and Film Tagging opened a 185-clip
+batch. So the 20:55 failure ("couldn't bring Synergy Editor to the front -- Ctrl+E may go to another
+window", "the export window never opened") was a one-off focus problem, not a defect: something else had
+focus while the run was working. If it recurs, the parser's own advice is right -- click once inside Synergy
+Editor's clip list and run again -- and the rule of thumb is to leave the machine alone while an export is
+going.
+
+uww_play_calls.csv now carries all three of Hope's scouted games (Franklin 212, Elmhurst 178, North Central
+185 = 585 opponent clips, against 390 before), and the tagging queue stands at Franklin 0/212, North Central
+0/185, UWW@Elmhurst 0/171, UWW@Carroll 0/24.
+
+---
+
+## Session roll-up -- 11/19 into 11/20
+
+Everything above happened in one long session. What follows is the shape of it, for a future reader who does
+not want to read twenty entries.
+
+**The spine of the session.** The 11/18 UWW @ Elmhurst game would not come into Film Tagging. Chasing that
+one symptom went: the game IS in (play-by-play, box score, lineups, schedule) but has no FILM -> the film
+needs a Synergy export -> the export needs a login -> Synergy had turned on two-factor by email -> the
+parser could not answer it -> a persistent browser profile plus a one-time code could -> my first attempt at
+that flooded the account with codes and got it locked out for an hour -> a selector written with CSS's `i`
+flag (which Playwright rejects) was swallowed by a bare `except` -> fixed, signed in, exported -> and then
+the export's own wait was too short, because its clock started before Synergy Editor was even opened. Each
+of those is a separate entry above. The lesson that ties them together: **a bare `except` that turns a real
+error into "nothing here" cost three rounds of emailed codes and a lockout.**
+
+**Files changed (sizes as of 11/20 07:21, all committed by Corey):**
+ - `parser_lib/18_turn_raw_4_column_play_by_play_table_into.py` (4,387) -- the scouted-opponent score flip
+ - `parser_lib/02_parse_every_team_schedule_scrape_live_from.py` (118,962) -- persistent browser profile
+ - `parser_lib/27_shared_video_tagging_helper_functions.py` (33,742) -- two-factor, lockout breaker
+ - `parser_lib/46_frame_capture.py` (200,818) -- Export.csv wait starts at the OK press
+ - `parser_lib/00_parser_modes.py` (60,088) -- removing a game from the cell now stops it
+ - `parser_lib/47_play_calls.py` (380,187) -- a call that names the other team stays out of the play tables
+ - `parser_lib/82_extract_player_headshots_from_scouting.py` (34,114) -- photo fallbacks + the web roster
+ - `parser_lib/87_build_html_scouting_brief_for_upcoming.py` (565,278) -- KTV cards, the All-keys table
+   width, "Expected here", the empty clutch card, the photo note, "Possibly mis-tagged"
+ - `streamlit_app.py` (1,241,270) -- the photo note on the roster card and in the player dialog
+ - `parser/synergy_login.ipynb` (NEW) -- the first-time Synergy sign-in, by hand
+ - `parser/inputs/opponent_sites.json` (NEW) -- opponent -> official roster URL
+ - `.gitignore` (1,111), `CLAUDE.md`
+ - moved out of parser_lib: `46_frame_capture-1.py`, `00_parser_modes-1.py`
+
+**Offline harnesses added in ~/wmtest (each runs against the real data or a sandbox):** `pbpscore_t.py`
+(the score flip, all four Hope files), `synmfa_t.py` (eight sign-in endings), `bankstick_t.py` (bank
+stickiness), `vxwait_t.py` (the export wait, on a virtual clock), `photofb_t.py` (the whole photo fallback
+chain), `foreign_t.py` (2 of 2,177 clips flagged), `mistag_t.py` (the new brief section), plus the earlier
+`ktvgrp_t.py`, `ktvtbl_t.py`, `cluunit_t.py`, `synlogin_t.py`.
+
+**Verified live:** the sign-in, the Elmhurst and North Central exports, the Film Tagging batches, the
+play-call flag counts, the bank rule against the real `_bank_games.json`.
+
+**NOT yet seen in a real run (the next `parser_brief` is their first test):** the photo fallbacks and the
+athletics.hope.edu scrape, the "Possibly mis-tagged" section, the "Expected here" wording, the empty clutch
+card, and the narrower All-keys table. The web scrape is the one most likely to need a second pass -- this
+session's shell could not reach athletics.hope.edu (proxy allowlist), so the table parsing was only proved
+against a Sidearm-shaped fixture. If it misses, the fetched page is saved in parser/inputs as
+`<team> - Roster (web).html`.
+
+**Open, by choice:**
+ - Thiel's export is one clip short (234 of 235, `98.mp4` missing) so its folder always reads "incomplete".
+   It no longer eats a capture slot, because Thiel is out of BANK_GAMES and the new rule drops a game with
+   no open batch -- but a re-export in Synergy Editor would tidy it.
+ - Ripon@UWWhitewater clips 88 and 95: a coach's "Ripon Motion #1" on two possessions the play-by-play says
+   were ours, both non-shooting fouls, both with a Ripon player tagged. Either the call or the possession is
+   wrong and the data cannot say which. They are flagged and kept out of the play tables; someone should
+   open them in the app.
+ - `.ipynb_checkpoints/` and `__pycache__/*.pyc` are tracked in git (including parser_lib's, which any
+   compile dirties). Left alone.
+ - The app has no per-clip deep link yet, so the brief's mis-tag rows land on Analytics carrying
+   `game=` and `clip=` for a future jump.
+
+
+## 2026-11-22 -- PLAY CALL SUMMARY: click a play call to see the plays behind it (options A + C)
+
+**CONFIRMED CHANGE (requested:** "click on 'Zoom' and then either get information about those plays that make up the
+data and see the video" -> "Yes, let's do A and C".) `87_build_html_scouting_brief_for_upcoming.py`, the Play call
+summary under HOW WE RUN OFFENSE / HOW <OPP> RUNS OFFENSE (both sides, every kind of brief). The table became a list of
+`<details class="pcs-r">` rows (Play call / Poss / PPP, same numbers as before). Opening a row lists its clips: game +
+date, clip number, half and clock, player, result (+ points), the five on the floor (surnames), and a "Synergy ->" link
+to that game's breakdown page (from `inputs/_synergy_ids.json`, the same source the "Possibly mis-tagged" table uses).
+Below each list: "open the game in Synergy and go to that clip number". NOT built: video in the brief (a clip is ~3 MB
+and the brief is one emailed file) and an app link (the app still has no per-clip route / viewer -- option B).
+
+**The list has to add up to the Poss column, so `_pcs_clips()` copies the breakdown's own selection** (47
+`_pl_offense_breakdown`): this season only (`season_play_calls`), possessions not on defense, `decode_quality` not
+"Untagged", situation Half court / BLOB / SLOB / ATO only (transition, offensive rebounds and openers are in the app's
+tables but not in this count), and for "No Play Call" (our side: "Flow") every clip with no call in those situations.
+Checked against the real Hope brief: **opponent side 52 of 52 rows match exactly; our side 33 of 36** -- Flow lists 39
+for 37, Gold 13 for 12, Over 2 for 1 (the breakdown drops a few clips with a rare / missing formation; not reproduced).
+Do NOT add a "formation used 3+ times" filter: tried, it broke the opponent side.
+
+**Two things the list showed about the numbers themselves (nothing changed -- Corey decides):**
+1. The breakdown counts **"Non Possession" clips as possessions** (a foul with the ball kept, a violation). The list
+   marks them "-- not a possession". Zoom shows it: 3 possessions / 1.67 PPP before UWW@Elmhurst clip 18 (Ketchum
+   non-shooting foul) was tagged, 4 / 1.25 after.
+2. **Skipped clips are still counted.** Elmhurst@Hope has clips with `skipped = True` AND decode_quality "App tag"; the
+   breakdown counts them (Hope's "Motion" 6 includes five of them), against the 11/15 rule that a skipped clip is in no
+   table. The list does not filter them either, so it matches the row. Worth checking why they carry both.
+
+Harness: `~/wmtest/pcs_t.py` (block lifted out of 87, run against data/uww_play_calls.csv; compares every row with the
+Hope brief on disk). Not yet seen in a real brief or in a browser -- the next parser_brief is the first test.
+
+
+## 2026-11-22 (later) -- Play call summary: games list + "watch in Synergy" (builds on the entry above)
+
+**CONFIRMED CHANGE (requested:** "when you expand the row for Zoom ... a list of different games that we ran the play, then
+be able to click on that opponent name that takes you to this page. Then you auto-select the plays so they can be watched.")
+Example page Corey sent: Synergy's play-by-play page for Ripon@UWWhitewater (6abc2667...). **How Synergy does it:** the page
+has no "selected plays" URL -- selection is page state. But every play on it is a link to Synergy's video player,
+`https://editor-web.synergysports.com/video?playlistUrl=<api>/possessionplaylists/statistics/37/clips?expression=<base64 of
+"iid eq N">&sort=gameDate:desc&take=500&title=...` (the expression is double-encoded: base64 inside playlistUrl, both URL-
+quoted). `iid` is Synergy's id for the play = the `iid` of `api/games/<id>/events`, which 46 already downloads for lineups.
+
+**Built:**
+- `46_frame_capture.py`: `_syn_save_lineups` now also writes an **`iid`** column to `inputs\_bank\<game id>_lineups.csv`;
+  new `_syn_backfill_iids()` (called after `_syn_export_lineups`, inside the frame-capture block, so it runs in
+  parser_models / parser_tagging, NOT parser_brief) loads the box score page of every game whose clips we hold and whose
+  file has no `iid` yet. `SYNERGY_IID_LINKS = False` turns it off; `SYNERGY_IID_MAX_GAMES` (15) caps a run.
+  Log: `[synergy] play ids ... still to fetch: N game(s)` / `play ids saved for N of M game(s)`.
+- `47_play_calls.py`: `_syn_attach_iids()` (after `_syn_attach_lineups`) adds **`synergy_game_id`** and **`synergy_iid`** to every
+  clip, matched by Synergy description (= `synergy_string`); identical descriptions in a game are separated by half + clock
+  (<= 10 s), else by order; no iid is given twice. Both columns are in `PLAY_CALL_COLS`. Log: `[synergy] <date> <game>:
+  Synergy play ids -- N of M clip(s) matched`.
+- `87`: each Play call summary row now lists the GAMES it was run in. The opponent's name ("vs Ripon") is the link: with play ids
+  it opens Synergy's video player on that play call's plays from that game; every play also has its own "Watch ->" link;
+  without play ids the name links to the game's breakdown page (the earlier behaviour).
+
+**Tested:** on the example page's 216 plays vs our 175 Ripon@UWWhitewater clips, all 175 matched, 175 distinct iids, and iid
+order follows clip number exactly (24 clips share a description with another clip, so the order rule is doing real work);
+Zoom = clips 80 / 84 / 156 -> iids 232986575 / 232986953 / 232992818. The block renders for both sides; links decode back to
+"iid eq N".
+**NOT tested:** (1) anything needing Synergy's login -- the built-in browser was signed out and Claude doesn't enter the
+password; (2) that several plays can be joined as `iid eq A or iid eq B` in one playlist (the "watch N plays" link on the
+game row). One play per link is the form Synergy itself emits. If the combined link opens empty, change `_pcs_watch` in 87
+to link the game row to the first play only; (3) that the events API `iid` equals the page's iid (strongly implied by 46's
+own use of `eventIid`, not seen).
+**To get it live:** run parser_models (fetches the ids, up to 15 games), then parser_brief. Leftover:
+`Claude outputs/syn_example_plays.json` (the example page's 216 iids + descriptions, used for the test).
+
+**11/22 (afternoon, requested):** Play call summary -- the per-play "Video" column and "Watch ->" links are gone, and the opponent's
+name is plain text. The link is now on the words **"watch N plays in Synergy"** in each game row (same combined playlist);
+without play ids that spot links to the game's breakdown page ("open the game in Synergy"). Also fixed: a clip with no half
+printed "nan" in the When column (now "--"). Corey's run on 11/22 already had play ids for North Central (10 plays) and the
+combined link was used from the real brief.
+
+
+## 2026-11-22 -- "watch all N plays (M games)" on each Play call summary row
+Corey tested a 15-play link spanning Elmhurst@Hope, Franklin@Hope and Hope@NorthCentral in Synergy: cross-game `iid eq A or iid eq B` playlists WORK. 87 `_pcs_body` now starts each expanded row with an "All games" line holding one link to every play (shown only with plays from 2+ games). The per-game links are unchanged. Not seen in a real run yet.
+
+
+## 2026-11-22 -- TEAM COMPARISON is three cards
+Requested: no "Expected here" card, "What decides it" -> "Biggest of Four Factors", no "Where we gain" card, more information on each. Now: Biggest of Four Factors (adds the opponent player the factor runs through via `_wm_face`, and the other three factors' PPG), What we do better / What they do better (each adds the next two season-average edges). The expected score still prints in the detail. The table's own "What decides it" column header is unchanged. Not seen in a real run yet.
+
+
+## 2026-11-22 -- the opponent's header, recent results and starters are one block
+Requested: drop the "Scouting the opponent" line from the team divider (`divider` hides that sub-line; ANALYSIS_MODE still matches on it first); no "<OPP> RECENT RESULTS" header (`section(..., bare=True)` -- only when the brief is not on last season's numbers, where the header says the games are from last year); no "<OPP> - ROSTER" header: `_ros_sec` prints a "Starters" label in the lineup cards' own `lc-lab` style (it carries the roster footnote) straight above the five-starter strip. Opponent only -- our own roster keeps its header. With no header bars `_sb_collapse` has nothing to wrap, so all three read as one always-visible block. Not seen in a real run yet.
+11/22 (later): the same treatment applies to OUR roster -- no "UW-WHITEWATER - ROSTER" header bar, a "Starters" label above the strip, and the divider's "Our own personnel, offense and week" sub-line is hidden. The page break before our divider stays.
+
+
+## 2026-11-22 -- CONFIRMED BUG (fixed): the Hope headshots from athletics.hope.edu were never fetched
+The 14:58 brief log: `[roster site] Hope Flying Dutchmen: 17 player(s) from athletics.hope.edu (saved page)` and no "N photo(s)", `uww_player_image_sources.csv` empty for Hope, "Opponent headshots: 1 found, 15 missing". The roster TABLE worked; the photos did not. 82 looked for each headshot in the player's PROFILE page og:image, but Sidearm's og:image is the site logo (the saved page has `<meta name="og:image">` with no content), and a bare `except: continue` hid it. The headshots are on the roster page itself: `<img data-src="/images/2026/11/3/Miller_Brady.jpg?width=80" alt="Brady Miller - View Profile">`. 82 now reads them from there (17 of 17 parse from the saved page), fetches them at `?width=400&quality=90` (then the page's own URL, then the bare path), and prints the first three fetch errors instead of swallowing them. The profile og:image step stays as a fallback. Not seen in a real run: this shell cannot reach hope.edu.
+
+
+## 2026-11-22 -- "<OPP> OFFENSE" and a new "<OPP> DEFENSE" section (5 cards)
+Requested: rename HOW <OPP> RUNS OFFENSE to "<OPP> OFFENSE"; create "<OPP> DEFENSE" with 5 cards, one of them the HOW <OPP> GUARDS SCREENS section. 87: the GUARDS SCREENS block is now the defense section (same position in the brief, before WHAT TO PLAY). Cards (`_def_cards`, no possession counts in the text): Base defense (`uww_opp_defense` + `uww_defense_by_situation`), Pressure, Screens (the old headline + their ball-screen coverage; the screen tables, defender tables and film cards are unchanged behind "Show the detail"), Points allowed (PPP, turnover and foul rate, best / worst situation from the opponent's own defensive clips -- possession_side Defense, side Opponent), Who closes it down (steals + blocks a game from `uww_defensive_roles`, 2+ games). Cards with no data drop out; fewer than 2 prints none. Tested against the real CSVs (all five render for Hope); full brief not rebuilt yet. Our own side has no defense section (not asked).
+11/22 (later): the same for us -- "HOW WE RUN OFFENSE" is "UW-WHITEWATER OFFENSE" and `_our_def_section()` (87, right after it) adds "UW-WHITEWATER DEFENSE" with the same five cards, from OUR defensive clips (side UWW, possession_side Defense, this season): base defense by situation, pressure, screens (the "UWW defense" rows of uww_screen_coverage_summary -- only a handful tagged so far, flagged thin), points allowed, and who closes it down (current roster only, since uww_defensive_roles also holds last season's players). No screen tables behind it -- we have no "how we guard screens" section. ANALYSIS_MODE drops it (title matches WHITEWATER). Tested against the real CSVs; not seen in a brief yet.
+
+
+## 2026-11-22 (evening) -- starters, five-man units and 3-man combos are ONE card, both teams
+Requested: all three in the overall section (Starters, then Five-man units, then 3-man combos subsections), and no ⓘ after "Starters". 87: `_roster_card` opens the card with a "Starters" `lc-lab` inside it and ends with a marker chunk (`_RC_END`); the lineup blocks call `_open_or_join_card()`, which takes that marker back and carries on in the same card instead of opening a second one (the page_break() before each lineup block is gone, since it would have sat between them; our block also had a stray duplicate `<div class="card">`, now gone). The roster footnote moved from the "Starters" label to the "Full roster" bar (`_ros_fn`). A preseason / opener brief's two roster copies end in `<!--/NS-->`, so those keep the old separate lineup card. Not seen in a real brief yet -- check the HTML for balanced divs if the layout looks off.
+11/22 (evening): spacing -- `details.rosdet` has its own margin, and the label / sub-heading spacing rules in the CSS (next to `.lc-lab`) also cover a label under cards, a note or a table, a `.pc-sub` under a table or bar, and a section's first card or bar under its headline. CSS only.
+
+
+## 2026-11-22 -- Offense sections: two rows of cards, WHAT TO PLAY folded in
+
+**CONFIRMED CHANGE (requested:** "Hope Offense ... 2 rows of cards. First row Motion, Plays, Actions. Second row
+BLOB/SLOB, Tempo, What they're good at, What they struggle with. What to Play Hope In should not be its own
+section.") `87` `_off_cards(side)` now returns two `lcards` rows (3 + 4). The two new cards use the old WHAT TO PLAY
+data (`_pf_opp` / `_pf_uww`: PPP by defense family, pressure's effect on turnovers) plus best/worst set, action and
+clock. The section itself is off unless `BRIEF_WHAT_TO_PLAY_SECTION = True`. Applies to both teams' offense sections.
+Not seen in a real run yet; a failure in the new cards prints `[offense cards] ... skipped` and leaves the other five.
+
+**11/22 (later) -- the bullets above the offense table are gone, and the defense table moved.** Requested: keep "How they
+score against each defense" in the Hope offense details; the bullets "should be in the cards". `_off_cards` now folds
+them in: the formation bullets become a "By formation -- 41: 41 Motion most (36%, 0.62 PPP) ..." line on the Plays card;
+the BLOB / SLOB bullets ("BLOB most run: BLOB Motion (22%, 1.00 PPP)", "SLOB: no play call tagged yet") join that card's
+note; the two "most successful" bullets were already the Plays / Actions cards' "Most successful" lines (same source
+text). The list is no longer printed (`BRIEF_OFFENSE_BULLETS = True` brings it back). The WHAT TO PLAY block still builds
+its table + notes into `_DFAM_CHUNKS`, printed at the top of the opponent offense's "Show the full table" details.
+Not seen in a real run yet.
+
+**11/22 -- TRIGGER & SCREENER READS section removed** (requested). Same data already sits on the Actions card (team
+Ball handler / Screener line) and each player's roster card (`_reads_of`, top 3 reads per player).
+`BRIEF_TRIGGER_SECTION = True` brings it back.
+
+**11/22 -- All-keys table has a 'Why this score' column** (requested): rebuilds 83's priority parts (source points, edge size x40, data x15, instruction/description) per key and notes any other adjustment (e.g. the small-sample scaling) so the parts sum to the printed score.
+
+**11/22 (later) -- All-keys table is expandable rows** (requested, replacing the extra column): pcs-r rows like the play-call summary -- key / score / area; open one for its reasoning, 'Why N' parts and source.
+
+**11/22 -- GAMES replaces ADD_GAMES / BANK_GAMES / EXTRA_GAMES in parser_models' first cell** (requested). One list; `_pm_split_games` (00, called where run_parser stores its options) sorts each entry: FastScout link / "<m>_<d>_<yy> a @ b" name -> ADD_GAMES, 24-char Synergy ID or dict with synergy_id / fastscout_url -> BANK_GAMES, dict with "opponent" -> EXTRA_GAMES. Nothing downstream changed, and the three old option names still work (merged), so parser_brief's EXTRA_GAMES = None is untouched. Reload parser_models from disk in JupyterLab.

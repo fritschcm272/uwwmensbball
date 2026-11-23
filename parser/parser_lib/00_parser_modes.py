@@ -663,6 +663,38 @@ def _pm_scratch(mode):
     return want
 
 
+def _pm_split_games(o):
+    """CONFIRMED CHANGE (requested 11/22: "combine ADD_GAMES, BANK_GAMES and EXTRA_GAMES into one thing"). One list,
+    GAMES, in parser_models' first cell; each entry is sorted into the three settings the rest of the parser already
+    reads, so nothing downstream changes:
+      * a FastScout game link, "fastscout:<id>", or a "<m>_<d>_<yy> <away> @ <home>" name  -> ADD_GAMES
+      * a 24-character Synergy game ID, or a dict with "synergy_id" / "fastscout_url"       -> BANK_GAMES
+      * a dict with "opponent" (a scrimmage / game not on FastScout, scouted as the next)   -> EXTRA_GAMES
+    The three old settings still work and are merged with GAMES, so an old notebook runs unchanged."""
+    g = o.get("GAMES")
+    if g is None:
+        return o
+    g = [g] if isinstance(g, (str, dict)) else list(g or [])
+    add, bank, extra = [], [], []
+    for e in g:
+        if isinstance(e, dict):
+            (extra if e.get("opponent") and not (e.get("synergy_id") or e.get("fastscout_url")) else bank).append(e)
+        elif isinstance(e, str) and e.strip():
+            x = e.strip()
+            if len(x) == 24 and _pm_re.fullmatch(r"[0-9a-fA-F]{24}", x):
+                bank.append(x)
+            else:
+                add.append(x)
+    def _merge(key, new):
+        old = o.get(key) or []
+        old = [old] if isinstance(old, (str, dict)) else list(old)
+        o[key] = old + [x for x in new if x not in old]
+    _merge("ADD_GAMES", add)
+    _merge("BANK_GAMES", bank)
+    _merge("EXTRA_GAMES", extra)
+    return o
+
+
 def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb", quiet=None, fresh=False, options=None):
     """Run parser_nb.ipynb's cells for one job: "models", "tagging" or "brief" (see the top of this file).
     start_at = a section name ("50_player_tracking") to continue from after a stop -- the sections above it are not run
@@ -679,7 +711,7 @@ def run_parser(mode, start_at=None, stop_after=None, notebook="parser_nb.ipynb",
         nb = _pm_json.load(fh)
     print(f"=== {mode.upper()}: {plan['label']} ===", flush=True)
     _pm_scratch(mode)
-    G["_PM_OPTIONS"] = dict(options or {})
+    G["_PM_OPTIONS"] = _pm_split_games(dict(options or {}))
     G["ANALYSIS_MODE"] = (mode == "analysis")
     if G["_PM_OPTIONS"]:
         _o = G["_PM_OPTIONS"]

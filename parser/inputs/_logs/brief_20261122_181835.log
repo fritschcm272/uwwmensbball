@@ -1,0 +1,1131 @@
+  [disk] scratch folder: F:\uwwmensbball_temp
+  [disk] data (F:): 1596.0 GB free
+  [disk] scratch (F:): 1596.0 GB free
+
+===== cell 1 <file> =====
+
+===== cell 2 00b_season_switch, 01_uw_whitewater_scouting_parser =====
+Season: 2026-27 (last season 2025-26: F:\uwwmensbball\data_2025-26)
+Input directory: ./inputs
+Output directory: ../data
+LLM comparisons: disabled
+Reference date: 2026-11-22
+Before scout: no -- using every scouting report found
+Brief links -> https://uwwmensbball-new.streamlit.app
+
+===== cell 4  =====
+
+===== cell 5  =====
+
+===== cell 7 02_parse_every_team_schedule_scrape_live_from =====
+Found 10 schedule MHTML file(s) in ./inputs:
+ - Carroll (WI) Pioneers - Schedule_2026.html
+ - Elmhurst Bluejays - Schedule_2026.html
+ - Hope Flying Dutchmen - Schedule_2026.html
+ - Ripon Red Hawks - Schedule_2026.html
+ - UW-Stout Blue Devils - Schedule_2023.html
+ - UW-Stout Blue Devils - Schedule_2026.html
+ - UW-Whitewater - Schedule_2023.html
+ - UW-Whitewater - Schedule_2024.html
+ - UW-Whitewater - Schedule_2025.html
+ - UW-Whitewater - Schedule_2026.html
+Detected season 2026 from UWW's local schedule snapshot -- using FASTSCOUT_DOCS_SEASON='26' for any live-scrape URLs below (was hardcoded to '25').
+Skipping live scrape for UW-Whitewater's own schedule -- a local schedule file already exists: UW-Whitewater - Schedule_2026.html
+Excluding 20 game(s) scheduled beyond the next upcoming game -- not downloading those reports yet.
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0yM1QwMDoxOToxOC45NDFaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NTM5MzE1OSwiZXhwIjoxNzk2NjAyNzU5LCJzaWQiOiJoZW1ZM2lYME83YjY3clpCejhpTzNYaEZTSDctLVA1LSIsImNfaGFzaCI6IkwwYlFReTZjR2Fydk1vRlVyb0VYbGciLCJub25jZSI6IjZiNmI5N2U5LWI2NTAtNDI1NS05NWNkLTE0OTZkMTg4OGM0YiJ9.XnaRZESTro_ojPSaIL8UGTHC_sb8_zG7SXGEYafpdd4hYgqoCazkpTOu-pJX2RP-oOnIxf191-9-rvG9A4n1HLr3lxaC4g3KFx_Se102-nBw8hs9WILkMV9D9C4JIbLp3XmE8fOfiDMuunA9zRfnqGCONY8UrHq_T-2kgxbGy-NeJl5v5Ly7YCqqWJO57isMEi2etzhclK4PEtNM-JdBzCN2H439DOgGyWXMQz8hFLARVhx4j3NHFbSOhTUmZ7fEhB-iW6NgQBFzLg39kCtlf8SZvuCHgQTl1_U7aSb5afjE3A0ZdKlN3wAi3dDHHfZ8ymZnwEGwFqz_oWwCw_mNxw&token_type=Bearer&expires_at=1796602759 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+  (upcoming game's report: couldn't check FastScout's Last Modified -- Error: Page.goto: net::ERR_INSUFFICIENT_RESOURCES at https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+Call log:
+  - na)
+
+Every game already has a local scouting-report PDF, or is missing required data -- nothing to download from FastScout. (24 raw game(s) found; 0 missing opponent_url, 0 missing a parseable date.)
+  UW-Whitewater Warhawks (UW-Whitewater - Schedule_2026.html): 4 game(s) -- scouted opponents: ['Ripon Red Hawks', 'Elmhurst Bluejays', 'Hope Flying Dutchmen', 'Carroll (WI) Pioneers']
+
+Fetching 4 opponent schedule(s) (scrape opponent_url, MHTML backup on failure):
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0yM1QwMDoxOTo1OS45NzFaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NTM5MzIwMCwiZXhwIjoxNzk2NjAyODAwLCJzaWQiOiIzX1h2QXJ1azRUUkdBNEFoWEh2WF80NUp3Q3BiY045ViIsImNfaGFzaCI6IjhOdWN3OF9DS2dhdXVTRW5ybXJTa2ciLCJub25jZSI6IjMzZWJjMzFjLTg2MjctNGFjNi04YTIyLWE0Y2E2MmI3NDFiNiJ9.XxhxjEv-EG-4aixyfo9aHyK3s69__mLoYVzsqTA8k14leqRNCq1CJFNdhHTzkNhXoGGuANpzTAFCkEZEpH_1nk8r1ONaFbncpXeeVwxLAok08LyI-fkNavBdCgbSWP51D35YE0qLYDIhxZ9t5JIg92tsMz4g0t66VctXdCwi2D6-WvBioDzyUzkLynuvNGFe3fWhm2xRlbO0SkF8v169p9daTg79bewTC5FpRW9apFmdmREZQw_ZTNwFCGEV5zQK6dP0fJ77ElmagfxnAhYZAmQEV-B9f_MYc0hT1ARIv_obPkpXslzCYC82gAf3NrgeoI-0Jorz7ymtmgcO5Z3wgg&token_type=Bearer&expires_at=1796602800 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+  Could not start an authenticated FastScout browser session: Error: Page.goto: net::ERR_ABORTED; maybe frame was detached?
+Call log:
+  - navigating to "https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26", waiting until "domcontentloaded"
+
+Traceback (most recent call last):
+  File "F:\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 1820, in <module>
+    scraped_html_by_opponent = run_in_fastscout_session(_run_fastscout_scrape_session)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 822, in run_in_fastscout_session
+    return _fastscout_session["executor"].submit(_job).result()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\anaconda3\Lib\concurrent\futures\_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\anaconda3\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\frits\anaconda3\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 792, in _job
+    _bootstrap()
+  File "F:\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 765, in _bootstrap
+    _ensure_fastscout_login(page)
+  File "F:\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 585, in _ensure_fastscout_login
+    _goto_with_auth_retry(page, known_url, "text=SCHEDULE", timeout_ms)
+  File "F:\uwwmensbball\parser\parser_lib\02_parse_every_team_schedule_scrape_live_from.py", line 414, in _goto_with_auth_retry
+    page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
+  File "C:\Users\frits\anaconda3\Lib\site-packages\playwright\sync_api\_generated.py", line 9875, in goto
+    self._sync(
+  File "C:\Users\frits\anaconda3\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "C:\Users\frits\anaconda3\Lib\site-packages\playwright\_impl\_page.py", line 560, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\anaconda3\Lib\site-packages\playwright\_impl\_frame.py", line 156, in goto
+    await self._channel.send(
+  File "C:\Users\frits\anaconda3\Lib\site-packages\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\frits\anaconda3\Lib\site-packages\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.goto: net::ERR_ABORTED; maybe frame was detached?
+Call log:
+  - navigating to "https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26", waiting until "domcontentloaded"
+
+  Falling back to local backup MHTML for Carroll (WI) Pioneers: Carroll (WI) Pioneers - Schedule_2026.html
+  Carroll (WI) Pioneers (Carroll (WI) Pioneers - Schedule_2026.html): 5 game(s) -- all games before 2026-11-22
+  Falling back to local backup MHTML for Ripon Red Hawks: Ripon Red Hawks - Schedule_2026.html
+  Ripon Red Hawks (Ripon Red Hawks - Schedule_2026.html): 6 game(s) -- all games before 2026-11-22
+  Falling back to local backup MHTML for Elmhurst Bluejays: Elmhurst Bluejays - Schedule_2026.html
+  Elmhurst Bluejays (Elmhurst Bluejays - Schedule_2026.html): 5 game(s) -- all games before 2026-11-22
+  Falling back to local backup MHTML for Hope Flying Dutchmen: Hope Flying Dutchmen - Schedule_2026.html
+  Hope Flying Dutchmen (Hope Flying Dutchmen - Schedule_2026.html): 4 game(s) -- all games before 2026-11-22
+Synergy game IDs: 0 of 3 played UWW game(s), 0 game row(s) in all -- no video link on FastScout for: Sat, Nov 7 Carroll (WI) Pioneers, Sat, Nov 14 Ripon Red Hawks, Wed, Nov 18 Elmhurst Bluejays
+           date                      opponent                    team  \
+0    Sat, Nov 7         Carroll (WI) Pioneers  UW-Whitewater Warhawks   
+1   Sat, Nov 14               Ripon Red Hawks  UW-Whitewater Warhawks   
+2   Wed, Nov 18             Elmhurst Bluejays  UW-Whitewater Warhawks   
+3   Tue, Nov 24          Hope Flying Dutchmen  UW-Whitewater Warhawks   
+4    Sat, Nov 7        UW-Whitewater Warhawks   Carroll (WI) Pioneers   
+5   Fri, Nov 13                 Loras Duhawks   Carroll (WI) Pioneers   
+6   Sat, Nov 14            Bethel (MN) Royals   Carroll (WI) Pioneers   
+7   Wed, Nov 18               Edgewood Eagles   Carroll (WI) Pioneers   
+8   Sat, Nov 21           UW-La Crosse Eagles   Carroll (WI) Pioneers   
+9    Sat, Nov 7             Elmhurst Bluejays         Ripon Red Hawks   
+10   Sun, Nov 8        Milwaukee Panthers EXH         Ripon Red Hawks   
+11  Wed, Nov 11     St. Norbert Green Knights         Ripon Red Hawks   
+12  Sat, Nov 14        UW-Whitewater Warhawks         Ripon Red Hawks   
+13  Wed, Nov 18              Lakeland Muskies         Ripon Red Hawks   
+14  Sat, Nov 21             Beloit Buccaneers         Ripon Red Hawks   
+15   Sat, Nov 7               Ripon Red Hawks       Elmhurst Bluejays   
+16  Wed, Nov 11                 DePauw Tigers       Elmhurst Bluejays   
+17  Sat, Nov 14          Hope Flying Dutchmen       Elmhurst Bluejays   
+18  Wed, Nov 18        UW-Whitewater Warhawks       Elmhurst Bluejays   
+19  Sat, Nov 21                   Coe Kohawks       Elmhurst Bluejays   
+20   Fri, Nov 6          Anderson (IN) Ravens    Hope Flying Dutchmen   
+21   Sat, Nov 7            Franklin Grizzlies    Hope Flying Dutchmen   
+22  Sat, Nov 14             Elmhurst Bluejays    Hope Flying Dutchmen   
+23  Tue, Nov 17  North Central (IL) Cardinals    Hope Flying Dutchmen   
+
+         location  \
+0            Away   
+1            Home   
+2            Away   
+3            Home   
+4            Home   
+5   Neutral Court   
+6            Away   
+7            Away   
+8            Home   
+9            Home   
+10           Away   
+11           Home   
+12           Away   
+13           Away   
+14           Away   
+15           Away   
+16           Home   
+17           Away   
+18           Home   
+19           Home   
+20           Home   
+21           Home   
+22           Home   
+23           Away   
+
+                                                                                     opponent_url  \
+0   https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw?league=NCAAB-III&season=26   
+1   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=26   
+2   https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw?league=NCAAB-III&season=26   
+3   https://fastscout.fastmodelsports.com/teams/HRFCusfbR4OnaX09Q5O0XQ?league=NCAAB-III&season=26   
+4   https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw?league=NCAAB-III&season=26   
+5   https://fastscout.fastmodelsports.com/teams/ajx5YMsQReiGG5ySrx_9zw?league=NCAAB-III&season=26   
+6   https://fastscout.fastmodelsports.com/teams/5YLgxHv4TW64jUgzvfjgqA?league=NCAAB-III&season=26   
+7   https://fastscout.fastmodelsports.com/teams/j2Rs34LFTP2eL8u-R-Tnyg?league=NCAAB-III&season=26   
+8   https://fastscout.fastmodelsports.com/teams/UrY3DOoLQbe_PnM_sm4HJA?league=NCAAB-III&season=26   
+9   https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw?league=NCAAB-III&season=26   
+10      https://fastscout.fastmodelsports.com/teams/jS33htMfSCSQVe-MVy9lBQ?league=NCAAB&season=26   
+11  https://fastscout.fastmodelsports.com/teams/mdTxP3GCSVKmzTfFimCobQ?league=NCAAB-III&season=26   
+12  https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw?league=NCAAB-III&season=26   
+13  https://fastscout.fastmodelsports.com/teams/2Vdqayo0TyGkQtaFIH0f4Q?league=NCAAB-III&season=26   
+14  https://fastscout.fastmodelsports.com/teams/emBh5s30TA-k_E211KwGIQ?league=NCAAB-III&season=26   
+15  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ?league=NCAAB-III&season=26   
+16  https://fastscout.fastmodelsports.com/teams/9ILXFmINTiOZoYEj1Kb44g?league=NCAAB-III&season=26   
+17  https://fastscout.fastmodelsports.com/teams/HRFCusfbR4OnaX09Q5O0XQ?league=NCAAB-III&season=26   
+18  https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw?league=NCAAB-III&season=26   
+19  https://fastscout.fastmodelsports.com/teams/jXGQW7S_QkGvOZlY68lfbQ?league=NCAAB-III&season=26   
+20  https://fastscout.fastmodelsports.com/teams/rbS_OYLsTA6PKpdF8cR-RQ?league=NCAAB-III&season=26   
+21  https://fastscout.fastmodelsports.com/teams/B1MzAoTrSkS3daVNld3mpQ?league=NCAAB-III&season=26   
+22  https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw?league=NCAAB-III&season=26   
+23  https://fastscout.fastmodelsports.com/teams/dShnkyWDRTaBQuxYFLIBSg?league=NCAAB-III&season=26   
+
+                                                                                                                               game_url  \
+0   https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/BTiJn2Q2QUqwnB4oVvvRsA/boxscore?league=NCAAB-III&season=26   
+1   https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/iWbUqzNQS52l9UpBBUC83Q/boxscore?league=NCAAB-III&season=26   
+2   https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/OUnfVjwgTzqSZAN9FQVgsw/boxscore?league=NCAAB-III&season=26   
+3   https://fastscout.fastmodelsports.com/teams/YNoIeSV6SVujUWWWZIKOxw/games/TQH8EgXnS1ycB5pMaKd79g/boxscore?league=NCAAB-III&season=26   
+4   https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games/BTiJn2Q2QUqwnB4oVvvRsA/boxscore?league=NCAAB-III&season=26   
+5   https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games/oYQc9UlJRWK5FOV7toRK9A/boxscore?league=NCAAB-III&season=26   
+6   https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games/fjn7zc8_QSilAgRhfWUWOg/boxscore?league=NCAAB-III&season=26   
+7   https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games/cbPNmyI9SheQlLyQYqDNKA/boxscore?league=NCAAB-III&season=26   
+8   https://fastscout.fastmodelsports.com/teams/nkIaCaMjQNOs1x2nMHrryw/games/_wOtTwZYSEmOa04yFk3P7w/boxscore?league=NCAAB-III&season=26   
+9   https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/Q-R41YqCRVa_Rf_nXXlVQg/boxscore?league=NCAAB-III&season=26   
+10  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/l7jJkzfjQuiRIg2E05SX0w/boxscore?league=NCAAB-III&season=26   
+11  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/M2_CR747RjyMi26xDFn6IQ/boxscore?league=NCAAB-III&season=26   
+12  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/iWbUqzNQS52l9UpBBUC83Q/boxscore?league=NCAAB-III&season=26   
+13  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/WLwnUqXLQ0CZIhS0Zvv4Aw/boxscore?league=NCAAB-III&season=26   
+14  https://fastscout.fastmodelsports.com/teams/NYQ5dX1lTj2qPTiYSf_8EQ/games/Gb_YPfJ0S-a_sOC_N4WYtg/boxscore?league=NCAAB-III&season=26   
+15  https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw/games/Q-R41YqCRVa_Rf_nXXlVQg/boxscore?league=NCAAB-III&season=26   
+16  https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw/games/sQFpH6FSSBiF6JHrLZFhKA/boxscore?league=NCAAB-III&season=26   
+17  https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw/games/o9f3b4_5SW-s5fmUAfgQpw/boxscore?league=NCAAB-III&season=26   
+18  https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw/games/OUnfVjwgTzqSZAN9FQVgsw/boxscore?league=NCAAB-III&season=26   
+19  https://fastscout.fastmodelsports.com/teams/wI_oq6BcQWaPN8iyk-64bw/games/B2IaXvR5TxSPIwushlMekw/boxscore?league=NCAAB-III&season=26   
+20  https://fastscout.fastmodelsports.com/teams/HRFCusfbR4OnaX09Q5O0XQ/games/tswPar7OS-OTne1b9tLslQ/boxscore?league=NCAAB-III&season=26   
+21  https://fastscout.fastmodelsports.com/teams/HRFCusfbR4OnaX09Q5O0XQ/games/cFEWvQ5JSr-t2qZOF1FO-A/boxscore?league=NCAAB-III&season=26   
+22  https://fastscout.fastmodelsports.com/teams/HRFCusfbR4OnaX09Q5O0XQ/games/o9f3b4_5SW-s5fmUAfgQpw/boxscore?league=NCAAB-III&season=26   
+23  https://fastscout.fastmodelsports.com/teams/HRFCusfbR4OnaX09Q5O0XQ/games/N4cOtIrSSxayF8GsDoQz2w/boxscore?league=NCAAB-III&season=26   
+
+   video_url synergy_game_id synergy_boxscore_url outcome  team_score  \
+0       None            None                 None       W        78.0   
+1       None            None                 None       W        73.0   
+2       None            None                 None       L        65.0   
+3       None            None                 None    None         NaN   
+4       None            None                 None       L        74.0   
+5       None            None                 None       L        74.0   
+6       None            None                 None       W        71.0   
+7       None            None                 None       L        57.0   
+8       None            None                 None       L        66.0   
+9       None            None                 None       L        52.0   
+10      None            None                 None       L        48.0   
+11      None            None                 None       L        68.0   
+12      None            None                 None       L        70.0   
+13      None            None                 None       W        84.0   
+14      None            None                 None       W        69.0   
+15      None            None                 None       W        81.0   
+16      None            None                 None       W        75.0   
+17      None            None                 None       L        62.0   
+18      None            None                 None       W        73.0   
+19      None            None                 None       W        92.0   
+20      None            None                 None       W        90.0   
+21      None            None                 None       W        79.0   
+22      None            None                 None       W        68.0   
+23      None            None                 None       L        69.0   
+
+    opponent_score  point_margin   season Upcoming  
+0             74.0           4.0  2026-27       No  
+1             70.0           3.0  2026-27       No  
+2             73.0          -8.0  2026-27       No  
+3              NaN           NaN  2026-27      Yes  
+4             78.0          -4.0  2026-27       No  
+5             80.0          -6.0  2026-27       No  
+6             65.0           6.0  2026-27       No  
+7             71.0         -14.0  2026-27       No  
+8             92.0         -26.0  2026-27       No  
+9             81.0         -29.0  2026-27       No  
+10            99.0         -51.0  2026-27       No  
+11            74.0          -6.0  2026-27       No  
+12            73.0          -3.0  2026-27       No  
+13            79.0           5.0  2026-27       No  
+14            66.0           3.0  2026-27       No  
+15            52.0          29.0  2026-27       No  
+16            60.0          15.0  2026-27       No  
+17            68.0          -6.0  2026-27       No  
+18            65.0           8.0  2026-27       No  
+19            76.0          16.0  2026-27       No  
+20            63.0          27.0  2026-27       No  
+21            59.0          20.0  2026-27       No  
+22            62.0           6.0  2026-27       No  
+23            74.0          -5.0  2026-27       No  
+  [time] 02_parse_every_team_schedule_scrape_live_from: 2.0 min
+
+===== cell 9  =====
+
+===== cell 11  =====
+    jersey_number                  PLAYER GP-GS  MIN      FGM-A    FG%  \
+0            14.0            Mikey Wildes     -    -          -      -   
+1            25.0             Taveon Vann   2-0    6    0.5-0.5   100%   
+2            23.0          Mauryon Turner     -    -          -      -   
+3            12.0  Tyshawn Teague-Johnson   3-3   27    2.7-9.0  29.6%   
+4            35.0           Rashad Rogers   3-3   26    2.3-5.0  46.7%   
+5             5.0         Isaiah Robinson   3-3   27    2.3-5.0  46.7%   
+6            11.0            Luke Paddock   1-0    1    0.0-0.0      -   
+7             2.0           Kelton McEwen   3-3   33    4.0-9.3  42.9%   
+8            21.0            Brock Marino     -    -          -      -   
+9            15.0           Collin Madson   3-3   38   7.0-15.0  46.7%   
+10            1.0            JR Lukenbill   3-0   20    2.7-5.3    50%   
+11            0.0          Agape Keys Jr.     -    -          -      -   
+12            0.0         Agape Keyes Jr.     -    -          -      -   
+13           20.0           Chris Johnson     -    -          -      -   
+14            3.0              Zay Howard     -    -          -      -   
+15           33.0         Trent Grunewald   1-0    8    0.0-0.0      -   
+16           10.0         Darius Chestnut   3-0   14    1.3-2.3  57.1%   
+17           24.0         Zavier Castillo   2-0   10    0.5-1.0    50%   
+18           27.0          Jonathan Aluyi     -    -          -      -   
+19            NaN              Team Total     3  600  23.0-52.0  44.2%   
+20            NaN                Opponent     3  600  25.3-57.0  44.4%   
+
+       3PM-A    3P%   3P-R      FTM-A    FT%   PTS   ORB   DRB   REB   AST  \
+0          -      -      -          -      -     -     -     -     -     -   
+1    0.0-0.0      -     0%    1.5-2.0    75%   2.5   1.0   1.0   2.0   0.0   
+2          -      -      -          -      -     -     -     -     -     -   
+3    0.7-3.0  22.2%  33.3%    0.7-1.7    40%   6.7   1.0   5.3   6.3   1.0   
+4    0.3-1.3    25%  26.7%    1.0-3.0  33.3%   6.0   1.7   4.7   6.3   1.3   
+5    1.0-2.3  42.9%  46.7%    1.3-3.0  44.4%   7.0   1.3   2.0   3.3   1.7   
+6    0.0-0.0      -      -    0.0-0.0      -   0.0   0.0   0.0   0.0   0.0   
+7    1.7-6.0  27.8%  64.3%    1.0-1.0   100%  10.7   0.3   1.0   1.3   2.3   
+8          -      -      -          -      -     -     -     -     -     -   
+9    1.3-5.3    25%  35.6%  11.0-13.0  84.6%  26.3   1.0   2.3   3.3   3.3   
+10   1.0-2.7  37.5%    50%    1.0-1.7    60%   7.3   1.7   3.3   5.0   0.3   
+11         -      -      -          -      -     -     -     -     -     -   
+12         -      -      -          -      -     -     -     -     -     -   
+13         -      -      -          -      -     -     -     -     -     -   
+14         -      -      -          -      -     -     -     -     -     -   
+15   0.0-0.0      -      -    2.0-2.0   100%   2.0   0.0   1.0   1.0   0.0   
+16   0.3-1.0  33.3%  42.9%    2.0-2.3  85.7%   5.0   0.3   1.3   1.7   0.0   
+17   0.0-0.0      -     0%    0.0-0.0      -   1.0   0.0   0.0   0.0   0.0   
+18         -      -      -          -      -     -     -     -     -     -   
+19  6.3-21.7  29.2%  41.7%  19.7-27.7  71.1%  72.0   9.0  22.0  31.0  10.0   
+20  8.7-23.0  37.7%  40.4%  13.0-19.0  68.4%  72.3  11.3  21.7  33.0  12.0   
+
+      TO  STL  BLK    PF  
+0      -    -    -     -  
+1    1.0  0.0  0.0   1.0  
+2      -    -    -     -  
+3    0.7  1.3  2.0   2.7  
+4    2.3  0.7  1.0   2.7  
+5    3.3  2.7  0.0   3.7  
+6    0.0  0.0  0.0   0.0  
+7    0.7  0.0  0.0   2.0  
+8      -    -    -     -  
+9    1.3  0.7  0.3   2.0  
+10   1.3  0.3  0.3   3.0  
+11     -    -    -     -  
+12     -    -    -     -  
+13     -    -    -     -  
+14     -    -    -     -  
+15   0.0  0.0  0.0   1.0  
+16   1.0  0.3  0.0   1.7  
+17   0.0  0.0  0.0   0.5  
+18     -    -    -     -  
+19  12.3  6.0  3.7  19.0  
+20  13.0  5.7  3.0  22.0  
+
+===== cell 13 03_investigate_playerstattable_tile_widgets =====
+
+===== cell 15 04_investigate_myteam_analytics_dashboard =====
+
+===== cell 16 05_investigate_myteam_analytics_dashboard_2 =====
+
+===== cell 17 06_investigate_myteam_analytics_dashboard_3 =====
+
+===== cell 18 07_investigate_myteam_analytics_dashboard_4 =====
+
+===== cell 20  =====
+Overall record (W-L): 2-1
+outcome location  L  W  games
+0           Away  1  1      2
+1           Home  0  1      1
+  location  avg_point_margin
+0     Away              -2.0
+1     Home               3.0
+
+===== cell 22 08_parse_each_opponent_fastscout_scoutbuilder =====
+Found 0 PDF scout report(s) and 4 HTML scout report(s):
+ - 11_14_26 Ripon Red Hawks @ UW-Whitewater_scout.html
+ - 11_18_26 UW-Whitewater @ Elmhurst Bluejays_scout.html
+ - 11_24_26 Hope Flying Dutchmen @ UW-Whitewater_scout.html
+ - 11_7_26 UW-Whitewater @ Carroll (WI) Pioneers_scout.html
+  Hope Flying Dutchmen: scouting report '11_24_26 Hope Flying Dutchmen @ UW-Whitewater_scout.html' matches the upcoming game date (Nov 24, 2026).
+  Parsed 'Carroll (WI) Pioneers' (.html): 121 elements, 1 tables
+  Parsed 'Ripon Red Hawks' (.html): 142 elements, 1 tables
+  Parsed 'Elmhurst Bluejays' (.html): 146 elements, 1 tables
+  Parsed 'Hope Flying Dutchmen' (.html): 139 elements, 1 tables
+
+===== cell 24 09_extract_each_opponent_roster =====
+                 opponent   game_date jersey_number                  name  \
+0   Carroll (WI) Pioneers  2026-11-07           #33         Dennis Estepp   
+1   Carroll (WI) Pioneers  2026-11-07           #12        Peyton McKenna   
+2   Carroll (WI) Pioneers  2026-11-07           #34          Cahlil Jones   
+3   Carroll (WI) Pioneers  2026-11-07            #4        Michael McNabb   
+4   Carroll (WI) Pioneers  2026-11-07           #25   Logan Steffensmeier   
+5   Carroll (WI) Pioneers  2026-11-07            #3          Lucas Parker   
+6   Carroll (WI) Pioneers  2026-11-07           #23          Jimmy Tarjan   
+7   Carroll (WI) Pioneers  2026-11-07           #42       Greg Smith, Jr.   
+8         Ripon Red Hawks  2026-11-14           #30          Seth Bunders   
+9         Ripon Red Hawks  2026-11-14            #0         Jose Gonzales   
+10        Ripon Red Hawks  2026-11-14            #3           Keenan Rahn   
+11        Ripon Red Hawks  2026-11-14           #35         Michael Asman   
+12        Ripon Red Hawks  2026-11-14           #34       Jackson Flowers   
+13        Ripon Red Hawks  2026-11-14           #11             Sam Leoni   
+14        Ripon Red Hawks  2026-11-14            #2            Landon Lee   
+15        Ripon Red Hawks  2026-11-14           #42            Jack Field   
+16        Ripon Red Hawks  2026-11-14            #4             Joey Daun   
+17      Elmhurst Bluejays  2026-11-18            #0           Jack Cherry   
+18      Elmhurst Bluejays  2026-11-18           #21         Talen Pearson   
+19      Elmhurst Bluejays  2026-11-18            #1    Dominic Trelenberg   
+20      Elmhurst Bluejays  2026-11-18           #15  Vinnie Adjahoungbeta   
+21      Elmhurst Bluejays  2026-11-18           #40           Aidyn Boone   
+22      Elmhurst Bluejays  2026-11-18           #10         Chris Ketchum   
+23      Elmhurst Bluejays  2026-11-18            #4           EJ Marshall   
+24      Elmhurst Bluejays  2026-11-18            #2            Luke Smith   
+25      Elmhurst Bluejays  2026-11-18           #20           Andy Colvin   
+26   Hope Flying Dutchmen  2026-11-24            #1         Avery Sanchez   
+27   Hope Flying Dutchmen  2026-11-24            #2       Brendan Cargill   
+28   Hope Flying Dutchmen  2026-11-24            #3        Tucker Walther   
+29   Hope Flying Dutchmen  2026-11-24           #13            Orion Yant   
+30   Hope Flying Dutchmen  2026-11-24           #44           Kyle Blauch   
+31   Hope Flying Dutchmen  2026-11-24           #33          Sean Wesolek   
+32   Hope Flying Dutchmen  2026-11-24           #11         Carter Bishop   
+33   Hope Flying Dutchmen  2026-11-24            #0          Brady Miller   
+34   Hope Flying Dutchmen  2026-11-24           #12             Jared Ryg   
+
+   position height   weight class_year     role  \
+0         G   6'0"  170 lbs         SR  Starter   
+1         G   6'2"  175 lbs         JR  Starter   
+2         G   6'2"     None         FR  Starter   
+3         G   6'5"  205 lbs         JR  Starter   
+4         F   6'7"     None         SO  Starter   
+5         G   6'4"  185 lbs         SR    Bench   
+6       G/F   6'3"  200 lbs         JR    Bench   
+7         F   6'7"  215 lbs         SO    Bench   
+8         G   6'0"  140 lbs         SR  Starter   
+9         G   6'3"     None         SO  Starter   
+10        G   6'5"     None         JR  Starter   
+11        F   6'7"     None         JR  Starter   
+12        F   6'6"     None         JR  Starter   
+13        G   6'1"     None         JR    Bench   
+14        G  5'10"     None         SO    Bench   
+15        F   6'7"  195 lbs         SR    Bench   
+16        G   6'2"     None         SO    Bench   
+17        G   6'2"  190 lbs         JR  Starter   
+18        G   6'5"  185 lbs         JR  Starter   
+19        F   6'5"  205 lbs         GR  Starter   
+20        F   6'5"  215 lbs         JR  Starter   
+21        F   6'5"  245 lbs         SR  Starter   
+22        G   6'5"  205 lbs         JR    Bench   
+23        G   6'0"  180 lbs         SR    Bench   
+24        G   6'0"  185 lbs         SO    Bench   
+25        F   6'8"  200 lbs         SO    Bench   
+26        G   6'1"  184 lbs         SO  Starter   
+27        G  5'10"  180 lbs         SO  Starter   
+28      G/F   6'4"  185 lbs         SO  Starter   
+29        F   6'6"  210 lbs         JR  Starter   
+30        F   6'7"  270 lbs         JR  Starter   
+31      F/C   6'6"  230 lbs         SO    Bench   
+32        G   6'3"  190 lbs         JR    Bench   
+33        G   6'3"  180 lbs         JR    Bench   
+34        G  5'10"  185 lbs         JR    Bench   
+
+                                                                                                    player_notes  \
+0               PG - pushes tempo in transition | Driver/shooter, cuts really hard | Disruptive on ball defender   
+1                    Shooter! (213 of 254 shot attempts were 3's) | C & S 3's with range | Doesn't like pressure   
+2                                            Driver/Shooter | Looking to score in transition | Prefers RHD drive   
+3            LH Driver/Shooter | Seeks contact on most finishes (6 FT's per game) | Loves to spin back on drives   
+4                                                  Driver/Shooter | Likes to slash to basket | Crashes O-Boards!   
+5                                                                  Shooter!! | C&S 3's | Hunts 3's in transition   
+6                                                                               Driver/Cutter | Crashes O-Boards   
+7                                                                    5 man | Screener & ball mover | Non-shooter   
+8              Shooter/Driver | Seeks contact on drives and jump shots | Pump fakes & jab steps before he drives   
+9                                                                        Driver | Looking to score in transition   
+10                                                                           Shooter (38% last season) | C&S 3's   
+11                                                      C&S 3's, quick release | Screener/Cutter | LS/RH in post   
+12                                                                                  Pick and pop 5 man | C&S 3's   
+13                                                                 Driver/Shooter | Likes to reject ball screens   
+14                                                                                                Driver/Shooter   
+15                                                                              Shooter/Driver | Hunts the C&S 3   
+16                                                            Shooter | Leading scorer in last game (4 made 3's)   
+17                                   PG, looking to push in transition | Shooter/Driver | Will pull up on drives   
+18                                                              Shooter/Driver | Moves the ball/looks for others   
+19    LH 3 level scorer, likes to post | Straight line drives, prefers LHD. | Loves to curl off screens & finish   
+20                  3 level scorer (Shoots, drives, & posts) | RH but prefers LHD | Rebounds very hard (10/game)   
+21           Shooter/Driver | Hunts Pick & Pop or Ghost screen 3's | Likes to slip screens to the rim/LS in post   
+22                                                          Driver/Cutter | Good athlete and offensive rebounder   
+23                                                                                       Drive 1st | Prefers RHD   
+24                                                                       Ball handler | Shooter/Driver | C&S 3's   
+25                                                             Scores on drop-offs | Offensive rebounding threat   
+26                                                                   Shooter/Driver | Likes to pull up on drives   
+27            LH Driver/Shooter | Hunts 3's in transition | Likes to spin, pump fake, draw contact (8 FT's/game)   
+28                                                             Driver/Shooter | Runs the wing hard in transition   
+29                                             Driver, likes to spin | LS/RH in post | Great offensive rebounder   
+30  Posts hard after ball screens (Non shooter) | Prefers LS in post | Uses size to wedge for offensive rebounds   
+31                                                                                     C & S 3's | LS/RH in post   
+32                                                                                Driver/Shooter | Active Cutter   
+33                                                                                    Driver/Shooter | C & S 3's   
+34                                                                            Driver/Shooter | Pressure Defender   
+
+                                                                                     keys_to_defending  \
+0                             Stop him early in transition | No back cuts!!! | Protect ball around him   
+1                                            LOCK & TRAIL!!! | OVER EVERYTHING!!! | Pressure & Disrupt   
+2                                         Anticipate RHD | Keep out of the paint!! | Contest all shots   
+3              Show hands/don't foul on drives!! | Heavy gap presence 1 pass away | Multiple Efforts!!   
+4                                                                  Box Out!! | No SLD! | No rhythm C&S   
+5                                                           NO C&S 3's!!! | Locate early in transition   
+6                                                          Box Out | Keep him in front | Be a Helper!!   
+7                                                                             Be a Helper!!! | Box out   
+8                    NO C&S 3's! | Wall up and force him to finish OVER us | Stay down v. shot fakes!!   
+9                                      Pick up early in transition | Keep him in front | Be a Helper!!   
+10                                                           No C&S 3's | Make him put it on the floor   
+11                                           No C&S 3s!! (stunt v. pick & pop) | NLS in post | Box Out   
+12                                    No C&S 3s!! (stunt v. pick & pop) | No 1-pass away 3's | Box Out   
+13                                                         Keep him in front. No rejects! | No C&S 3's   
+14                                                               Stop early in transition | No C&S 3's   
+15                                                                 No C&S 3's | Stunt the pick and pop   
+16                                                                                          No C&S 3's   
+17                               Get him STOPPED in Transition | No C & S 3's | Keep out of the paint!   
+18                                                                Closeout with high hand | No C&S 3's   
+19  Anticipate quick 1st step (LHD) | Be physical & fight over screens (CHASE v. Handoffs) | Box Out!!   
+20                                                            No C&S 3's | Anticipate LHD | BOX OUT!!!   
+21                                    Expect pops after screens on & off ball | No C&S 3's!! | Box Out   
+22                                                                   MUST BOX OUT!! | See ball and man   
+23                                                          Anticipate RHD | Cut him off in transition   
+24                                No Rhythm C&S 3's | Force tough finishes | Attack him off the bounce   
+25                                                                    Must box out | Attack him inside   
+26                                                         No C & S 3's | Anticipate pull up on drives   
+27                           STAY DOWN! | Anticipate spin w/ gap presence | Locate early in transition   
+28                                                               Anticipate Drive | Stop in transition   
+29                                 Win the closeout and anticipate spin | NLS in post | MUST BOX OUT!!   
+30                                     NLS | Physical BOX OUTS! | Recover high side after ball screens   
+31                                                                                  No C & S 3's | NLS   
+32                                                    Win the closeout | See ball and man at all times   
+33                                                                    No C & S 3's | Contain the drive   
+34                                                                 Contain the drive | Can be a helper   
+
+    has_scouting_report  
+0                  True  
+1                  True  
+2                  True  
+3                  True  
+4                  True  
+5                  True  
+6                  True  
+7                  True  
+8                  True  
+9                  True  
+10                 True  
+11                 True  
+12                 True  
+13                 True  
+14                 True  
+15                 True  
+16                 True  
+17                 True  
+18                 True  
+19                 True  
+20                 True  
+21                 True  
+22                 True  
+23                 True  
+24                 True  
+25                 True  
+26                 True  
+27                 True  
+28                 True  
+29                 True  
+30                 True  
+31                 True  
+32                 True  
+33                 True  
+34                 True  
+
+===== cell 26 10_extract_uw_whitewater_offensive_and =====
+                 opponent                                    category  \
+0   Carroll (WI) Pioneers                          Game Plan Overview   
+1   Carroll (WI) Pioneers                          Game Plan Overview   
+2   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+3   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+4   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+5   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+6   Carroll (WI) Pioneers  Offensive Game Plan (vs. Opponent Defense)   
+7   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+8   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+9   Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+10  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+11  Carroll (WI) Pioneers  Defensive Game Plan (vs. Opponent Offense)   
+12        Ripon Red Hawks                          Game Plan Overview   
+13        Ripon Red Hawks                          Game Plan Overview   
+14        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+15        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+16        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+17        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+18        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+19        Ripon Red Hawks  Offensive Game Plan (vs. Opponent Defense)   
+20        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+21        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+22        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+23        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+24        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+25        Ripon Red Hawks  Defensive Game Plan (vs. Opponent Offense)   
+26      Elmhurst Bluejays                          Game Plan Overview   
+27      Elmhurst Bluejays                          Game Plan Overview   
+28      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+29      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+30      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+31      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+32      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+33      Elmhurst Bluejays  Offensive Game Plan (vs. Opponent Defense)   
+34      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+35      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+36      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+37      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+38      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+39      Elmhurst Bluejays  Defensive Game Plan (vs. Opponent Offense)   
+40   Hope Flying Dutchmen                          Game Plan Overview   
+41   Hope Flying Dutchmen                          Game Plan Overview   
+42   Hope Flying Dutchmen  Offensive Game Plan (vs. Opponent Defense)   
+43   Hope Flying Dutchmen  Offensive Game Plan (vs. Opponent Defense)   
+44   Hope Flying Dutchmen  Offensive Game Plan (vs. Opponent Defense)   
+45   Hope Flying Dutchmen  Offensive Game Plan (vs. Opponent Defense)   
+46   Hope Flying Dutchmen  Offensive Game Plan (vs. Opponent Defense)   
+47   Hope Flying Dutchmen  Offensive Game Plan (vs. Opponent Defense)   
+48   Hope Flying Dutchmen  Defensive Game Plan (vs. Opponent Offense)   
+49   Hope Flying Dutchmen  Defensive Game Plan (vs. Opponent Offense)   
+50   Hope Flying Dutchmen  Defensive Game Plan (vs. Opponent Offense)   
+51   Hope Flying Dutchmen  Defensive Game Plan (vs. Opponent Offense)   
+52   Hope Flying Dutchmen  Defensive Game Plan (vs. Opponent Offense)   
+53   Hope Flying Dutchmen  Defensive Game Plan (vs. Opponent Offense)   
+
+                              topic  \
+0                   KEYS TO VICTORY   
+1                    TEAM STRENGTHS   
+2          Overall Defensive Scheme   
+3         Ball Screen & DHO Defense   
+4       Ball Screen Actions & Reads   
+5        Speciality Defensive Notes   
+6   Potential Adjustments (Defense)   
+7            Defending Their Action   
+8   Ball Screen Actions & Personnel   
+9           Ball Screen Coverage(s)   
+10  Potential Adjustments (Offense)   
+11                      ELOB & SLOB   
+12                  KEYS TO VICTORY   
+13                   TEAM STRENGTHS   
+14      Attacking their man defense   
+15         Overall Defensive Scheme   
+16        Ball Screen & DHO Defense   
+17      Ball Screen Actions & Reads   
+18       Speciality Defensive Notes   
+19  Potential Adjustments (Defense)   
+20         Overall OFFENSIVE SCHEME   
+21           Defending Their Action   
+22          Ball Screen Coverage(s)   
+23  Ball Screen Actions & Personnel   
+24  Potential Adjustments (Offense)   
+25                      ELOB & SLOB   
+26                  KEYS TO VICTORY   
+27                   TEAM STRENGTHS   
+28      Attacking their man defense   
+29         Overall Defensive Scheme   
+30        Ball Screen & DHO Defense   
+31      Ball Screen Actions & Reads   
+32       Speciality Defensive Notes   
+33  Potential Adjustments (Defense)   
+34         Overall OFFENSIVE SCHEME   
+35           Defending Their Action   
+36  Ball Screen Actions & Personnel   
+37          Ball Screen Coverage(s)   
+38  Potential Adjustments (Offense)   
+39                      ELOB & SLOB   
+40                  KEYS TO VICTORY   
+41                   TEAM STRENGTHS   
+42      Attacking their man defense   
+43         Overall Defensive Scheme   
+44        Ball Screen & DHO Defense   
+45      Ball Screen Actions & Reads   
+46       Speciality Defensive Notes   
+47  Potential Adjustments (Defense)   
+48         Overall OFFENSIVE SCHEME   
+49           Defending Their Action   
+50  Ball Screen Actions & Personnel   
+51          Ball Screen Coverage(s)   
+52                      ELOB & SLOB   
+53  Potential Adjustments (Offense)   
+
+                                                                                                                                                    notes  \
+0                                        1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. DOMINATE THE PAINT OFFENSIVELY!!   
+1   1. Transition/Fast paced offense (quick ball movement & cutting) | 2. Main scorer #4 capable of carrying offense (22 ppg) | 3. Quick & aggressive ...   
+2   M2M Defense | Full/Deep help in Gaps | Protecting the basket first | Struggle to closeout & rotate after gap help | Full court 2 man press | Looki...   
+3            FH-Will switch when guard is late to recover | Will switch 1-4 | DHO vs shooter-Guard chases over. Big FH | DHO vs Driver- Open & go through   
+4                                                                                         Attack the big | Reject the screen! | Hit the pop or short roll   
+5                                                                                                           2 Man Press (want to push up sideline & trap)   
+6                                                                                                                                                           
+7   TRANSITION DEFENSE!!! | Contain & turn the ball handler early | No Back cuts! | Keep them off the FT Line = Wall up and Stay Down | SQUEEZE #4 ON ...   
+8                   DHO's & ball screens after entry to 5 man at high post | Like to Ghost ball screens | 5 setting drag screens & step ups in transition   
+9                                                                                                                   14X-Strong (Hard Hedge) | No splits!!   
+10                                                                                                                                            15X / Blitz   
+11                                                                                                                              Staggered screens for #12   
+12                                    1. REBOUNDING & TRANSITION DEFENSE | 2. COMMUNICATION ON SCREENING ACTION! | 3. EARLY BALL MOVEMENT & PAINT TOUCHES   
+13               Motion offense with good ball movement & cutting | 2.Aggressive gap and help defense with active hands | 3.Mixing ball screens and DHO's   
+14  REBOUNDS = RUN!!! | Hunt for paint touches | Drive & kick 3's available vs Gap help | Don't drive through the help ( Kick it out! ) | Attack the H...   
+15  M2M Gap Defense | Heavy Gap Help | Active with hands in gaps=steals | Give help deep around FT line or lower | Fight over & chase vs screens off t...   
+16                      Hard Hedge vs Ball Screens | Slower posts more of a quick show | Switch certain match ups | Chase & trail or slide under vs DHO's   
+17                                                                                   Roll man available vs HH | Attack #34 when he shows | Attack in DHOs   
+18                                                                                                               Used a 3-2 zone some last couple seasons   
+19                                                                                                                                                          
+20  Motion Offense | Pin downs, flares, baseline screens | Early Staggered screens (will Swirl) | Heavy Ball Screen & DHO usage. | 3 Side Action. 1st ...   
+21  Transition Defense | SPRINT - TURN - TALK!! | Ball Pressure & Trace = Deflections!! | No Baseline drives or Rejects | See ball & man at all times ...   
+22                                                                                   13X-Strong | No rejects | Good tags on #35 | ACTIVE HANDS BY GUARDS!   
+23  Use a lot of ball screens | Will set screens toward the middle and side line | Often start possessions with a butt screen or drag ball screen | DH...   
+24                                                                                                                                              14X | 15X   
+25                                                                  They run our BLOB out of a Diamond formation | SLOB is into a double high ball screen   
+26                               WIN THE GLASS & TURNOVER BATTLES! | BE STRONG & PHYSICAL V. THEIR PRESSURE | GUARD YOUR YARD - WIN THE 1V1'S DEFENSIVELY   
+27  1. Great offensive rebounding team (12 per game) | 2. All starters with perimeter skills & shooting ability (37% 3 pt) | 3. Physical & Aggressive ...   
+28  Handle Pressure/Don't settle for quick shots early | Physical Cutting & Come off Tight | ATTACK THE PAINT!!! | Guards-Test them v. ball screens | ...   
+29  M2M Defense | Active hands & physical pressure on the ball | Help or show in Gaps | Physical fighting through screens | Take the clearest path to ...   
+30                                                     Ball screen Defense | Switch 1-5 | Have hard hedged with the 5 | Guards are aggressive v. Handoffs   
+31                                     Bigs- Strong/physical ball screens | Look for slips | Throw backs and post entries | Ball screen rejects available   
+32                                                                                                                                                          
+33                                                                                                                                         ZONA & GOLD!!!   
+34  Look to push in transition | 5 out offense (usually starts with a set play) | 8-10 set plays they run consistently | 5 man is trigger to start off...   
+35  SPRINT BACK & STOP THE BALL!!! | Guard Your Yard | WIN closeouts at all positions | Stay down on shot fakes | Anticipate pop after all screens | T...   
+36                                Wing ball screens | Bigs Pop after most ball screens | Guards looking to attack & throwback to screener | Ghost screens   
+37                                                                                                                                                    15X   
+38                                                                                            14X-Strong | Aggressive tags v. pick and pop | "12" (1-2-2)   
+39                                                                                             1-4 high alignment w/ curls, slips, handoffs for inbounder   
+40                                             1. Guard Your Yard 1 on 1 | 2. Elite communication on defense | 3. Win the rebounding & free throw battles   
+41   1. Putting constant pressure on the paint offensively | 2. Disciplined defense holding opponents to 36% FG | 3. Offensive rebounding & drawing fouls   
+42  STOPS TO TRANSITION!! | Attack the Paint (Play off 2 Feet)! | Seek advantages in ball screens | Kick out 3's available | POST TOUCHES | Drive to P...   
+43  M2M | Off ball = in gaps and protecting basket first | Switching handoffs & G to G actions | On ball focus=Containing 1 on 1 | Help in the paint (...   
+44  vs Ball screens: FH (#44 will drop) | Guard will go over or under screener | Guards struggle to fight over ball screens | switch when they get stu...   
+45                                                                        Attack the Big vs Ball screens | Screen/Rescreens Available | Look for Rejects!   
+46                                                                                            Have shown a few possessions of man press and a 1-2-2 press   
+47                                                                                                                                           Zone offense   
+48  4 out 1 in or 5 out dribble drive motion | constantly attacking off the dribble | lots of blur cuts and DHO's | Look to get it inside when #44 is ...   
+49  Contain 1 on 1 without fouling! | 2 hand wall ups vs finishes | Off your man and in the GAPS | NO BASELINE | Heavy help off non-shooters | Communi...   
+50                                                 Some possessions start with a high ball screen | DHO continuity similar to our ZONA | DHO to rescreens   
+51                                                                                                                                               14X Easy   
+52                                                                                                                      4 in a stack line - curls & slips   
+53                                                                                                                                                    15X   
+
+   report_date  
+0   2026-11-07  
+1   2026-11-07  
+2   2026-11-07  
+3   2026-11-07  
+4   2026-11-07  
+5   2026-11-07  
+6   2026-11-07  
+7   2026-11-07  
+8   2026-11-07  
+9   2026-11-07  
+10  2026-11-07  
+11  2026-11-07  
+12  2026-11-14  
+13  2026-11-14  
+14  2026-11-14  
+15  2026-11-14  
+16  2026-11-14  
+17  2026-11-14  
+18  2026-11-14  
+19  2026-11-14  
+20  2026-11-14  
+21  2026-11-14  
+22  2026-11-14  
+23  2026-11-14  
+24  2026-11-14  
+25  2026-11-14  
+26  2026-11-18  
+27  2026-11-18  
+28  2026-11-18  
+29  2026-11-18  
+30  2026-11-18  
+31  2026-11-18  
+32  2026-11-18  
+33  2026-11-18  
+34  2026-11-18  
+35  2026-11-18  
+36  2026-11-18  
+37  2026-11-18  
+38  2026-11-18  
+39  2026-11-18  
+40  2026-11-24  
+41  2026-11-24  
+42  2026-11-24  
+43  2026-11-24  
+44  2026-11-24  
+45  2026-11-24  
+46  2026-11-24  
+47  2026-11-24  
+48  2026-11-24  
+49  2026-11-24  
+50  2026-11-24  
+51  2026-11-24  
+52  2026-11-24  
+53  2026-11-24  
+
+===== cell 28  =====
+Team efficiency narrative (ORtg/DRtg/Pace/FASTINTELLIGENCE) is not captured in the PDF export -- it's a
+UI-only panel that isn't part of the printable ScoutBuilder report, and is no longer available now that
+scouting reports are sourced exclusively from PDFs.
+
+===== cell 30 11_cross_reference_each_scouted_opponent =====
+                opponent         date location outcome opp_season_avg_ppg  \
+0  Carroll (WI) Pioneers   Sat, Nov 7     Away       W               None   
+1        Ripon Red Hawks  Sat, Nov 14     Home       W               None   
+2      Elmhurst Bluejays  Wed, Nov 18     Away       L               None   
+3   Hope Flying Dutchmen  Tue, Nov 24     Home    None               None   
+
+   opp_actual_ppg opp_ppg_vs_average  uww_points opp_season_avg_ppg_allowed  \
+0            74.0               None        78.0                       None   
+1            70.0               None        73.0                       None   
+2            73.0               None        65.0                       None   
+3             NaN               None         NaN                       None   
+
+  uww_ppg_vs_opp_avg_allowed  point_margin  
+0                       None           4.0  
+1                       None           3.0  
+2                       None          -8.0  
+3                       None           NaN  
+
+(opp_season_avg_ppg / opp_ppg_vs_average / opp_season_avg_ppg_allowed / uww_ppg_vs_opp_avg_allowed are always blank now -- team/player statistics from the scouting report are no longer used; see the blanking earlier in this cell.)
+
+Carroll (WI) Pioneers (Sat, Nov 7, Away): UWW 78.0 - Carroll (WI) Pioneers 74.0 (W, margin +4)
+  Pre-game keys to victory: 1. TRANSITION DEFENSE!!! | 2. SQUEEZE & LIMIT #4 (Guard 1 on 1 + Gap Help) | 3. DOMINATE THE PAINT OFFENSIVELY!!
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Ripon Red Hawks (Sat, Nov 14, Home): UWW 73.0 - Ripon Red Hawks 70.0 (W, margin +3)
+  Pre-game keys to victory: 1. REBOUNDING & TRANSITION DEFENSE | 2. COMMUNICATION ON SCREENING ACTION! | 3. EARLY BALL MOVEMENT & PAINT TOUCHES
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Elmhurst Bluejays (Wed, Nov 18, Away): UWW 65.0 - Elmhurst Bluejays 73.0 (L, margin -8)
+  Pre-game keys to victory: WIN THE GLASS & TURNOVER BATTLES! | BE STRONG & PHYSICAL V. THEIR PRESSURE | GUARD YOUR YARD - WIN THE 1V1'S DEFENSIVELY
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+Hope Flying Dutchmen (Tue, Nov 24, Home): UWW nan - Hope Flying Dutchmen nan (None, margin n/a)
+  Pre-game keys to victory: 1. Guard Your Yard 1 on 1 | 2. Elite communication on defense | 3. Win the rebounding & free throw battles
+  No season-average PPG available for comparison (scouting-report statistics are not used).
+  No season-average points-allowed figure available for comparison (scouting-report statistics are not used).
+
+===== cell 32 12_win_loss_splits_by_keys_to_victory =====
+Per-game 'Keys to Victory' categories detected WITH SIDE ATTRIBUTION:
+  UWW = what Whitewater does proactively (attack, score, rebound, share)
+  OPP = what Whitewater does to contain the opponent (guard, force TOs, limit, pressure)
+                opponent outcome                           category side
+0  Carroll (WI) Pioneers       W  Perimeter Defense / Ball Pressure  OPP
+1  Carroll (WI) Pioneers       W                     Scoring Inside  UWW
+2        Ripon Red Hawks       W            Ball Movement / Assists  UWW
+3        Ripon Red Hawks       W                         Rebounding  UWW
+4      Elmhurst Bluejays       L          Ball Security / Turnovers  UWW
+5      Elmhurst Bluejays       L  Perimeter Defense / Ball Pressure  OPP
+6      Elmhurst Bluejays       L                         Rebounding  UWW
+7   Hope Flying Dutchmen    None                        Free Throws  UWW
+8   Hope Flying Dutchmen    None  Perimeter Defense / Ball Pressure  OPP
+9   Hope Flying Dutchmen    None                         Rebounding  UWW
+
+Win/loss splits by category + side (UWW vs OPP emphasis):
+             display_label side                           category  games  \
+0      UWW: Share the Ball  UWW            Ball Movement / Assists      1   
+1    UWW: Protect the Ball  UWW          Ball Security / Turnovers      1   
+2  UWW: Get to the FT Line  UWW                        Free Throws      0   
+3     OPP: On-Ball Defense  OPP  Perimeter Defense / Ball Pressure      2   
+4    UWW: Crash the Boards  UWW                         Rebounding      2   
+5    UWW: Attack the Paint  UWW                     Scoring Inside      1   
+
+   wins  losses  win_pct  
+0     1       0      1.0  
+1     0       1      0.0  
+2     0       0      NaN  
+3     1       1      0.5  
+4     1       1      0.5  
+5     1       0      1.0  
+
+===== cell 34 13_keys_to_victory_category_reference =====
+                             category         stat_cols                                                        example_phrases                                                             why_chosen
+0           Ball Security / Turnovers                TO  ball security, turnover, protect/take care of the ball, limit turn...  Directly named -- "ball security"/"turnovers" have a 1:1 stat colu...
+1                          Rebounding     REB, ORB, DRB  own the paint, bully/dominate the glass, rebound, board, second ch...  "Glass"/"board"/"crash"/"own the paint" possession language in thi...
+2                Three-Point Shooting        3PM-A, 3P%  three, 3 pt, 3pt, perimeter shooting, spacing, shooting ability, s...  Direct stat match for perimeter shot volume/efficiency. Expanded w...
+3                         Free Throws        FTM-A, FT%                                     free throw, ft line, getting to ft  Direct stat match. Added "ft line" / "getting to ft" from Aurora (...
+4                  Fouls / Discipline                PF                                           foul, wall up, drawing fouls  Direct stat match for foul-discipline emphasis. Added "wall up" (A...
+5             Ball Movement / Assists               AST   assist, ball movement, share the ball, playmaking, playmaker, create  Direct stat match for offensive ball-sharing emphasis. Added "play...
+6           Paint Protection / Blocks               BLK                               block, protect the rim, paint protection                 Direct stat match for interior shot-blocking emphasis.
+7   Perimeter Defense / Ball Pressure               STL  steal, press capable, full court press, force turnovers, force to'...  Renamed from "Ball Pressure / Steals" once Aurora/Eureka/Elmhurst ...
+8                      Scoring Inside  FG2M, FG2A, FG2%  dominate the paint, attack the paint, live in the paint, attack th...  Interior-scoring emphasis -- uses derived 2PT FG stats (FGM-FG3M, ...
+9               Field Goal Efficiency        FGM-A, FG%                                                    limit their scoring  Overall shooting efficiency emphasis -- used when the scouting not...
+10           (intentionally unmapped)                 -  communication screening action / communicate screens & actions (Ri...  No corresponding stat exists in a season box score for screen-navi...
+
+===== cell 36 14_build_per_player_scouting_profiles =====
+Adding 15 box-score-only player(s) with no scouting writeup (defaulted to role=Bench):
+                 opponent jersey_number              name
+5   Carroll (WI) Pioneers           #22  Andrew Hollerich
+6   Carroll (WI) Pioneers           #10        Cai Joseph
+7   Carroll (WI) Pioneers           #11       Evan Oleson
+8   Carroll (WI) Pioneers           #24      Cale Buboltz
+9   Carroll (WI) Pioneers           #15   Hayden Stebbins
+10  Carroll (WI) Pioneers           #35     Matt Leonhard
+11  Carroll (WI) Pioneers           #30    Auggie Hoffman
+15        Ripon Red Hawks            #5  Christian Wilson
+19        Ripon Red Hawks           #20       Anton Kilde
+21        Ripon Red Hawks           #12  Domanic Rasberry
+29      Elmhurst Bluejays            #3        DJ Jervier
+34      Elmhurst Bluejays           #23       Cooper Hasz
+43   Hope Flying Dutchmen           #32  Jacob Van Hekken
+44   Hope Flying Dutchmen           #20        Kaden Grau
+46   Hope Flying Dutchmen           #10     Justin Fisher
+Scouting-report player statistics are disabled by design (PDF reports are last-season data) -- player_profiles stat columns start blank and are only filled in by the PBP-derived override further down this notebook, from real current-season games.
+                 opponent jersey_number                  name     role  \
+0   Carroll (WI) Pioneers           #33         Dennis Estepp  Starter   
+1   Carroll (WI) Pioneers           #12        Peyton McKenna  Starter   
+2   Carroll (WI) Pioneers           #34          Cahlil Jones  Starter   
+3   Carroll (WI) Pioneers            #4        Michael McNabb  Starter   
+4   Carroll (WI) Pioneers           #25   Logan Steffensmeier  Starter   
+5   Carroll (WI) Pioneers            #3          Lucas Parker    Bench   
+6   Carroll (WI) Pioneers           #23          Jimmy Tarjan    Bench   
+7   Carroll (WI) Pioneers           #42       Greg Smith, Jr.    Bench   
+8         Ripon Red Hawks           #30          Seth Bunders  Starter   
+9         Ripon Red Hawks            #0         Jose Gonzales  Starter   
+10        Ripon Red Hawks            #3           Keenan Rahn  Starter   
+11        Ripon Red Hawks           #35         Michael Asman  Starter   
+12        Ripon Red Hawks           #34       Jackson Flowers  Starter   
+13        Ripon Red Hawks           #11             Sam Leoni    Bench   
+14        Ripon Red Hawks            #2            Landon Lee    Bench   
+15        Ripon Red Hawks           #42            Jack Field    Bench   
+16        Ripon Red Hawks            #4             Joey Daun    Bench   
+17      Elmhurst Bluejays            #0           Jack Cherry  Starter   
+18      Elmhurst Bluejays           #21         Talen Pearson  Starter   
+19      Elmhurst Bluejays            #1    Dominic Trelenberg  Starter   
+20      Elmhurst Bluejays           #15  Vinnie Adjahoungbeta  Starter   
+21      Elmhurst Bluejays           #40           Aidyn Boone  Starter   
+22      Elmhurst Bluejays           #10         Chris Ketchum    Bench   
+23      Elmhurst Bluejays            #4           EJ Marshall    Bench   
+24      Elmhurst Bluejays            #2            Luke Smith    Bench   
+25      Elmhurst Bluejays           #20           Andy Colvin    Bench   
+26   Hope Flying Dutchmen            #1         Avery Sanchez  Starter   
+27   Hope Flying Dutchmen            #2       Brendan Cargill  Starter   
+28   Hope Flying Dutchmen            #3        Tucker Walther  Starter   
+29   Hope Flying Dutchmen           #13            Orion Yant  Starter   
+30   Hope Flying Dutchmen           #44           Kyle Blauch  Starter   
+31   Hope Flying Dutchmen           #33          Sean Wesolek    Bench   
+32   Hope Flying Dutchmen           #11         Carter Bishop    Bench   
+33   Hope Flying Dutchmen            #0          Brady Miller    Bench   
+34   Hope Flying Dutchmen           #12             Jared Ryg    Bench   
+35  Carroll (WI) Pioneers           #22      Andrew Hollerich    Bench   
+36  Carroll (WI) Pioneers           #10            Cai Joseph    Bench   
+37  Carroll (WI) Pioneers           #11           Evan Oleson    Bench   
+38  Carroll (WI) Pioneers           #24          Cale Buboltz    Bench   
+39  Carroll (WI) Pioneers           #15       Hayden Stebbins    Bench   
+40  Carroll (WI) Pioneers           #35         Matt Leonhard    Bench   
+41  Carroll (WI) Pioneers           #30        Auggie Hoffman    Bench   
+42        Ripon Red Hawks            #5      Christian Wilson    Bench   
+43        Ripon Red Hawks           #20           Anton Kilde    Bench   
+44        Ripon Red Hawks           #12      Domanic Rasberry    Bench   
+45      Elmhurst Bluejays            #3            DJ Jervier    Bench   
+46      Elmhurst Bluejays           #23           Cooper Hasz    Bench   
+47   Hope Flying Dutchmen           #32      Jacob Van Hekken    Bench   
+48   Hope Flying Dutchmen           #20            Kaden Grau    Bench   
+49   Hope Flying Dutchmen           #10         Justin Fisher    Bench   
+
+                                             notes_tags_display  \
+0                           slasher_driver, three_point_shooter   
+1                          catch_and_shoot, three_point_shooter   
+2                           slasher_driver, three_point_shooter   
+3                           slasher_driver, three_point_shooter   
+4                rebounder, slasher_driver, three_point_shooter   
+5                          catch_and_shoot, three_point_shooter   
+6                                     rebounder, slasher_driver   
+7                                                     playmaker   
+8                           slasher_driver, three_point_shooter   
+9                                                slasher_driver   
+10                         catch_and_shoot, three_point_shooter   
+11            catch_and_shoot, post_scorer, three_point_shooter   
+12                         catch_and_shoot, three_point_shooter   
+13                          slasher_driver, three_point_shooter   
+14                          slasher_driver, three_point_shooter   
+15         catch_and_shoot, slasher_driver, three_point_shooter   
+16                                          three_point_shooter   
+17         pull_up_shooter, slasher_driver, three_point_shooter   
+18                          slasher_driver, three_point_shooter   
+19                          cutter, post_scorer, slasher_driver   
+20  post_scorer, rebounder, slasher_driver, three_point_shooter   
+21             post_scorer, slasher_driver, three_point_shooter   
+22                                    rebounder, slasher_driver   
+23                                               slasher_driver   
+24         catch_and_shoot, slasher_driver, three_point_shooter   
+25                                                    rebounder   
+26         pull_up_shooter, slasher_driver, three_point_shooter   
+27                          slasher_driver, three_point_shooter   
+28                          slasher_driver, three_point_shooter   
+29                       post_scorer, rebounder, slasher_driver   
+30                                       post_scorer, rebounder   
+31            catch_and_shoot, post_scorer, three_point_shooter   
+32                          slasher_driver, three_point_shooter   
+33         catch_and_shoot, slasher_driver, three_point_shooter   
+34                          slasher_driver, three_point_shooter   
+35                                                                
+36                                                                
+37                                                                
+38                                                                
+39                                                                
+40                                                                
+41                                                                
+42                                                                
+43                                                                
+44                                                                
+45                                                                
+46                                                                
+47                                                                
+48                                                                
+49                                                                
+
+                                                                                  keys_tags_display  \
+0                                                                     deny_cuts, transition_defense   
+1                                                                                  pressure_disrupt   
+2                                                                    anticipate_move, keep_in_front   
+3                                                                                      help_defense   
+4                                                            box_out_priority, deny_catch_and_shoot   
+5                                                          deny_catch_and_shoot, transition_defense   
+6                                                     box_out_priority, help_defense, keep_in_front   
+7                                                                    box_out_priority, help_defense   
+8                                                         deny_catch_and_shoot, physical_discipline   
+9                                                   help_defense, keep_in_front, transition_defense   
+10                                                                             deny_catch_and_shoot   
+11                                             box_out_priority, deny_catch_and_shoot, post_defense   
+12                                                           box_out_priority, deny_catch_and_shoot   
+13                                                              deny_catch_and_shoot, keep_in_front   
+14                                                         deny_catch_and_shoot, transition_defense   
+15                                                                             deny_catch_and_shoot   
+16                                                                             deny_catch_and_shoot   
+17                                                         deny_catch_and_shoot, transition_defense   
+18                                                                             deny_catch_and_shoot   
+19  anticipate_move, box_out_priority, deny_catch_and_shoot, physical_discipline, screen_navigation   
+20                                          anticipate_move, box_out_priority, deny_catch_and_shoot   
+21                                        box_out_priority, deny_catch_and_shoot, screen_navigation   
+22                                                                                 box_out_priority   
+23                                                              anticipate_move, transition_defense   
+24                                                                             deny_catch_and_shoot   
+25                                                                                 box_out_priority   
+26                                                            anticipate_move, deny_catch_and_shoot   
+27                           anticipate_move, help_defense, physical_discipline, transition_defense   
+28                                                              anticipate_move, transition_defense   
+29                            anticipate_move, box_out_priority, deny_catch_and_shoot, post_defense   
+30                                                                   box_out_priority, post_defense   
+31                                                               deny_catch_and_shoot, post_defense   
+32                                                                             deny_catch_and_shoot   
+33                                                                             deny_catch_and_shoot   
+34                                                                                     help_defense   
+35                                                                                                    
+36                                                                                                    
+37                                                                                                    
+38                                                                                                    
+39                                                                                                    
+40                                                                                                    
+41                                                                                                    
+42                                                                                                    
+43                                                                                                    
+44                                                                                                    
+45                                                                                                    
+46                                                                                                    
+47                                                                                                    
+48                                                                                                    
+49                                                                                                    
+
+     PTS   REB   AST   FG%   3P%  
+0   None  None  None  None  None  
+1   None  None  None  None  None  
+2   None  None  None  None  None  
+3   None  None  None  None  None  
+4   None  None  None  None  None  
+5   None  None  None  None  None  
+6   None  None  None  None  None  
+7   None  None  None  None  None  
+8   None  None  None  None  None  
+9   None  None  None  None  None  
+10  None  None  None  None  None  
+11  None  None  None  None  None  
+12  None  None  None  None  None  
+13  None  None  None  None  None  
+14  None  None  None  None  None  
+15  None  None  None  None  None  
+16  None  None  None  None  None  
+17  None  None  None  None  None  
+18  None  None  None  None  None  
+19  None  None  None  None  None  
+20  None  None  None  None  None  
+21  None  None  None  None  None  
+22  None  None  None  None  None  
+23  None  None  None  None  None  
+24  None  None  None  None  None  
+25  None  None  None  None  None  
+26  None  None  None  None  None  
+27  None  None  None  None  None  
+28  None  None  None  None  None  
+29  None  None  None  None  None  
+30  None  None  None  None  None  
+31  None  None  None  None  None  
+32  None  None  None  None  None  
+33  None  None  None  None  None  
+34  None  None  None  None  None  
+35  None  None  None  None  None  
+36  None  None  None  None  None  
+37  None  None  None  None  None  
+38  None  None  None  None  None  
+39  None  None  None  None  None  
+40  None  None  None  None  None  
+41  None  None  None  None  None  
+42  None  None  None  None  None  
+43  None  None  None  None  None  
+44  None  None  None  None  None  
+45  None  None  None  None  None  
+46  None  None  None  None  None  
+47  None  None  None  None  None  
+48  None  None  None  None  None  
+49  None  None  None  None  None  
+
+===== cell 38 15_break_out_keys_to_victory_categories_by =====
+Opponent production by role (Starter vs Bench) for the stat(s) behind each matched Keys-to-Victory category:
+Empty DataFrame
+Columns: [opponent, outcome, category, role, stat, players_with_data, avg_per_player, role_total]
+Index: []
+No count-type stats available yet to compare Starter vs Bench totals for the matched categories.
+
+===== cell 40 16_play_by_play_parsing_functions =====
+
+===== cell 42 17_classify_each_raw_play_by_play_text_string =====
+
+===== cell 44 18_turn_raw_4_column_play_by_play_table_into =====
+
+===== cell 46 19_extract_opponent_name_from_pbp_mhtml =====
+
+===== cell 48 20_identify_upcoming_opponent =====
+
+===== cell 50 21_roster_pages =====
+Roster targets this run: ['UW-Whitewater Warhawks', 'Carroll (WI) Pioneers', 'Ripon Red Hawks', 'Elmhurst Bluejays', 'Hope Flying Dutchmen']
+    [login] navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] got redirected to identity.hudl.com while waiting on https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- logging in and retrying
+    [auth-retry] login_to_fastscout returned, now at https://fastscout.fastmodelsports.com/#access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZaYjBkN0VpWG9TQ0FhUTdYaW90SCJ9.eyJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2Nvbm5lY3Rpb25fbmFtZSI6InByb2QtaHVkbC11c2Vycy10ZXJyYWZvcm0iLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL3VzZXJfaWQiOiI2NDM1MDQ3IiwiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS90b2siOiJpZCIsImh0dHBzOi8vaWRlbnRpdHkuaHVkbC5jb20vaXNfc3lzYWRtaW4iOmZhbHNlLCJodHRwczovL2lkZW50aXR5Lmh1ZGwuY29tL2ludGVybmFsX2lkX2h1ZGwiOiI2NDM1MDQ3IiwiZ2l2ZW5fbmFtZSI6IkNvcmV5IiwiZmFtaWx5X25hbWUiOiJGcml0c2NoIiwibmlja25hbWUiOiJmcml0c2NoY20yNyIsIm5hbWUiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOTY3OWI2Mzk1N2E1ZTJmZmE2NjMyYWZhYjVmMGExYTU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZmci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0yM1QwMDoyMToxNy4yNTBaIiwiZW1haWwiOiJmcml0c2NoY20yN0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5odWRsLmNvbS8iLCJhdWQiOiJ1UFJyRFVpWkZOU3d2RnJ0cnVsQ3lBWDBwaDZBckx6VSIsInN1YiI6ImF1dGgwfGh1ZGx8NjQzNTA0NyIsImlhdCI6MTc5NTM5MzI3NywiZXhwIjoxNzk2NjAyODc3LCJzaWQiOiI2SktzMFlXcTVPY0RmSjRGNUdIejllS2RyYWpaUl9vYSIsImNfaGFzaCI6IkZmVDFSR2FhM0phREVDeGwzVU8weWciLCJub25jZSI6IjI0OTU1YWUxLTQ3NWItNDIzYi05ODNkLWIxOTVkZTRkMDQ4NCJ9.KE8CYj7iFUXPOqcFpvbPcryuiw5MufxcsR1W2OXJLeoNNtiPJ9btDN7Zr-JqYTr3gCyax42Ykg4okZjnZY1WW4YJM0l-moq-fmnklQJZiR8u9stSjYMrrq3tLzH9bFk2hKEZ0TMGNg1758V-4lUWJxvBoitVAv6sJVDvkAJF2DZa585soSm3c4ElS3XXlPlE9eBZEpw5V6rGVx2Y15TIAee3_fXyDdoTmhGdlbldDm4h9dybFAxSzxE6qcuXgxlAA58Lx-FUJe4uqrJRs0NN7ezCiUgcSgg2DlDuRBqESInZzV4KEekSCC7GTUj5G_HVLfEf1Rwx5aNhLjIss7WxXQ&token_type=Bearer&expires_at=1796602877 -- re-navigating to https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26
+    [auth-retry] re-navigated, now at https://fastscout.fastmodelsports.com/teams/myTeam/analytics/dashboard?league=NCAAB-III&season=26 -- waiting for 'text=SCHEDULE'
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\frits\anaconda3\Lib\logging\__init__.py", line 1113, in emit
+    stream.write(msg + self.terminator)
+OSError: [WinError 233] No process is on the other end of the pipe
+Call stack:
+  File "C:\Users\frits\anaconda3\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\frits\anaconda3\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\frits\anaconda3\Lib\site-packages\ipykernel\parentpoller.py", line 106, in run
+    get_logger().warning("Parent appears to have exited, shutting down.")
+Message: 'Parent appears to have exited, shutting down.'
+Arguments: ()

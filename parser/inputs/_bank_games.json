@@ -21,7 +21,8 @@
   }
  },
  "_fastscout": {
-  "cFEWvQ5JSr-t2qZOF1FO-A": "6ab818207c04d5284e260158"
+  "cFEWvQ5JSr-t2qZOF1FO-A": "6ab818207c04d5284e260158",
+  "9wJIHeMUSMC4qXdofOqPuQ": "6af13923a457001dbd2ab1d6"
  },
  "6ab818207c04d5284e260158": {
   "date": "2026-11-07",
@@ -43,5 +44,26 @@
     "Brendan Cargill"
    ]
   }
+ },
+ "6af13923a457001dbd2ab1d6": {
+  "starters": {
+   "Wash(StLouis)": [
+    "Anthony Pryzbilla",
+    "Josh Kim",
+    "Lyeton Thomas-Johnson",
+    "Ryan Cohen",
+    "George Gale"
+   ],
+   "GustavusAdolphus": [
+    "Myles Barnette",
+    "Andrew Quam",
+    "Obinna Izuora",
+    "Jake Schmitt",
+    "Landon Dimler"
+   ]
+  },
+  "date": "2026-11-07",
+  "label": "Washington (St. Louis) Bears vs Gustavus Adolphus",
+  "for": ""
  }
 }
