@@ -2667,6 +2667,43 @@ def _syn_words(x):
             and w not in ("pioneers", "college", "university", "wisconsin", "warhawks", "state")}
 
 
+# CONFIRMED BUG (fixed 11/24; the 11/24 run opened Synergy Editor on "OklahomaState@Minnesota - Nov 20, 2026" for the Gustavus
+# vs Minnesota Morris game). The lookup took the FIRST game on that date where ANY word of each team's name appeared anywhere
+# in the game: "Minnesota" (from "Minnesota Morris") is in "Minnesota Golden Gophers", and "Golden" (from "Golden Gusties")
+# is in "Minnesota GOLDEN Gophers" -- so Oklahoma State @ Minnesota passed for Gustavus @ Minnesota Morris, and the cache
+# already held the right game (GustavusAdolphus@MNMorris). A match now has to put each team on ITS OWN side of the game, with
+# a good share of that team's words in that side's name (_SYN_SIDE_MIN), and the best-scoring game wins, not the first.
+_SYN_SIDE_MIN = 0.4
+
+
+def _syn_game_score(g, tw, ow):
+    """0 when this Synergy game is not team-vs-opponent; otherwise how well the two sides match (higher = better)."""
+    def _side(*names):
+        return re.sub(r"[^a-z]+", "", " ".join(str(n or "") for n in names).lower())
+    hb, ab = _side(g.get("home"), g.get("home_short")), _side(g.get("away"), g.get("away_short"))
+
+    def _frac(words, blob):
+        return (sum(w in blob for w in words) / len(words)) if words else 0.0
+    best = 0.0
+    for (a_, b_) in ((tw, ow), (ow, tw)):                       # team at home / team away
+        fa, fb = _frac(a_, hb), _frac(b_, ab)
+        if fa >= _SYN_SIDE_MIN and fb >= _SYN_SIDE_MIN:
+            best = max(best, fa + fb)
+    return best
+
+
+def _syn_best_game(games, d_, tw, ow):
+    """The id of the game on date d_ that best matches the two teams, or None."""
+    _best, _gid = 0.0, None
+    for gid, g in games.items():
+        if g.get("date") != d_:
+            continue
+        sc = _syn_game_score(g, tw, ow)
+        if sc > _best:
+            _best, _gid = sc, gid
+    return _gid
+
+
 def _syn_game_rec(g):
     ht, at = g.get("homeTeam") or {}, g.get("awayTeam") or {}
     return {"date": str(g.get("localDate") or "")[:10], "name": g.get("name"),
@@ -2784,9 +2821,7 @@ def _syn_lookup(wanted):
     out, todo = {}, []
     for t_, d_, o_ in wanted:
         tw, ow = _syn_words(t_), _syn_words(o_)
-        hit = next((gid for gid, g in cache["games"].items() if g.get("date") == d_
-                    and any(w in re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}".lower()) for w in ow)
-                    and any(w in re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}".lower()) for w in tw)), None)
+        hit = _syn_best_game(cache["games"], d_, tw, ow)
         if hit:
             out[(t_, d_, o_)] = hit
         else:
@@ -2857,13 +2892,11 @@ def _syn_lookup(wanted):
                     print(f"  [synergy] {t_}'s {_season_lab} games page: {_games_page(tid)} game(s)", flush=True)
                 elif tid is None:
                     print(f"  [synergy] {t_}: no Synergy team found among UW-Whitewater's games", flush=True)
-            for gid, g in {**cache["games"], **new_games}.items():
-                blob = re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('home_short')} {g.get('away')} {g.get('away_short')}".lower())
-                if g.get("date") == d_ and any(w in blob for w in ow) and any(w in blob for w in tw):
-                    found[(t_, d_, o_)] = gid
-                    if not os.path.exists(os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv")):
-                        saved_lu += bool(_syn_save_lineups(gid, _syn_capture(page, _SST_BOXSCORE.format(gid=gid))))
-                    break
+            gid = _syn_best_game({**cache["games"], **new_games}, d_, tw, ow)
+            if gid:
+                found[(t_, d_, o_)] = gid
+                if not os.path.exists(os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv")):
+                    saved_lu += bool(_syn_save_lineups(gid, _syn_capture(page, _SST_BOXSCORE.format(gid=gid))))
         return found, new_games, new_teams, saved_lu
     try:
         found, ng, nt, nlu = run_in_fastscout_session(_work)
@@ -2944,8 +2977,7 @@ def _syn_export_lineups():
             continue
         ds = str(d0.date())
         if any(g.get("date") == ds and os.path.exists(os.path.join(INPUT_DIR, "_bank", f"{gid}_lineups.csv"))
-               and all(any(w in re.sub(r"[^a-z]+", "", f"{g.get('home')} {g.get('away')}".lower()) for w in _syn_words(t))
-                       for t in teams)
+               and _syn_game_score(g, _syn_words(teams[0]), _syn_words(teams[1])) > 0
                for gid, g in have.items()):
             continue                                        # (already done)
         want.append((teams[0], ds, teams[1]))

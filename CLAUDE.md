@@ -1,7 +1,7 @@
 # CLAUDE.md — handoff notes for a new chat
 
 Read this first in any new chat about the UW-Whitewater (UWW) men's basketball scouting project.
-Last updated: Nov 14, 2026. Owner: Corey. (Sections 0, 4, 7, 9 and 10 are current; section 8 is the Nov 2 history.)
+Last updated: Nov 24, 2026 (newest entries are at the bottom: 11/22-11/24). Owner: Corey. (Sections 0, 4, 7, 9 and 10 are current; section 8 is the Nov 2 history.)
 
 ---
 
@@ -2979,3 +2979,47 @@ Requested: a way to change Situation / Formation / Play Call after the coaches s
 
 ## 2026-11-23 -- CLUTCH card (beside Actions) and "Clutch situations" details section
 87: `_clutch_poss(side)` / `_clutch_counts` (built on `_clutch_tbl`, this season, tagged, no foreign-team calls) feed (1) a Clutch card in row 1 of `_off_cards` (headline = most-run named play; Plays / Actions lists; PPP and possessions) and (2) a `Clutch situations (N)` `<details class="ob-det">` right after Play call summary, per game: clip, when, play call, actions, player, result, five, with a Synergy "watch all N plays" link (editor-web playlist via `_pcs_watch` on synergy_iid) and one per game. Both sides. Offline check on the real table: UWW 28 clutch possessions, opponent 7, all with synergy ids. The details section sits inside the `if len(_sg)` block (needs the play-call summary helpers). Not seen in a real run.
+
+
+## 2026-11-24 -- KTV cards: top 3 with descriptions, no app links
+Requested. 87: BRIEF_KTV_KEYS_PER_CARD default 3; every key on a card carries its own reasoning (evidence when none); card headlines are plain text (`_ktv_key_html(k, link=False)`). App links remain only in the all-keys details table and its footer link. Not seen in a real run.
+
+
+## 2026-11-24 -- CONFIRMED BUG: the Synergy game lookup matched Oklahoma State @ Minnesota for Gustavus @ Minnesota Morris
+Log models_20261124_115513 (brief autorun): "[editor] game title on Synergy: OklahomaState@Minnesota - Nov 20, 2026" for the 11/20 Gustavus vs Minnesota Morris game. 46 `_syn_lookup` took the first game on the date where ANY word of each team name appeared anywhere in the game: "Minnesota" and "Golden" (Gustavus Adolphus **Golden** Gusties) both sit in "Minnesota Golden Gophers". The right game (GustavusAdolphus@MNMorris) was already in `_synergy_ids.json`. Now `_syn_game_score` / `_syn_best_game`: each team on its own side with >= 40% of its words in that side's name, best score wins. Offline: Morris -> GustavusAdolphus@MNMorris; UWW/Elmhurst, UWW/Ripon, Hope/North Central resolve correctly; Buena Vista (not on Synergy yet) -> None; all 600 cached games resolve to a game on their own date. The export itself never ran (Synergy Editor had no window). Not seen in a real run.
+
+
+## 2026-11-24 -- KTV cards in sentence case
+Requested. 87 `_ktv_sentence`: a card headline / description that is mostly capitals ("WIN REBOUNDING & FREE THROWS") is lower-cased with the first letter raised (short acronyms like DHO, BLOB, PPP keep theirs); mixed-case lines untouched. The card group label ("OFFENSE") is no longer upper-cased by CSS. Cards only -- the all-keys table is unchanged. Not seen in a real run.
+
+
+## 2026-11-24 -- Source column in the all-keys table
+Requested. 87: the Keys to Victory all-keys table (`pcs-ktv`) has a fourth column, Source, in the row and header (the source badge, "--" when none); the duplicate Source line inside an opened row was removed. Not seen in a real run.
+
+
+## 2026-11-24 -- related Keys to Victory merged in the brief
+Requested after the Hope brief showed 23 keys with rebounding stated four times. 87 `_ktv_merge_related` (after the Game Plan keys are appended; BRIEF_KTV_MERGE = False turns it off): by headline topic -- rebounding, paint/drives, pressure, and the "Counter with ..." + "Feature the ... combo" pair sharing 2+ players -- keeps the staff-written key as lead (else best score), takes the group's best score, appends what the others add, and lists the folded headlines under "Also covers" in the opened table row. Brief only: the app and uww_ktv_keys.csv keep every key. Not seen in a real run.
+
+
+## 2026-11-24 -- MORE FROM THE APP: app-only tables brought back as closed details
+
+**CONFIRMED CHANGE (requested: "look into all of the information that we have in the application that we weren't currently using on the scouting reports and bring it all back in. But everything new needs to be put into details sections that need to be expanded.")** `87` `_more_from_app()`, just before the footer; section "MORE FROM THE APP" is in `_SB_FIXED` (no outer expander), every block is its own closed `<details class="ob-det">`. `BRIEF_MORE_FROM_APP = False` removes it. A block is left out when its data is empty.
+Blocks: Rebounding tendencies (`uww_rebound_tendencies`, sample rows skipped) | Their lineups, best and worst (`uww_opponent_prior_games_lineup_stints`, fives with 3+ min, net per 10) | How many passes they make (`uww_pass_counts`, 4+ tracked possessions per play call) | Comparable players (`uww_player_comparisons`) | More keys from the play-by-play (`uww_pbp_derived_keys`, minus any already a key) | Their roster from their own site (`uww_opponent_web_rosters`, hometown / high school) | Our scoring runs (`uww_scoring_runs`; not in analysis briefs).
+Hope today: rebounding, lineups, comparable players, roster, our runs show. Passes is omitted (only 12 tracked possessions in the whole file); play-by-play keys are omitted (all already keys).
+NOT ported on purpose: practice plan (sample data), coach notes (empty), court heat (visual), tempo splits / opponent-adjusted efficiency / note sentiment / projected box score (computed inside the app, not in tables), raw play-by-play and tracking tables.
+Tested offline against the real CSVs; not seen in a real parser_brief run yet.
+
+
+## Session roll-up -- 11/23 into 11/24 (this chat)
+
+**Done, in order (each has its own entry above):** Gustavus @ Howard Payne court alias (`COURT_ARENA_ALIASES`, 51; the game is NCAA 6664638, 11/13) | `inputs/play_call_remap.csv` (51 rows) applied by `_pl_apply_remap` in 47, original kept in `play_call_as_tagged` | Clutch card beside Actions + "Clutch situations" details with Synergy links | KTV cards: top 3 per group with descriptions, no app links (links only in the all-keys table), sentence case, Source column | Synergy lookup fix (46 `_syn_game_score`): a game must match BOTH teams, which stopped Oklahoma State @ Minnesota being exported for Gustavus @ Minnesota Morris | related KTV keys merged (`_ktv_merge_related`, `BRIEF_KTV_MERGE`; Hope 23 keys -> 17, "Also covers" line in the table) | MORE FROM THE APP (7 closed details; `BRIEF_MORE_FROM_APP`).
+
+**Answered, no code change:** why `parser_brief` sometimes runs `parser_models` -- `BRIEF_AUTORUN_MODELS` (00_parser_modes): when the brief's REFERENCE_DATE differs from the date in `inputs/_upcoming_game.json` it first runs models for that date (~50 min, pushes data), because the film and tagging were prepared for the other game. Set it False to get a stop with the exact line to run instead.
+
+**Files touched:** `parser_lib/87_build_html_scouting_brief_for_upcoming.py`, `47_play_calls.py`, `46_frame_capture.py`, `51_court_mapping.py`, `inputs/play_call_remap.csv` (new), `CLAUDE.md`.
+
+**NOT seen in a real run yet:** all of the above. Reload `parser_brief.ipynb` (and models/tagging) from disk, then run `parser_brief`; check the log for `Keys to victory: N key(s) folded`, the Clutch card, and the MORE FROM THE APP blocks.
+
+**Offered, NOT approved (do nothing unless Corey says so):** dropping strength notes, Game Plan keys 19-22, combining keys 12 and 14, raising the KTV cutoff to 60.
+
+**Traps met this session:** my patch scripts write the file before `ast.parse`, so a failed parse leaves a broken file (patch it, don't re-apply); no backslash inside f-string expressions on Python 3.10; a recursive grep over `data/` on the mount times out (120 s); use `mcp__remote-devices__device_bash`, not `Bash`, for his files.

@@ -1590,7 +1590,7 @@ details.rosdet + .lc-lab, details.rosdet + .tier-h { margin-top: 22px; }
 .lcards .lc-x b { color: var(--warhawk-purple); }
 @media screen and (max-width: 820px) { .lcards { flex-wrap: wrap; } .lcards .lc { flex: 1 1 45%; } }
 .lcards.ktv-cards .lc { flex: 1 1 0; min-width: 0; }
-.lcards.ktv-cards .lc-t { display: flex; align-items: center; gap: 6px; color: var(--dim); }
+.lcards.ktv-cards .lc-t { text-transform: none; letter-spacing: 0; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; color: var(--dim); }
 .lcards.ktv-cards .lc-t .ktv-right { margin-left: auto; display: flex; align-items: center; gap: 5px; }
 .lcards.ktv-cards .lc-t > .src { margin-left: auto; }   /* a key with no score: the badge still sits right */
 .lcards.ktv-cards .lc-t .src, .lcards.ktv-cards .lc-t .ktv-score, .lcards.ktv-cards .lc-t .lsn { text-transform: none;
@@ -1618,6 +1618,9 @@ table.ktv-tbl th:nth-child(5), table.ktv-tbl td:nth-child(5) { width: 12%; }
 table.ktv-tbl td { vertical-align: top; }
 table.ktv-tbl tr.ktv-on td { background: #fffbe9; }
 .pcs-r.ktv-on > summary { background: #fffbe9; }
+/* requested 11/24: a Source column in the all-keys table (the play-call table keeps its three) */
+.pcs-ktv .pcs-h, .pcs-ktv .pcs-r > summary { grid-template-columns: 1fr 60px 130px 150px; }
+.pcs-ktv .ktv-srccol { text-align: left; white-space: nowrap; }
 table.ktv-tbl .mini { color: var(--dim); font-weight: 400; }
 /* ---- the five starters across the top of a roster ---------------------------------------------- */
 .sfive { display: flex; gap: 8px; align-items: stretch; margin: 0 0 8px; }
@@ -4783,6 +4786,91 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         ktv = pd.concat([ktv, _synth_df], ignore_index=True) if not ktv.empty else _synth_df
         ktv = ktv.sort_values("key_number") if "key_number" in ktv.columns else ktv
 
+    # CONFIRMED CHANGE (requested 11/24: "Yes, I would like you to do that" -- merge the keys that say the same thing, after
+    # the Hope brief showed 23 keys with rebounding stated four times). Brief only: the app and uww_ktv_keys.csv keep every key.
+    # A group is decided by the KEY'S HEADLINE, not by names, so it works for any opponent:
+    #   rebounding   rebound / box-out / glass / free throws ("Win rebounding & free throws", "Opponent strength: Offensive
+    #                rebounding & drawing fouls", "Rebounding edge: ...")
+    #   paint        "drive to the basket" / "paint"            (checked before pressure: "constant pressure on the PAINT")
+    #   pressure     "pressure"
+    #   lineup pair  "Counter with ..." + "Feature the ... combo" when they name 2+ of the same players
+    # The lead is the staff-written key when the group has one (the coaches' words stay), else the highest score. Its score
+    # is the group's best, and what the others add (their own reasoning, when the lead does not already say it) is appended;
+    # the headlines folded in are listed in the opened row ("Also covers"). BRIEF_KTV_MERGE = False turns it off.
+    def _ktv_merge_related(df):
+        if df is None or df.empty or not {"headline", "source"} <= set(df.columns):
+            return df
+        _txt = lambda v: "" if v is None or (isinstance(v, float) and pd.isna(v)) or str(v).strip().lower() == "nan" else str(v).strip()
+        _hd = df["headline"].map(lambda v: _txt(v).lower())
+
+        def _topic(h):
+            if re.search(r"drive to the basket|\bpaint\b", h):
+                return "paint"
+            if re.search(r"rebound|box-?out|\bglass\b|free throw", h):
+                return "rebounding"
+            if "pressure" in h:
+                return "pressure"
+            return None
+        _grp = {}
+        for _i, _h in _hd.items():
+            _t = _topic(_h)
+            if _t:
+                _grp.setdefault(_t, []).append(_i)
+        # lineup pair: "Counter with A, B, C" and "Feature the A, B, C combo" sharing 2+ names
+        _cn = [i for i, h in _hd.items() if h.startswith("counter with ")]
+        _ft = [i for i, h in _hd.items() if h.startswith("feature the ") and "combo" in h]
+        for _a in _cn:
+            for _b in _ft:
+                _na = {w for w in re.split(r"[^a-z\-]+", _hd[_a].replace("counter with ", "")) if len(w) > 2}
+                _nb = {w for w in re.split(r"[^a-z\-]+", _hd[_b].replace("feature the ", "").replace("combo", "")) if len(w) > 2}
+                if len(_na & _nb) >= 2:
+                    _grp.setdefault("lineup", []).extend([_a, _b])
+        _drop, _n_merged = [], 0
+        df = df.copy()
+        if "merged_keys" not in df.columns:
+            df["merged_keys"] = ""
+        for _t, _ix in _grp.items():
+            _ix = list(dict.fromkeys(_ix))
+            if len(_ix) < 2:
+                continue
+            _sub = df.loc[_ix]
+            _staff = _sub[_sub["source"].astype(str) == "Keys to Victory"]
+            _pool = _staff if len(_staff) else _sub
+            _ps = pd.to_numeric(_pool.get("priority_score"), errors="coerce").fillna(0)
+            _lead = _ps.idxmax()
+            _lead_txt = _txt(df.at[_lead, "reasoning"]) if "reasoning" in df.columns else ""
+            _have = re.sub(r"[^a-z0-9]+", "", _lead_txt.lower())
+            _extra, _also = [], []
+            for _o in _ix:
+                if _o == _lead:
+                    continue
+                _also.append(_txt(df.at[_o, "headline"]))
+                _r = _txt(df.at[_o, "reasoning"]) if "reasoning" in df.columns else ""
+                if not _r and _txt(df.at[_o, "source"]) == "Game Plan":     # (its headline carries the numbers; a bare "Opponent strength:" note adds nothing)
+                    _r = re.sub(r"(?i)^opponent strength:\s*", "", _txt(df.at[_o, "headline"]))
+                _k = re.sub(r"[^a-z0-9]+", "", _r.lower())
+                if _r and _k[:40] not in _have and _k not in _have:
+                    _extra.append(_r.rstrip("."))
+                    _have += _k
+            if _extra and "reasoning" in df.columns:
+                df.at[_lead, "reasoning"] = (_lead_txt.rstrip(".") + ". " if _lead_txt else "") + ". ".join(_extra[:2]) + "."
+            _best = pd.to_numeric(_sub.get("priority_score"), errors="coerce").max()
+            if pd.notna(_best) and "priority_score" in df.columns:
+                df.at[_lead, "priority_score"] = _best
+            df.at[_lead, "merged_keys"] = " | ".join(_also)
+            _drop += [_o for _o in _ix if _o != _lead]
+            _n_merged += len(_ix) - 1
+        if _drop:
+            df = df.drop(index=_drop)
+            print(f"  Keys to victory: {_n_merged} key(s) folded into related ones ({len(df)} left) -- "
+                  f"BRIEF_KTV_MERGE = False shows every key", flush=True)
+        return df
+    if globals().get("BRIEF_KTV_MERGE", True) and not ktv.empty:
+        try:
+            ktv = _ktv_merge_related(ktv)
+        except Exception as _kme:
+            print(f"  (keys not merged: {type(_kme).__name__}: {_kme})", flush=True)
+
     # Only the highest-priority keys go on the brief (KTV_BRIEF_RULES / ktv_select_for_brief, defined in the
     # key-building cell). The app still shows every key from uww_ktv_keys.csv.
     _ktv_total = len(ktv)
@@ -4833,17 +4921,35 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         # BRIEF_KTV_KEYS_PER_CARD (4) caps a card; the rest are a "+N more below" line, and every key is in the
         # expander underneath either way. BRIEF_KTV_CARDS = False still gives the old numbered sentences.
         _ktv_row = max(1, int(globals().get("BRIEF_KTV_CARDS_MAX", 5)))         # the sentence path's own cap
-        _KTV_PER = max(1, int(globals().get("BRIEF_KTV_KEYS_PER_CARD", 4)))
+        _KTV_PER = max(1, int(globals().get("BRIEF_KTV_KEYS_PER_CARD", 3)))
         _KTV_GROUPS = (("Offense", lambda c: c == "offense"),
                        ("Defense", lambda c: c == "defense"),
                        ("Personnel, rotation &amp; intangibles", lambda c: c not in ("offense", "defense")))
 
-        def _ktv_key_html(k):
-            """(headline as a link where the app has the key, its score + source badge)."""
-            _h = _sb_clean(k.get("headline")).rstrip(".")
+        # CONFIRMED CHANGE (requested 11/24: "I'm still getting some ALL CAPS in the Keys to Victory Cards, and I want it all
+        # sentence case"). Staff-written keys come in capitals ("WIN REBOUNDING & FREE THROWS", "PRESSURE & DISRUPT
+        # DEFENSIVELY"), and the card's group label was upper-cased by CSS. A line that is mostly capitals is lower-cased and
+        # its first letter raised; short basketball acronyms keep theirs. Mixed-case lines are left exactly as written.
+        _KTV_ACR = {"dho", "blob", "slob", "ato", "ppp", "uww", "sts", "eog", "ft", "fts", "pnr", "efg", "tov", "orb", "ds",
+                    "bs", "ot", "nba", "ncaa", "mvp", "ii", "iii"}
+
+        def _ktv_sentence(t):
+            t = str(t or "")
+            _l = [c for c in t if c.isalpha()]
+            if len(_l) < 4 or sum(c.isupper() for c in _l) / len(_l) <= 0.6:
+                return t
+            def _w(m):
+                w = m.group(0)
+                return w.upper() if w.lower() in _KTV_ACR else w.lower()
+            t = re.sub(r"[A-Za-z]+", _w, t)
+            return re.sub(r"[A-Za-z]", lambda m: m.group(0).upper(), t, count=1)
+
+        def _ktv_key_html(k, link=True):
+            """(headline as a link where the app has the key, its score + source badge). link=False: plain text."""
+            _h = _ktv_sentence(_sb_clean(k.get("headline")).rstrip("."))
             _ak = int(k["key_number"]) if pd.notna(k.get("key_number")) else None
             _hh = (name_link(_h, page="upcoming", tab="keys", key=_ak)
-                   if _ak and str(k.get("source")) != "Game Plan" else _sb_esc(_h))
+                   if link and _ak and str(k.get("source")) != "Game Plan" else _sb_esc(_h))
             _p = pd.to_numeric(k.get("priority_score"), errors="coerce")
             _sc = (f'<span class="ktv-score" title="Priority score (0-100)">{int(round(_p))}</span>'
                    if pd.notna(_p) else "")
@@ -4866,20 +4972,18 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 # own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot"
                 # -- not its score and source tag. The number and the tag say where a key came from; the reasoning
                 # says what to do about it, which is what a coach reads a card for. Both are still in the table below.
-                _lead, _lead_badge = _ktv_key_html(_shown.iloc[0])
-                _lead_why = (_sb_clean(_shown.iloc[0].get("reasoning")).rstrip(".")
-                             or _sb_clean(_shown.iloc[0].get("evidence")).rstrip("."))
-                _rest = "".join(f'<div class="lc-x ktv-more">{_ktv_key_html(r_)[0]}</div>'
-                                for _, r_ in _shown.iloc[1:].iterrows())
-                # CONFIRMED CHANGE (requested 11/19): "I don't need the '7 KEYS' or the '+3 More in the Table'
-                # notes." Both were housekeeping ABOUT the card rather than coaching: the count said how many
-                # keys the category holds and the overflow line said the table has the rest, which the table
-                # directly below already shows. The card now carries only the keys themselves.
-                _cards_out.append(
-                    f'<div class="lc"><div class="lc-t">{_gname}</div>'
-                    f'<div class="lc-n">{_lead}</div>'
-                    + (f'<div class="lc-s ktv-why">{_sb_esc(_lead_why)}.</div>' if _lead_why else "") + _rest
-                    + "</div>")
+                # CONFIRMED CHANGE (requested 11/24: "I don't want the Keys to victory cards to have links to the app. That
+                # should only be within the details table. Also, only include the top 3 for each of the cards and include
+                # the descriptions for all 3"). Each card: its top 3 keys (BRIEF_KTV_KEYS_PER_CARD), every one with its own
+                # reasoning (the evidence line when it has none), as plain text -- the app links live in the all-keys table.
+                _kb = []
+                for _n_, (_, _kr) in enumerate(_shown.iterrows()):
+                    _kh = _ktv_key_html(_kr, link=False)[0]
+                    _kw = _ktv_sentence(_sb_clean(_kr.get("reasoning")).rstrip(".") or _sb_clean(_kr.get("evidence")).rstrip("."))
+                    _kst = ' style="margin-top:10px"' if _n_ else ""
+                    _kb.append(f'<div class="lc-n"{_kst}>{_kh}</div>'
+                               + (f'<div class="lc-s ktv-why">{_sb_esc(_kw)}.</div>' if _kw else ""))
+                _cards_out.append(f'<div class="lc"><div class="lc-t">{_gname}</div>' + "".join(_kb) + "</div>")
             if _cards_out:
                 add('<div class="lcards ktv-cards">' + "".join(_cards_out) + "</div>")
             else:
@@ -4984,20 +5088,26 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 # formatted the Play Calls table"). Same pcs-r markup as the play-call summary: the row is key / score / area,
                 # and opening it shows the reasoning, where it came from and the parts of the score.
                 _why_sc = _score_why(k, _psv)
+                _also_txt = ("" if str(k.get("merged_keys") or "").strip().lower() in ("", "nan")
+                             else str(k.get("merged_keys")).replace(" | ", " \u00b7 "))
                 _body = ((f'<div class="mini" style="margin:2px 0 6px">{_sb_esc(_why)}.</div>' if _why else "")
                          + f'<div class="pcs-gh"><b>Why {_sc or "this"}</b> <span class="mini">{_sb_esc(_why_sc)}</span></div>'
-                         + f'<div class="pcs-gh"><b>Source</b> {source_badge(k.get("source"))}</div>')
+                         + (f'<div class="pcs-gh"><b>Also covers</b> <span class="mini">{_sb_esc(_also_txt)}</span></div>' if _also_txt else "")
+                         # requested 11/24: the app link lives here, in the details table, and not on the cards
+                         + (f'<div class="pcs-gh"><b>App</b> {app_link("Open this key in the app", page="upcoming", tab="keys", key=int(float(_kn)))}</div>'
+                            if _kn and str(k.get("source")) != "Game Plan" else ""))
                 _ktv_rows.append(
                     f'<details class="pcs-r{" ktv-on" if _star else ""}"><summary>'
                     f'<span class="l">{_sb_esc(_hl)}'
                     + (f' <span class="mini">{_sb_esc(_star)}</span>' if _star else "")
-                    + f'</span><span class="t1">{_sc}</span><span class="t1">{_sb_esc(_area)}</span></summary>'
+                    + f'</span><span class="t1">{_sc}</span><span class="t1">{_sb_esc(_area)}</span>'
+                    f'<span class="t1 ktv-srccol">{(source_badge(k.get("source")) or "--").strip()}</span></summary>'
                     f'<div class="pcs-b">{_body}</div></details>')
             add('<details class="rosdet"><summary><span class="rd-open">All ' + str(_ktv_total)
                 + ' keys</span><span class="rd-sub">every key the parser built for this game, best first -- click one for its reasoning and score</span>'
                 "</summary>"
-                '<div class="card pcs"><div class="pcs-h"><span class="l">Key</span><span class="t1">Score</span>'
-                '<span class="t1">Area</span></div>' + "".join(_ktv_rows)
+                '<div class="card pcs pcs-ktv"><div class="pcs-h"><span class="l">Key</span><span class="t1">Score</span>'
+                '<span class="t1">Area</span><span class="t1">Source</span></div>' + "".join(_ktv_rows)
                 + "</div>" + _ktv_link + "</details>")
             _ktv_expander = True
         if not _ktv_expander:
@@ -8595,6 +8705,156 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
     # ---- footer ---------------------------------------------------------------------------
     _an["skip"] = _an["ours"] = False                 # (parser_analysis: the footer is kept)
+
+    # CONFIRMED CHANGE (requested 11/24: "look into all of the information that we have in the application that we weren't
+    # currently using on the scouting reports and bring it all back in. But everything new needs to be put into details
+    # sections that need to be expanded"). Each block is a closed <details>; the section itself is fixed (no outer expander)
+    # so a coach sees the list of what is there. Only tables the brief never read are used here, and only when they hold real
+    # rows for this opponent (a sample / placeholder table is left out). BRIEF_MORE_FROM_APP = False leaves the section out.
+    def _more_from_app():
+        _items = []
+
+        def _sur(n_):
+            _w = [x for x in str(n_).split() if x.strip(".,").lower() not in ("jr", "sr", "ii", "iii", "iv")]
+            return _w[-1].strip(",") if _w else ""
+
+        def _lus(lu_):
+            return " / ".join(_sur(x) for x in str(lu_ or "").split(",") if x.strip())
+
+        def _tbl(heads, rows):
+            if not rows:
+                return ""
+            _h = "".join(f'<th class="l">{_sb_esc(x)}</th>' for x in heads)
+            _b = "".join("<tr>" + "".join(f'<td class="l">{c_}</td>' for c_ in r_) + "</tr>" for r_ in rows)
+            return f'<table class="ob-tbl"><thead><tr>{_h}</tr></thead><tbody>{_b}</tbody></table>'
+
+        def _opp_rows(name, col="opponent"):
+            d_ = _sb_d(name)
+            if d_.empty or col not in d_.columns:
+                return pd.DataFrame()
+            return d_[d_[col].astype(str) == str(short)]
+
+        def _item(title, sub, body):
+            if body:
+                _items.append(f'<details class="ob-det"><summary>{_sb_esc(title)} <span class="mini">{_sb_esc(sub)}</span></summary>'
+                              f'<div class="card">{body}</div></details>')
+
+        # 1. rebounding: who crashes the offensive glass and who secures the defensive one, by kind of miss
+        try:
+            r_ = _opp_rows("uww_rebound_tendencies")
+            if not r_.empty and "is_sample" in r_.columns:
+                r_ = r_[r_["is_sample"].astype(str).str.lower() != "true"]
+            _item("Rebounding tendencies", "who crashes, by kind of miss",
+                  _tbl(["Situation", "Rate", "Who gets them", "Detail"],
+                       [[_sb_esc(_sb_clean(x.get("situation"))), _sb_esc(f'{int(float(x.get("crash_pct")))}%') if pd.notna(pd.to_numeric(x.get("crash_pct"), errors="coerce")) else "--",
+                         _sb_esc(_sb_clean(x.get("who_crashes"))), _sb_esc(_sb_clean(x.get("note")))] for _, x in r_.iterrows()]))
+        except Exception as e_:
+            print(f"  (more from the app: rebounding not shown: {type(e_).__name__}: {e_})", flush=True)
+        # 2. their lineups: every stint from their games, by five, best and worst
+        try:
+            st_ = _sb_d("uww_opponent_prior_games_lineup_stints")
+            if not st_.empty and {"lineup", "stint_minutes", "margin_change"} <= set(st_.columns):
+                g_ = st_.assign(_m=pd.to_numeric(st_["stint_minutes"], errors="coerce"), _d=pd.to_numeric(st_["margin_change"], errors="coerce")) \
+                    .groupby("lineup").agg(m=("_m", "sum"), d=("_d", "sum"), n=("lineup", "size")).reset_index()
+                g_ = g_[g_["m"] >= 3].copy()
+                g_["p10"] = g_["d"] / g_["m"] * 10
+                g_ = g_.sort_values("p10", ascending=False)
+                if len(g_) >= 2:
+                    _pick = pd.concat([g_.head(5), g_.tail(5)]).drop_duplicates("lineup")
+                    _item("Their lineups, best and worst", "every five with 3+ minutes together, net points per 10 minutes",
+                          _tbl(["Five", "Min", "Net", "Net per 10 min"],
+                               [[_sb_esc(_lus(x["lineup"])), f'{x["m"]:.1f}', f'{x["d"]:+.0f}', f'{x["p10"]:+.1f}'] for _, x in _pick.iterrows()])
+                          + '<p class="mini">From the play-by-play of their games this season. Net = their score minus the opponent\u2019s while that five was on the floor.</p>')
+        except Exception as e_:
+            print(f"  (more from the app: their lineups not shown: {type(e_).__name__}: {e_})", flush=True)
+        # 3. passes per possession by play call
+        try:
+            p_ = _sb_d("uww_pass_counts")
+            if not p_.empty and {"offense_team", "play_call", "passes_tracked"} <= set(p_.columns):
+                p_ = p_[(p_["offense_team"].astype(str) == str(short)) & p_["passes_tracked"].notna()].copy()
+                p_["_p"] = pd.to_numeric(p_["passes_tracked"], errors="coerce")
+                p_["_e"] = p_["ends_on_pass"].astype(str).str.lower().isin(["true", "1", "1.0"]) if "ends_on_pass" in p_.columns else False
+                p_["_pt"] = pd.to_numeric(p_.get("points"), errors="coerce")
+                p_["_c"] = p_["play_call"].map(lambda v: _sb_clean(v) if isinstance(v, str) and v.strip() and v.strip().lower() != "nan" else "No play call")
+                g_ = p_.groupby("_c").agg(n=("_c", "size"), a=("_p", "mean"), e=("_e", "mean"), pt=("_pt", "mean")).reset_index()
+                g_ = g_[g_["n"] >= 4].sort_values("n", ascending=False).head(12)
+                if len(g_):
+                    _item("How many passes they make", "per possession, by play call (possessions with film tracking)",
+                          _tbl(["Play call", "Poss", "Avg passes", "Ends on a pass", "PPP"],
+                               [[_sb_esc(x["_c"]), str(int(x["n"])), f'{x["a"]:.1f}', f'{x["e"] * 100:.0f}%', f'{x["pt"]:.2f}' if pd.notna(x["pt"]) else "--"] for _, x in g_.iterrows()])
+                          + f'<p class="mini">All their tracked possessions: {p_["_p"].mean():.1f} passes on average, {p_["_e"].mean() * 100:.0f}% end on a pass.</p>')
+        except Exception as e_:
+            print(f"  (more from the app: passes not shown: {type(e_).__name__}: {e_})", flush=True)
+        # 4. comparable players
+        try:
+            c_ = _opp_rows("uww_player_comparisons", "target_opponent")
+            if not c_.empty:
+                c_ = c_.sort_values("similarity_score", ascending=False)
+                _item("Comparable players", "each of their players matched to a similar player on another team",
+                      _tbl(["Their player", "Position / role", "Comparable player", "Team", "Similarity"],
+                           [[_sb_esc(_sb_clean(x.get("target_player"))), _sb_esc(" \u00b7 ".join(v for v in (_sb_clean(x.get("target_position")), _sb_clean(x.get("target_role"))) if v)),
+                             _sb_esc(_sb_clean(x.get("compared_player"))), _sb_esc(_sb_strip_mascot(_sb_clean(x.get("compared_opponent")))),
+                             _sb_esc(f'{float(x.get("similarity_score")):.1f}') if pd.notna(pd.to_numeric(x.get("similarity_score"), errors="coerce")) else "--"]
+                            for _, x in c_.iterrows()]))
+        except Exception as e_:
+            print(f"  (more from the app: comparable players not shown: {type(e_).__name__}: {e_})", flush=True)
+        # 5. the play-by-play's own keys that are not already a key above
+        try:
+            k_ = _opp_rows("uww_pbp_derived_keys")
+            if not k_.empty:
+                _have = {re.sub(r"[^a-z0-9]+", "", str(h).lower()) for h in _sb_d("uww_ktv_keys").get("headline", pd.Series(dtype=object)).dropna()}
+                k_ = k_[~k_["title"].astype(str).map(lambda t_: re.sub(r"[^a-z0-9]+", "", t_.lower()) in _have)]
+                _item("More keys from the play-by-play", "derived from their shooting by action; not already in Keys to Victory",
+                      _tbl(["Key", "The numbers", "What to do"],
+                           [[_sb_esc(_sb_clean(x.get("title"))), _sb_esc(_sb_clean(x.get("supporting_stats"))), _sb_esc(_sb_clean(x.get("recommendation")))]
+                            for _, x in k_.iterrows()]))
+        except Exception as e_:
+            print(f"  (more from the app: play-by-play keys not shown: {type(e_).__name__}: {e_})", flush=True)
+        # 6. their roster as their own site lists it
+        try:
+            w_ = _opp_rows("uww_opponent_web_rosters")
+            if not w_.empty:
+                w_ = w_.assign(_j=pd.to_numeric(w_["jersey_number"], errors="coerce")).sort_values("_j")
+                _rows = []
+                for _, x in w_.iterrows():
+                    _nm = _sb_esc(_sb_clean(x.get("name")))
+                    _u = _sb_clean(x.get("profile_url"))
+                    if _u.startswith("http"):
+                        _nm = f'<a class="applink" href="{_sb_esc(_u)}"{_SB_NEWTAB}>{_nm}</a>'
+                    _j = pd.to_numeric(x.get("jersey_number"), errors="coerce")
+                    _rows.append([str(int(_j)) if pd.notna(_j) else "", _nm, _sb_esc(_sb_clean(x.get("position"))), _sb_esc(_sb_clean(x.get("height"))),
+                                  _sb_esc(_sb_clean(x.get("weight"))), _sb_esc(_sb_clean(x.get("class_year"))), _sb_esc(_sb_clean(x.get("hometown"))),
+                                  _sb_esc(_sb_clean(x.get("high_school")))])
+                _item("Their roster, from their own site", "hometown and high school for every player",
+                      _tbl(["#", "Player", "Pos", "Ht", "Wt", "Class", "Hometown", "High school"], _rows))
+        except Exception as e_:
+            print(f"  (more from the app: roster not shown: {type(e_).__name__}: {e_})", flush=True)
+        # 7. ours: biggest runs and leads in each of our games (not in an analysis brief -- no UW-Whitewater information there)
+        try:
+            if not _an["on"]:
+                r_ = _sb_d("uww_scoring_runs")
+                if not r_.empty and {"uww_biggest_run", "opponent_biggest_run"} <= set(r_.columns):
+                    r_ = r_.sort_values("game_date", ascending=False)
+                    _item("Our scoring runs", "biggest run and largest lead, each game this season",
+                          _tbl(["Game", "Our best run", "Five on the floor", "Their best run", "Our largest lead", "Their largest lead"],
+                               [[_sb_esc(_sb_strip_mascot(_sb_clean(x.get("opponent"))) + " " + _sb_clean(x.get("game_date"))),
+                                 _sb_esc(_sb_clean(x.get("uww_biggest_run"))), _sb_esc(_lus(str(x.get("uww_run_uww_lineup")).split(" / ")[0])),
+                                 _sb_esc(_sb_clean(x.get("opponent_biggest_run"))), _sb_esc(_sb_clean(x.get("uww_largest_lead"))),
+                                 _sb_esc(_sb_clean(x.get("opponent_largest_lead")))] for _, x in r_.iterrows()]))
+        except Exception as e_:
+            print(f"  (more from the app: scoring runs not shown: {type(e_).__name__}: {e_})", flush=True)
+        return _items
+
+    if globals().get("BRIEF_MORE_FROM_APP", True):
+        try:
+            _mfa = _more_from_app()
+            if _mfa:
+                section("\U0001f4ce MORE FROM THE APP")
+                add('<p class="mini">Everything below is in the app too. Each block opens on click.</p>')
+                for _m_ in _mfa:
+                    add(_m_)
+        except Exception as _mfe:
+            print(f"  (more from the app not built: {type(_mfe).__name__}: {_mfe})", flush=True)
     try:
         generated = datetime.now().strftime("%B %-d, %Y at %-I:%M %p")
     except ValueError:
@@ -8801,7 +9061,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # is what holds the cards, the bench and the reads -- only the five-across strip is always on the page.
     _SB_FIXED = [str(t).upper() for t in (globals().get("BRIEF_FIXED_SECTIONS")
                                           or ("KEYS TO VICTORY", "ROSTER", "RECENT RESULTS",
-                                              "HOW THEY FINISHED LAST SEASON"))]
+                                              "HOW THEY FINISHED LAST SEASON", "MORE FROM THE APP"))]
     # (the lineup blocks have no section header of their own any more -- requested -- so they ride inside the
     # roster section above them, which is itself always visible)
 
