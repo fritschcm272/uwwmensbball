@@ -1,42 +1,34 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Hope Flying Dutchmen,2026-11-24,Offense,1,📋,WIN REBOUNDING & FREE THROWS,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 46% of their own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot.,Keys to Victory,,,True,80.0
-Hope Flying Dutchmen,2026-11-24,Offense,2,🏀,Feature our best look: Motion,"Us: 0.88 PPP on 48 tagged possessions this season vs our 0.85 average
-Them: opponents scored 0.77 PPP running this against Hope Flying Dutchmen on 23 tagged possessions
-Runs it most: Madson, Robinson, McEwen, Rogers, Teague-Johnson
-Usually comes off 5 Out Motion","We score 0.88 a possession on it and Hope Flying Dutchmen gives up 0.77 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.36000000000000004,1.0,True,64.4
-Hope Flying Dutchmen,2026-11-24,Offense,3,🎯,Attack their weakest look: Catch-and-shoot (open),"Opponents shot 14/33 · 42% FG · 64% eFG · 1.27 pts/attempt · +0.43 vs all looks · 15% of attempts · 97% of them threes on this against Hope Flying Dutchmen
+Gustavus Adolphus Golden Gusties,2026-11-28,Offense,1,📋,Win the rebounding and free throw battles,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Gustavus Adolphus on every shot.,Keys to Victory,,,True,80.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Offense,2,🎯,Attack their weakest look: Drive to the basket,"Opponents shot 13/23 · 57% FG · 57% eFG · 1.13 pts/attempt · +0.18 vs all looks · 26% of attempts on this against Gustavus Adolphus Golden Gusties
+Best on this shot:
+• Madson, Robinson, Lukenbill, McEwen, Teague-Johnson 5/6 · 83%
+• Madson, Chestnut, Lukenbill, McEwen, Vann 4/5 · 80%
+• Madson, Robinson, McEwen, Rogers, Teague-Johnson 7/13 · 54%
 Runs it most:
-• Madson, Robinson, Lukenbill, McEwen, Teague-Johnson 4x · 50%
-• Madson, Robinson, McEwen, Rogers, Teague-Johnson 3x · 67%
-• Madson, McEwen, Rogers, Teague-Johnson, Castillo 2x · 50%
-Usually comes off SLOB for us",Teams have shot 42% on it against Hope Flying Dutchmen -- hunt it; we usually get it out of SLOB.,Data-Driven,0.6,1.0,True,74.0
-Hope Flying Dutchmen,2026-11-24,Offense,4,📋,Call our best set: Cheetah,"1.80 PPP on 5 uses vs our 0.85 overall · 1/2 FG
+• Madson, Robinson, McEwen, Rogers, Teague-Johnson 13x · 54%
+• Madson, Robinson, Lukenbill, McEwen, Teague-Johnson 6x · 83%
+• Madson, Chestnut, Lukenbill, McEwen, Vann 5x · 80%",Teams have shot 57% on it against Gustavus Adolphus Golden Gusties -- hunt it.,Data-Driven,0.6,0.7666666666666667,True,70.5
+Gustavus Adolphus Golden Gusties,2026-11-28,Offense,3,📋,Call our best set: Cheetah,"1.80 PPP on 5 uses vs our 0.85 overall · 1/2 FG
 Finished most by Kelton Mcewen
 No coverage tagged against it yet","Our most productive set this season -- go to it when we need a good look, with Kelton Mcewen finishing.",Data-Driven,0.7307692307692311,0.25,True,68.0
-Hope Flying Dutchmen,2026-11-24,Defense,5,📊,Take away their most efficient high-volume actions,Offensive Rebound: 60.0% on 20 attempts; P&R Ball Handler: 56.5% on 23 attempts,Each is 5+ points above their 45.9% overall clip on 15+ attempts. Offensive Rebound: hit a body on every shot before going to the ball. P&R Ball Handler: pick one ball-screen coverage and stay in it -- keep the handler out of the middle.,Data-Driven,,,True,62.5
-Hope Flying Dutchmen,2026-11-24,Defense,6,📊,Funnel them into their worst high-volume looks,Spot-Up: 34.7% on 72 attempts,Each is 5+ points below their 45.9% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
-Hope Flying Dutchmen,2026-11-24,Defense,7,📊,Pressure the actions they turn it over on,Post-Up: 9 TO in 28 uses (32.1% vs 11.3% across all actions); P&R Ball Handler: 4 TO in 27 uses (14.8% vs 11.3% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
-Hope Flying Dutchmen,2026-11-24,Defense,8,📋,PRESSURE & DISRUPT DEFENSIVELY,,,Keys to Victory,,,True,80.0
-Hope Flying Dutchmen,2026-11-24,Defense,9,📋,ELITE COMMUNICATION DEFENSIVELY,,,Keys to Victory,,,True,80.0
-Hope Flying Dutchmen,2026-11-24,Defense,10,⚠️,Opponent strength: Putting constant pressure on the paint offensively,,,Team Strengths,,,True,49.5
-Hope Flying Dutchmen,2026-11-24,Defense,11,⚠️,Opponent strength: Disciplined defense holding opponents to 36% FG,,,Team Strengths,,,True,49.5
-Hope Flying Dutchmen,2026-11-24,Defense,12,⚠️,Opponent strength: Offensive rebounding & drawing fouls,,,Team Strengths,,,True,49.5
-Hope Flying Dutchmen,2026-11-24,Defense,13,🛡️,What Hope Flying Dutchmen goes to most: Drive to the basket,"80 attempts, 59% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-Hope Flying Dutchmen,2026-11-24,Defense,14,📋,Take away their go-to set: Motion,"41 uses in 3 games · 1.00 PPP vs their 0.78 overall · 13/27 FG · 6 TO
-Finished most by Avery Sanchez
-Built on: Ball Screen
-Next most-called: 41 Motion
-Tagged as: [app] Motion | [app] 5 out bs: Man-to-Man | [app] Motion: Man-to-Man
-No coverage tagged against it yet","Their most-called half-court set. Avery Sanchez finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us.",Data-Driven,1.0,1.0,True,90.0
-Hope Flying Dutchmen,2026-11-24,Defense,15,,Finish every defensive possession with a box-out,"They grab 46% of their own misses -- we usually allow 39%, so this is above our norm; most by Orion Yant, Hope.",They get 46% of their own misses back -- a stop isn't a stop until we secure the rebound; find Orion Yant on every shot.,Data-Driven,1.0,1.0,True,90.0
-Hope Flying Dutchmen,2026-11-24,Personnel,16,🔒,"Counter with Madson, McEwen, Rogers, Grunewald, Castillo","+1.39/min — Madson, McEwen, Rogers, Grunewald, Castillo
-+1.16/min — Madson, Robinson, Lukenbill, McEwen, Teague-Johnson
-+0.00/min — Madson, Robinson, McEwen, Rogers, Teague-Johnson","UWW's best net margin against opponent units that resemble Hope Flying Dutchmen's most-used lineup (Sanchez, Cargill, Blauch, Yant, Walther). Target profile: 2 guard, 1 wing, 2 forward · avg 6'3"" · three point shooter / slasher driver / post scorer / rebounder. Measured across 24 comparable opponent unit(s), 41 min this season.",Lineup Scouting,1.0,0.6761666666666667,True,83.1
-Hope Flying Dutchmen,2026-11-24,Personnel,17,🔒,"Attack Hope Flying Dutchmen's Miller, Cargill, Walther combo","Worst +/- 3-man combos:
--12.0 in 21.3 min — Miller, Cargill, Walther
--11.0 in 16.0 min — Cargill, Wesolek, Walther
--9.0 in 15.8 min — Cargill, Ryg, Walther",Hope Flying Dutchmen's most exploitable 3-man combinations: their worst net-rating units with real minutes this season.,Lineup Scouting,1.0,0.5325,True,81.0
-Hope Flying Dutchmen,2026-11-24,Personnel,18,,"Feature the Madson, McEwen, Rogers combo","Madson, McEwen, Rogers: +3.9 per 40 after shrinkage · on/off +14.2 · 63 competitive min in 3 games
-Madson, Robinson, Teague-Johnson: +2.0 per 40 after shrinkage · on/off +7.4 · 61 competitive min in 3 games
-Madson, Lukenbill, McEwen: +0.9 per 40 after shrinkage · on/off +3.3 · 49 competitive min in 3 games
-On/off: +14.2 per 40 minutes (better with them on the floor)",Our best trio this season -- +3.9 per 40 minutes together; get them on the floor together.,Lineup Scouting,0.32268473701193934,0.5275,True,53.8
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,4,📊,Funnel them into their worst high-volume looks,Spot-Up: 30.8% on 39 attempts,Each is 5+ points below their 48.1% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,5,📋,Being strong with the ball and handling pressure,,,Keys to Victory,,,True,80.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,6,📋,GUARDING THE BALL 1 ON 1,,,Keys to Victory,,,True,80.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,7,⚠️,Opponent strength: #13 capable of taking over a game (24.4ppg),,,Team Strengths,,,True,49.5
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,8,⚠️,Opponent strength: Spread you out and drive to the rim relentlessly,,,Team Strengths,,,True,49.5
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,9,⚠️,Opponent strength: Apply constant defensive pressure to turn you over,,,Team Strengths,,,True,49.5
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,10,🛡️,What Gustavus Adolphus Golden Gusties goes to most: Drive to the basket,"46 attempts, 52% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,11,,Finish every defensive possession with a box-out,"They grab 40% of their own misses -- we usually allow 35%, so this is above our norm; most by Gustavus Adolphus, Obinna Izuora.",They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Gustavus Adolphus on every shot.,Data-Driven,0.7055555555555557,1.0,True,78.2
+Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,12,🔒,"Attack lineup of Quam, Schmitt, Dimler, Barnette, Izuora","Worst +/- lineups:
+-2.0 in 33.5 min, 37% FG — Quam, Schmitt, Dimler, Barnette, Izuora
+Highest TO rate (per 40 min):
+17.5 TO/40 — Quam, Kolander, Schmitt, Barnette, Izuora
+10.7 TO/40 — Quam, Schmitt, Dimler, Barnette, Izuora",their worst net-rating lineups with real minutes this season,Lineup Scouting,0.11940298507462685,0.8375,True,50.3
+Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,13,🔒,"Counter with Marino, Madson, Robinson, Lukenbill, McEwen","+1.69/min — Marino, Madson, Robinson, Lukenbill, McEwen
++1.36/min — Madson, Chestnut, Robinson, Rogers, Teague-Johnson
++0.87/min — Madson, Chestnut, Lukenbill, McEwen, Rogers","UWW's best net margin against opponent units that resemble Gustavus Adolphus Golden Gusties's most-used lineup (Quam, Schmitt, Dimler, Barnette, Izuora). Target profile: 3 guard, 2 forward · avg 6'3"" · three point shooter / slasher driver / post scorer / catch and shoot. Measured across 12 comparable opponent unit(s), 40 min this season.",Lineup Scouting,1.0,0.6691666666666667,True,83.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,14,,"Feature the Madson, Robinson, McEwen combo","Madson, Robinson, McEwen: +2.7 per 40 after shrinkage · on/off +7.9 · 77 competitive min in 4 games
+Madson, Lukenbill, McEwen: +2.1 per 40 after shrinkage · on/off +5.4 · 57 competitive min in 4 games
+Madson, McEwen, Rogers: +1.8 per 40 after shrinkage · on/off +5.0 · 71 competitive min in 4 games
+On/off: +7.9 per 40 minutes (better with them on the floor)",Our best trio this season -- +2.7 per 40 minutes together; get them on the floor together.,Lineup Scouting,0.22792022792022792,0.6416666666666667,True,51.7

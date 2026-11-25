@@ -1,50 +1,30 @@
 scouted_opponent,side,lineup,top_calls,tagged_possessions,ppp,grouping
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Carter Bishop, Orion Yant",Motion (1x),1,0.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Carter Bishop, Sean Wesolek","Motion (3x), Iverson (1x)",4,0.75,Small / shooting five (no true big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Orion Yant, Sean Wesolek","Motion (5x), Motion - Post (1x), Hi-Lo (1x)",10,1.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Orion Yant, Tucker Walther",Motion (4x),4,1.33,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brady Miller, Brendan Cargill, Sean Wesolek, Tucker Walther","Motion (5x), Horns #1 (1x)",6,1.33,Small / shooting five (no true big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Jared Ryg, Kyle Blauch",Hi-Lo (1x),1,0.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Justin Fisher, Kyle Blauch","41 Motion (1x), DHO (1x), Motion (1x)",4,1.67,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Justin Fisher, Sean Wesolek","SLOB Motion (1x), Motion (1x), 41 Motion (1x)",3,0.0,Small / shooting five (no true big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Kyle Blauch, Tucker Walther","Motion (3x), Dribble Drive (1x)",4,1.25,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Carter Bishop, Orion Yant, Sean Wesolek","Motion (8x), 41 Motion (2x), STS (1x)",19,0.74,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Jared Ryg, Kaden Grau, Kyle Blauch","Motion (3x), Knicks (1x), Dribble Drive (1x)",6,1.8,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Jared Ryg, Orion Yant, Sean Wesolek","Knicks (2x), Motion (2x), Horns Motion (1x)",9,1.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Kyle Blauch, Orion Yant, Tucker Walther","Motion (9x), 41 Motion (7x), Hi-Lo (3x)",34,0.7,Two-big lineup
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Brendan Cargill, Orion Yant, Sean Wesolek, Tucker Walther","41 Motion (2x), Motion (1x)",3,0.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Avery Sanchez, Justin Fisher, Kaden Grau, Kyle Blauch, Tucker Walther","Motion (1x), #4 (1x), Drag BS (1x)",4,0.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Carter Bishop, Jared Ryg, Orion Yant",Motion (1x),1,2.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Carter Bishop, Sean Wesolek, Tucker Walther","Motion (4x), Horns #5 (1x), Dribble Drive (1x)",6,0.83,Small / shooting five (no true big)
-Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Jared Ryg, Orion Yant, Tucker Walther","Motion (5x), Pinch-Ball Screen (1x), 41 Motion (1x)",9,1.38,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Brady Miller, Brendan Cargill, Jared Ryg, Sean Wesolek, Tucker Walther","Rip (1x), 41 Motion (1x), Jokic Action (1x)",3,0.0,Small / shooting five (no true big)
-Hope Flying Dutchmen,Opponent,"Brady Miller, Carter Bishop, Jared Ryg, Orion Yant, Tucker Walther",Iverson (2x),2,0.0,Base five (one big)
-Hope Flying Dutchmen,Opponent,"Brady Miller, Carter Bishop, Jared Ryg, Sean Wesolek, Tucker Walther","Motion (2x), pinch-clear (1x)",3,0.0,Small / shooting five (no true big)
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Kelton McEwen","Isolation (2x), ISO (1x)",3,0.0,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers","5 Out Motion (2x), Ripon Motion #1 (1x), Stagger (1x)",4,1.75,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",Motion (2x),2,1.0,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson","Motion (3x), Ripon Motion #1 (2x), RAM SCREEN (2x)",11,0.82,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson","SLOB Motion (3x), Motion (2x), Motion - Zoom (2x)",18,1.12,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Zavier Castillo","Motion (2x), STS (1x), 5 Out Motion (1x)",4,1.25,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Taveon Vann, Tyshawn Teague-Johnson","Set (2x), Motion - Zoom (1x), Stagger (1x)",4,0.0,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers","Ripon Motion #1 (4x), Stagger (2x), 5 Out Motion (2x)",17,0.76,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann","Stagger (5x), Motion (3x), SLOB (2x)",18,0.89,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","Motion (2x), Spread Zoom Motion (1x), Motion-over (1x)",6,0.83,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Paddock, Tyshawn Teague-Johnson","5 Out Motion (1x), Ripon Motion #1 (1x)",2,1.5,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Kelton McEwen, Rashad Rogers, Trent Grunewald","Motion (2x), 5 Out Motion (2x), Hawkeye (1x)",8,1.5,
-Hope Flying Dutchmen,UWW,"Collin Madson, Darius Chestnut, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",5 Out Motion (3x),3,0.67,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Rashad Rogers","Zona (1x), Ripon Motion #1 (1x), 5 Out Motion (1x)",10,0.88,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Taveon Vann","Stagger (1x), Flow (1x), Ripon Motion #1 (1x)",3,0.0,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Trent Grunewald","Motion (1x), Twins Left (1x), Ricky Set (1x)",6,0.5,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","Motion (6x), SLOB (2x), SLOB Motion (2x)",19,0.68,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Zavier Castillo","77 BS (1x), Hawk (1x), Go cut-Ball Screen (1x)",3,1.33,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Motion (13x), 5 Out Motion (9x), Ripon Motion #1 (8x)",72,0.73,
-Hope Flying Dutchmen,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Taveon Vann, Tyshawn Teague-Johnson","Motion (2x), SLOB Motion (1x), Twins Left (1x)",5,0.6,
-Hope Flying Dutchmen,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Stagger (1x), Gold (1x), Ram 15 (1x)",4,1.33,
-Hope Flying Dutchmen,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo","Zona (3x), Gold (1x), Motion (1x)",7,1.17,
-Hope Flying Dutchmen,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo","Motion (2x), BLOB (1x)",3,0.67,
-Hope Flying Dutchmen,UWW,"Collin Madson, Kelton McEwen, Rashad Rogers, Trent Grunewald, Zavier Castillo","Gold (3x), Motion (2x), floppy (1x)",8,0.5,
-Hope Flying Dutchmen,UWW,"Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","SLOB (2x), Motion (2x)",4,1.75,
-Hope Flying Dutchmen,UWW,"Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson","Stagger (2x), Ripon Motion #1 (1x), Twins Left (1x)",5,1.25,
-Hope Flying Dutchmen,UWW,"Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",Gold (1x),1,0.0,
-Hope Flying Dutchmen,UWW,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","Cheetah (1x), Motion (1x)",2,0.0,
+Gustavus Adolphus Golden Gusties,Opponent,"Andrew Quam, Jake Schmitt, Landon Dimler, Myles Barnette, Obinna Izuora","Motion (4x), Ram side (1x), Post Set #1 (1x)",8,0.29,3G-2W
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Kelton McEwen","Isolation (2x), ISO (1x)",3,0.0,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers","5 Out Motion (2x), Ripon Motion #1 (1x), Stagger (1x)",4,1.75,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Taveon Vann",Motion (2x),2,1.0,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson","Motion (3x), Ripon Motion #1 (2x), RAM SCREEN (2x)",11,0.82,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson","SLOB Motion (3x), Motion (2x), Motion - Zoom (2x)",18,1.12,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Rashad Rogers, Zavier Castillo","Motion (2x), STS (1x), 5 Out Motion (1x)",4,1.25,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Isaiah Robinson, Taveon Vann, Tyshawn Teague-Johnson","Set (2x), Motion - Zoom (1x), Stagger (1x)",4,0.0,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Rashad Rogers","Ripon Motion #1 (4x), Stagger (2x), 5 Out Motion (2x)",17,0.76,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Taveon Vann","Stagger (5x), Motion (3x), SLOB (2x)",18,0.89,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","Motion (2x), Spread Zoom Motion (1x), Motion-over (1x)",6,0.83,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, JR Lukenbill, Luke Paddock, Tyshawn Teague-Johnson","5 Out Motion (1x), Ripon Motion #1 (1x)",2,1.5,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Kelton McEwen, Rashad Rogers, Trent Grunewald","Motion (2x), 5 Out Motion (2x), Hawkeye (1x)",8,1.5,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Darius Chestnut, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",5 Out Motion (3x),3,0.67,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Rashad Rogers","Zona (1x), Ripon Motion #1 (1x), 5 Out Motion (1x)",10,0.88,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Taveon Vann","Stagger (1x), Flow (1x), Ripon Motion #1 (1x)",3,0.0,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Trent Grunewald","Motion (1x), Twins Left (1x), Ricky Set (1x)",6,0.5,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson","Motion (6x), SLOB (2x), SLOB Motion (2x)",19,0.68,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Isaiah Robinson, JR Lukenbill, Kelton McEwen, Zavier Castillo","77 BS (1x), Hawk (1x), Go cut-Ball Screen (1x)",3,1.33,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Motion (13x), 5 Out Motion (9x), Ripon Motion #1 (8x)",72,0.73,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Isaiah Robinson, Kelton McEwen, Taveon Vann, Tyshawn Teague-Johnson","Motion (2x), SLOB Motion (1x), Twins Left (1x)",5,0.6,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson","Stagger (1x), Gold (1x), Ram 15 (1x)",4,1.33,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Rashad Rogers, Zavier Castillo","Zona (3x), Gold (1x), Motion (1x)",7,1.17,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo","Motion (2x), BLOB (1x)",3,0.67,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Kelton McEwen, Rashad Rogers, Trent Grunewald, Zavier Castillo","Gold (3x), Motion (2x), floppy (1x)",8,0.5,
+Gustavus Adolphus Golden Gusties,UWW,"Collin Madson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","SLOB (2x), Motion (2x)",4,1.75,
+Gustavus Adolphus Golden Gusties,UWW,"Darius Chestnut, Isaiah Robinson, JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson","Stagger (2x), Ripon Motion #1 (1x), Twins Left (1x)",5,1.25,
+Gustavus Adolphus Golden Gusties,UWW,"Darius Chestnut, Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",Gold (1x),1,0.0,
+Gustavus Adolphus Golden Gusties,UWW,"Isaiah Robinson, Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo","Cheetah (1x), Motion (1x)",2,0.0,

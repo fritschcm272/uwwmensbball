@@ -1,31 +1,27 @@
 side,scouted_opponent,perspective,screen_family,screen_type,level,defender,coverage,screens_of_type,share_pct,thin_sample,top_defender,uses,games,poss_with_points,ppp,fg_pct,fga,turnovers,example_titles
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),High Hedge,11,45,False,,5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Over,11,45,False,,5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,11,9,False,,1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,DHO,Defender x screen x coverage,(no jersey),Over,1,100,True,,1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Zoom,Defender x screen x coverage,(no jersey),High Hedge,1,100,True,,1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),Switch,2,50,True,,1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),shad,2,50,True,,1,1,1,0.0,0.0,1,0,motion-ds-straight cut- ghost: m2m (SHAD)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Flare,Defender x screen x coverage,#23 JIMMY TARJAN,Through,1,100,True,,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),press,1,100,True,,1,1,1,0.0,,0,1,motion-throw5-twirl:m2m(press)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,High Hedge,11,45,False,(no jersey),5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,Over,11,45,False,(no jersey),5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,Switch,11,9,False,(no jersey),1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,DHO,Screen x coverage,,Over,1,100,True,(no jersey),1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Ball screen,Zoom,Screen x coverage,,High Hedge,1,100,True,(no jersey),1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,Switch,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,shad,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,motion-ds-straight cut- ghost: m2m (SHAD)
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Flare,Screen x coverage,,Through,1,100,True,#23 JIMMY TARJAN,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
-UWW,Hope Flying Dutchmen,Defenses UWW faced,Off-ball screen,Screen,Screen x coverage,,press,1,100,True,(no jersey),1,1,1,0.0,,0,1,motion-throw5-twirl:m2m(press)
-Opponent,Hope Flying Dutchmen,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Flat Hedge,3,67,True,,2,1,2,2.0,100.0,2,0,[app] 5 out ball screen: Man-to-Man (Flat Hedge) | [app] Motion: Man-to-Man (Flat Hedge)
-Opponent,Hope Flying Dutchmen,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,3,33,True,,1,1,1,2.0,100.0,1,0,[app] Motion (Switch)
-Opponent,Hope Flying Dutchmen,Opponent defense,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Switch,1,100,True,,1,1,1,0.0,0.0,1,0,[app] defense: Man-to-Man (Switch)
-Opponent,Hope Flying Dutchmen,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Flat Hedge,3,67,True,(no jersey),2,1,2,2.0,100.0,2,0,[app] 5 out ball screen: Man-to-Man (Flat Hedge) | [app] Motion: Man-to-Man (Flat Hedge)
-Opponent,Hope Flying Dutchmen,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Switch,3,33,True,(no jersey),1,1,1,2.0,100.0,1,0,[app] Motion (Switch)
-Opponent,Hope Flying Dutchmen,Opponent defense,Off-ball screen,Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,0.0,0.0,1,0,[app] defense: Man-to-Man (Switch)
-UWW,Hope Flying Dutchmen,UWW defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,1,100,True,,1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,UWW defense,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Switch,2,50,True,,1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,UWW defense,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),press,2,50,True,,1,1,1,0.0,0.0,1,0,:m2m(press)
-UWW,Hope Flying Dutchmen,UWW defense,Ball screen,Ball Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,UWW defense,Off-ball screen,Screen,Screen x coverage,,Switch,2,50,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
-UWW,Hope Flying Dutchmen,UWW defense,Off-ball screen,Screen,Screen x coverage,,press,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,:m2m(press)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),High Hedge,11,45,False,,5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Over,11,45,False,,5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,11,9,False,,1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,DHO,Defender x screen x coverage,(no jersey),Over,1,100,True,,1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Zoom,Defender x screen x coverage,(no jersey),High Hedge,1,100,True,,1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),Switch,2,50,True,,1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),shad,2,50,True,,1,1,1,0.0,0.0,1,0,motion-ds-straight cut- ghost: m2m (SHAD)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Flare,Defender x screen x coverage,#23 JIMMY TARJAN,Through,1,100,True,,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),press,1,100,True,,1,1,1,0.0,,0,1,motion-throw5-twirl:m2m(press)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,High Hedge,11,45,False,(no jersey),5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,Over,11,45,False,(no jersey),5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,Switch,11,9,False,(no jersey),1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,DHO,Screen x coverage,,Over,1,100,True,(no jersey),1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Zoom,Screen x coverage,,High Hedge,1,100,True,(no jersey),1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,Switch,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,shad,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,motion-ds-straight cut- ghost: m2m (SHAD)
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Flare,Screen x coverage,,Through,1,100,True,#23 JIMMY TARJAN,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Screen,Screen x coverage,,press,1,100,True,(no jersey),1,1,1,0.0,,0,1,motion-throw5-twirl:m2m(press)
+Opponent,Gustavus Adolphus Golden Gusties,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,1,100,True,,1,1,1,0.0,0.0,1,0,[app] Motion: Token Press - Man-to-Man (Switch)
+Opponent,Gustavus Adolphus Golden Gusties,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,0.0,0.0,1,0,[app] Motion: Token Press - Man-to-Man (Switch)
+UWW,Gustavus Adolphus Golden Gusties,UWW defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,1,100,True,,1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,UWW defense,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),Switch,2,50,True,,1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,UWW defense,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),press,2,50,True,,1,1,1,0.0,0.0,1,0,:m2m(press)
+UWW,Gustavus Adolphus Golden Gusties,UWW defense,Ball screen,Ball Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,UWW defense,Off-ball screen,Screen,Screen x coverage,,Switch,2,50,True,(no jersey),1,1,1,3.0,100.0,1,0,"bs:m2m(switch,switch)"
+UWW,Gustavus Adolphus Golden Gusties,UWW defense,Off-ball screen,Screen,Screen x coverage,,press,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,:m2m(press)

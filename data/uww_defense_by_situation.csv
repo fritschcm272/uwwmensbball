@@ -1,6 +1,5 @@
 opponent,situation,primary_defense,freq_pct,secondary_defense,note,is_sample
-Hope Flying Dutchmen,BLOB,Man-to-Man,100,,11 tagged possessions,False
-Hope Flying Dutchmen,Half court,Man-to-Man,89,2-3 Zone,57 tagged possessions; press seen on 3,False
-Hope Flying Dutchmen,Offensive rebound,Man-to-Man,100,,8 tagged possessions,False
-Hope Flying Dutchmen,SLOB,Man-to-Man,100,,4 tagged possessions,False
-Hope Flying Dutchmen,Transition,Man-to-Man,100,,11 tagged possessions; press seen on 1,False
+Gustavus Adolphus Golden Gusties,Half court,Man-to-man,78,2-3 zone (after a timeout or a long defensive stretch),"Switches 1-4, doesn't switch Landon Dimler's matchup",True
+Gustavus Adolphus Golden Gusties,BLOB,Man-to-man,60,Box-and-1 on our best shooter,Denies the first pass hard,True
+Gustavus Adolphus Golden Gusties,SLOB,Man-to-man,85,,"Same coverage as half court, no separate call seen",True
+Gustavus Adolphus Golden Gusties,After a made basket (press),1-2-1-1 full-court,30,Man-to-man (no press),Presses more in the 4th when trailing,True

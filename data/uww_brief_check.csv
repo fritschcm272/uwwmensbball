@@ -1,4 +1,5 @@
 opponent,file,severity,check,detail
-Hope Flying Dutchmen,scouting_brief_Hope_Flying_Dutchmen.html,problem,missing section,no ROSTER section in the brief
-Hope Flying Dutchmen,scouting_brief_Hope_Flying_Dutchmen.html,problem,keys,no Keys to Victory are printed
-Hope Flying Dutchmen,scouting_brief_Hope_Flying_Dutchmen.html,note,roster,"18 Offense / Defense box(es) say ""nothing on file yet"""
+Gustavus Adolphus Golden Gusties,scouting_brief_Gustavus_Adolphus_Golden_Gusties.html,problem,leftover,"""nan"" in: ...ul Best against: ATO 0.73 PPP Worst against: nan 0.75 PPP Who closes it down Myles Barnette 3..."
+Gustavus Adolphus Golden Gusties,scouting_brief_Gustavus_Adolphus_Golden_Gusties.html,problem,missing section,no ROSTER section in the brief
+Gustavus Adolphus Golden Gusties,scouting_brief_Gustavus_Adolphus_Golden_Gusties.html,problem,keys,no Keys to Victory are printed
+Gustavus Adolphus Golden Gusties,scouting_brief_Gustavus_Adolphus_Golden_Gusties.html,note,roster,"20 Offense / Defense box(es) say ""nothing on file yet"""

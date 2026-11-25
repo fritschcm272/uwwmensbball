@@ -1,325 +1,363 @@
 lineup,MIN,PTS,+/-,GP,clean_min,clean_pm,clean_gp,garbage_min,per40,shrunk_per40,off_per40,on_off,side,scouted_opponent,gp_exact
-"Collin Madson, Darius Chestnut, Isaiah Robinson",18.08,34.0,-10.0,3.0,18.08,-10.0,3.0,0.0,-22.123893805309738,-6.887052341597797,3.572846367606193,-25.69674017291593,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, JR Lukenbill",25.65,50.0,6.0,3.0,25.65,6.0,3.0,0.0,9.356725146198832,3.6557501904036553,-3.004614228994527,12.361339375193358,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, Kelton McEwen",21.31,41.0,7.0,3.0,21.31,7.0,3.0,0.0,13.13937118723604,4.56695481976839,-3.2810417307495126,16.42041291798555,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, Luke Paddock",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-1.3621658436914694,88.31868758282192,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, Rashad Rogers",20.76,41.0,-1.0,2.0,20.76,-1.0,2.0,0.0,-1.9267822736030826,-0.6583278472679394,0.0,-1.9267822736030826,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, Taveon Vann",9.49,17.0,1.0,2.0,9.49,1.0,2.0,0.0,4.214963119072708,0.8082440897150939,-0.7315957933241883,4.946558912396896,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, Trent Grunewald",2.5,10.0,6.0,1.0,2.5,6.0,1.0,0.0,96.0,5.647058823529411,-2.4067388688327314,98.40673886883273,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, Tyshawn Teague-Johnson",17.65,32.0,-5.0,3.0,17.65,-5.0,3.0,0.0,-11.3314447592068,-3.4692107545533393,1.581183911453701,-12.912628670660501,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Darius Chestnut, Zavier Castillo",1.53,0.0,-7.0,1.0,1.53,-7.0,1.0,0.0,-183.0065359477124,-6.742114134360703,2.0458613928906315,-185.05239734060302,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Isaiah Robinson, JR Lukenbill",30.07,51.0,4.0,3.0,30.07,4.0,3.0,0.0,5.320917858330562,2.2834308548594264,-2.253013405429762,7.573931263760324,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Isaiah Robinson, Kelton McEwen",58.34,98.0,2.0,3.0,58.34,2.0,3.0,0.0,1.3712718546451832,0.8135041692088673,-1.9834710743801653,3.3547429290253485,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Isaiah Robinson, Rashad Rogers",47.32,87.0,-11.0,3.0,47.32,-11.0,3.0,0.0,-9.29839391377853,-5.038937242327073,5.592841163310961,-14.89123507708949,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Isaiah Robinson, Taveon Vann",5.13,3.0,-4.0,2.0,5.13,-4.0,2.0,0.0,-31.18908382066277,-3.5453135386660755,1.0553161551314747,-32.244399975794245,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Isaiah Robinson, Trent Grunewald",2.27,1.0,-4.0,1.0,2.27,-4.0,1.0,0.0,-70.48458149779735,-3.785190442394133,1.0294243802007377,-71.51400587799809,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Isaiah Robinson, Tyshawn Teague-Johnson",60.86,113.0,5.0,3.0,60.86,5.0,3.0,0.0,3.286230693394676,1.98294665873488,-4.139358399448085,7.4255890928427615,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Isaiah Robinson, Zavier Castillo",3.23,3.0,-6.0,1.0,3.23,-6.0,1.0,0.0,-74.30340557275541,-5.551700208188758,1.7299541562148604,-76.03335972897027,UWW,Hope Flying Dutchmen,True
-"Collin Madson, JR Lukenbill, Kelton McEwen",49.44,82.0,2.0,3.0,49.44,2.0,3.0,0.0,1.6181229773462786,0.8944543828264759,-1.7291066282420746,3.3472296055883533,UWW,Hope Flying Dutchmen,True
-"Collin Madson, JR Lukenbill, Luke Paddock",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-1.3621658436914694,88.31868758282192,UWW,Hope Flying Dutchmen,True
-"Collin Madson, JR Lukenbill, Rashad Rogers",19.82,33.0,-6.0,3.0,19.82,-6.0,3.0,0.0,-12.108980827447022,-4.012036108324975,2.0197939810139367,-14.128774808460959,UWW,Hope Flying Dutchmen,True
-"Collin Madson, JR Lukenbill, Taveon Vann",8.76,18.0,5.0,2.0,8.76,5.0,2.0,0.0,22.831050228310502,4.1017227235438884,-2.1802325581395348,25.01128278645004,UWW,Hope Flying Dutchmen,True
-"Collin Madson, JR Lukenbill, Trent Grunewald",2.24,1.0,-4.0,1.0,2.24,-4.0,1.0,0.0,-71.42857142857142,-3.787878787878788,1.0291595197255574,-72.45773094829697,UWW,Hope Flying Dutchmen,True
-"Collin Madson, JR Lukenbill, Tyshawn Teague-Johnson",26.71,44.0,-3.0,3.0,26.71,-3.0,3.0,0.0,-4.492699363534257,-1.7988307600059958,0.8683382177358081,-5.361037581270065,UWW,Hope Flying Dutchmen,True
-"Collin Madson, JR Lukenbill, Zavier Castillo",8.879999999999999,21.0,2.0,2.0,8.879999999999999,2.0,2.0,0.0,9.00900900900901,1.6366612111292964,-1.0913059294288832,10.100314938437892,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Kelton McEwen, Rashad Rogers",63.3,124.0,10.0,3.0,63.3,10.0,3.0,0.0,6.3191153238546605,3.872216844143272,-7.922218221101907,14.241333544956568,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Kelton McEwen, Taveon Vann",8.98,16.0,3.0,2.0,8.98,3.0,2.0,0.0,13.3630289532294,2.449979583503471,-1.4563990533406155,14.819428006570014,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Kelton McEwen, Trent Grunewald",8.38,20.0,7.0,1.0,8.38,7.0,1.0,0.0,33.41288782816229,5.787515502273667,-2.8969762810066992,36.30986410916899,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Kelton McEwen, Tyshawn Teague-Johnson",61.39,105.0,-5.0,3.0,61.39,-5.0,3.0,0.0,-3.2578595862518323,-1.9725811223986587,2.78503046127067,-6.042890047522502,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Kelton McEwen, Zavier Castillo",16.32,42.0,16.0,2.0,16.32,16.0,2.0,0.0,39.2156862745098,11.363636363636365,-6.632852126414358,45.848538400924156,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Luke Paddock, Tyshawn Teague-Johnson",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-1.3621658436914694,88.31868758282192,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Rashad Rogers, Trent Grunewald",6.109999999999999,19.0,11.0,1.0,6.109999999999999,11.0,1.0,0.0,72.01309328968904,9.542398612014747,-4.257961500931429,76.27105479062047,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Rashad Rogers, Tyshawn Teague-Johnson",48.47,91.0,-5.0,3.0,48.47,-5.0,3.0,0.0,-4.126263668248401,-2.260653328812027,2.2736961773483015,-6.399959845596703,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Rashad Rogers, Zavier Castillo",13.4,34.0,11.0,2.0,13.4,11.0,2.0,0.0,32.83582089552239,8.239700374531836,-4.552352048558422,37.38817294408081,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Taveon Vann, Tyshawn Teague-Johnson",3.04,0.0,-5.0,1.0,3.04,-5.0,1.0,0.0,-65.78947368421052,-4.646840148698884,1.381692573402418,-67.17116625761294,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Trent Grunewald, Zavier Castillo",3.6399999999999997,9.0,5.0,1.0,3.6399999999999997,5.0,1.0,0.0,54.945054945054956,4.58295142071494,-2.083333333333333,57.02838827838829,UWW,Hope Flying Dutchmen,True
-"Collin Madson, Tyshawn Teague-Johnson, Zavier Castillo",6.55,17.0,6.0,1.0,6.55,6.0,1.0,0.0,36.6412213740458,5.155746509129968,-2.493543503428622,39.134764877474424,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Isaiah Robinson, JR Lukenbill",10.75,23.0,-1.0,3.0,10.75,-1.0,3.0,0.0,-3.7209302325581395,-0.7881773399014779,0.0,-3.7209302325581395,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Isaiah Robinson, Kelton McEwen",1.32,2.0,0.0,1.0,1.32,0.0,1.0,0.0,0.0,0.0,-0.3403675970047651,0.3403675970047651,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Isaiah Robinson, Rashad Rogers",12.66,24.0,-6.0,2.0,12.66,-6.0,2.0,0.0,-18.95734597156398,-4.557538928978352,1.883593897155773,-20.840939868719754,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Isaiah Robinson, Taveon Vann",2.8200000000000003,2.0,-3.0,2.0,2.8200000000000003,-3.0,2.0,0.0,-42.5531914893617,-2.802428771602055,0.6895362868470953,-43.242727776208795,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Isaiah Robinson, Tyshawn Teague-Johnson",15.48,32.0,0.0,3.0,15.48,0.0,3.0,0.0,0.0,0.0,-0.38699690402476783,0.38699690402476783,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Isaiah Robinson, Zavier Castillo",1.83,0.0,-7.0,1.0,1.83,-7.0,1.0,0.0,-153.0054644808743,-6.693760459000718,2.0511067430134173,-155.05657122388772,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, JR Lukenbill, Kelton McEwen",17.44,31.0,5.0,3.0,17.44,5.0,3.0,0.0,11.46788990825688,3.4818941504178276,-2.3668639053254434,13.834753813582324,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, JR Lukenbill, Luke Paddock",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-1.3621658436914694,88.31868758282192,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, JR Lukenbill, Rashad Rogers",11.13,20.0,3.0,1.0,11.13,3.0,1.0,0.0,10.78167115902965,2.346958732642284,-1.4854702441741714,12.267141403203821,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, JR Lukenbill, Taveon Vann",7.92,17.0,4.0,2.0,7.92,4.0,2.0,0.0,20.202020202020204,3.33889816360601,-1.8031013342949873,22.00512153631519,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, JR Lukenbill, Tyshawn Teague-Johnson",10.48,21.0,1.0,3.0,10.48,1.0,3.0,0.0,3.8167938931297707,0.7923930269413628,-0.7382798080472499,4.555073701177021,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Kelton McEwen, Rashad Rogers",11.0,22.0,6.0,2.0,11.0,6.0,2.0,0.0,21.818181818181817,4.705882352941177,-2.5964391691394657,24.414620987321282,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Kelton McEwen, Taveon Vann",6.67,15.0,4.0,2.0,6.67,4.0,2.0,0.0,23.9880059970015,3.4283265481037066,-1.783007934385308,25.771013931386808,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Kelton McEwen, Trent Grunewald",2.5,10.0,6.0,1.0,2.5,6.0,1.0,0.0,96.0,5.647058823529411,-2.4067388688327314,98.40673886883273,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Kelton McEwen, Tyshawn Teague-Johnson",3.69,2.0,-7.0,1.0,3.69,-7.0,1.0,0.0,-75.88075880758808,-6.4087891966124975,2.0842379504993485,-77.96499675808742,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Luke Paddock, Tyshawn Teague-Johnson",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-1.3621658436914694,88.31868758282192,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Rashad Rogers, Trent Grunewald",2.5,10.0,6.0,1.0,2.5,6.0,1.0,0.0,96.0,5.647058823529411,-2.4067388688327314,98.40673886883273,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Rashad Rogers, Tyshawn Teague-Johnson",11.1,21.0,-1.0,2.0,11.1,-1.0,2.0,0.0,-3.603603603603604,-0.7827788649706457,0.0,-3.603603603603604,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Rashad Rogers, Zavier Castillo",1.83,0.0,-7.0,1.0,1.83,-7.0,1.0,0.0,-153.0054644808743,-6.693760459000718,2.0511067430134173,-155.05657122388772,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Taveon Vann, Tyshawn Teague-Johnson",1.57,0.0,-3.0,1.0,1.57,-3.0,1.0,0.0,-76.43312101910828,-2.886697137358672,0.6821864074358318,-77.11530742654412,UWW,Hope Flying Dutchmen,True
-"Darius Chestnut, Tyshawn Teague-Johnson, Zavier Castillo",0.3,0.0,0.0,1.0,0.3,0.0,1.0,0.0,0.0,0.0,-0.3374388392103931,0.3374388392103931,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, JR Lukenbill, Kelton McEwen",23.77,35.0,4.0,3.0,23.77,4.0,3.0,0.0,6.731173748422381,2.5090167790497104,-2.1037130535394972,8.83488680196188,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, JR Lukenbill, Rashad Rogers",8.49,13.0,-5.0,3.0,8.49,-5.0,3.0,0.0,-23.55712603062426,-4.124561765312436,1.4499320344358857,-25.007058065060146,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, JR Lukenbill, Taveon Vann",2.09,3.0,1.0,2.0,2.09,1.0,2.0,0.0,19.138755980861248,0.950344499881207,-0.6852248394004283,19.823980820261678,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, JR Lukenbill, Trent Grunewald",2.24,1.0,-4.0,1.0,2.24,-4.0,1.0,0.0,-71.42857142857142,-3.787878787878788,1.0291595197255574,-72.45773094829697,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson",20.52,39.0,9.0,3.0,20.52,9.0,3.0,0.0,17.54385964912281,5.948446794448117,-4.068348250610252,21.61220789973306,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, JR Lukenbill, Zavier Castillo",1.67,3.0,1.0,1.0,1.67,1.0,1.0,0.0,23.952095808383234,0.9599232061435086,-0.6827686267815993,24.634864435164832,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Kelton McEwen, Rashad Rogers",39.54,68.0,-13.0,3.0,39.54,-13.0,3.0,0.0,-13.151239251390995,-6.537591149107368,6.052963430012609,-19.204202681403604,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Kelton McEwen, Taveon Vann",2.31,1.0,-1.0,1.0,2.31,-1.0,1.0,0.0,-17.316017316017316,-0.9454029780193807,0.0,-17.316017316017316,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Kelton McEwen, Trent Grunewald",2.27,1.0,-4.0,1.0,2.27,-4.0,1.0,0.0,-70.48458149779735,-3.785190442394133,1.0294243802007377,-71.51400587799809,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Kelton McEwen, Tyshawn Teague-Johnson",50.26,86.0,-3.0,3.0,50.26,-3.0,3.0,0.0,-2.3875845602865104,-1.3294925769997787,1.1665208515602215,-3.5541054118467317,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Kelton McEwen, Zavier Castillo",3.15,3.0,-6.0,2.0,3.15,-6.0,2.0,0.0,-76.19047619047619,-5.561993047508691,1.7287578874578615,-77.91923407793405,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",45.31,84.0,-8.0,3.0,45.31,-8.0,3.0,0.0,-7.062458618406532,-3.751025671081936,3.80796953624371,-10.870428154650241,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Rashad Rogers, Zavier Castillo",3.2800000000000002,0.0,-14.0,2.0,3.2800000000000002,-14.0,2.0,0.0,-170.73170731707313,-12.939001848428834,4.499826929733471,-175.2315342468066,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Taveon Vann, Tyshawn Teague-Johnson",3.04,0.0,-5.0,1.0,3.04,-5.0,1.0,0.0,-65.78947368421052,-4.646840148698884,1.381692573402418,-67.17116625761294,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Trent Grunewald, Zavier Castillo",0.03,0.0,0.0,1.0,0.03,0.0,1.0,0.0,0.0,0.0,-0.336671997306624,0.336671997306624,UWW,Hope Flying Dutchmen,True
-"Isaiah Robinson, Tyshawn Teague-Johnson, Zavier Castillo",1.75,0.0,-7.0,2.0,1.75,-7.0,2.0,0.0,-160.0,-6.706586826347305,2.0497053548552397,-162.04970535485523,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Kelton McEwen, Rashad Rogers",18.95,30.0,-6.0,3.0,18.95,-6.0,3.0,0.0,-12.66490765171504,-4.071246819338422,2.0022024226649315,-14.667110074379972,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Kelton McEwen, Taveon Vann",7.51,16.0,5.0,2.0,7.51,5.0,2.0,0.0,26.63115845539281,4.209640075773521,-2.155753166262463,28.786911621655275,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Kelton McEwen, Trent Grunewald",2.24,1.0,-4.0,1.0,2.24,-4.0,1.0,0.0,-71.42857142857142,-3.787878787878788,1.0291595197255574,-72.45773094829697,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson",21.68,30.0,-8.0,2.0,21.68,-8.0,2.0,0.0,-14.760147601476014,-5.188067444876784,2.881844380403458,-17.64199198187947,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Kelton McEwen, Zavier Castillo",8.879999999999999,21.0,2.0,2.0,8.879999999999999,2.0,2.0,0.0,9.00900900900901,1.6366612111292964,-1.0913059294288832,10.100314938437892,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Luke Paddock, Tyshawn Teague-Johnson",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-1.3621658436914694,88.31868758282192,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson",6.0,5.0,-11.0,3.0,6.0,-11.0,3.0,0.0,-73.33333333333333,-9.565217391304348,3.544842254519674,-76.87817558785301,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Rashad Rogers, Zavier Castillo",4.46,13.0,4.0,1.0,4.46,4.0,1.0,0.0,35.87443946188341,3.598740440845704,-1.7485574401119075,37.62299690199532,UWW,Hope Flying Dutchmen,True
-"JR Lukenbill, Tyshawn Teague-Johnson, Zavier Castillo",2.75,5.0,-3.0,1.0,2.75,-3.0,1.0,0.0,-43.63636363636363,-2.807017543859649,0.6891205099491773,-44.32548414631281,UWW,Hope Flying Dutchmen,True
-"Kelton McEwen, Rashad Rogers, Trent Grunewald",6.109999999999999,19.0,11.0,1.0,6.109999999999999,11.0,1.0,0.0,72.01309328968904,9.542398612014747,-4.257961500931429,76.27105479062047,UWW,Hope Flying Dutchmen,True
-"Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",43.62,75.0,-16.0,3.0,43.62,-16.0,3.0,0.0,-14.672168729940395,-7.6536713704855295,7.976601967561818,-22.648770697502215,UWW,Hope Flying Dutchmen,True
-"Kelton McEwen, Rashad Rogers, Zavier Castillo",13.32,34.0,11.0,2.0,13.32,11.0,2.0,0.0,33.03303303303303,8.252063015753938,-4.548900682335102,37.58193371536813,UWW,Hope Flying Dutchmen,True
-"Kelton McEwen, Taveon Vann, Tyshawn Teague-Johnson",1.47,0.0,-2.0,1.0,1.47,-2.0,1.0,0.0,-54.42176870748299,-1.9291053773812394,0.3408025900996847,-54.762571297582674,UWW,Hope Flying Dutchmen,True
-"Kelton McEwen, Trent Grunewald, Zavier Castillo",3.6399999999999997,9.0,5.0,1.0,3.6399999999999997,5.0,1.0,0.0,54.945054945054956,4.58295142071494,-2.083333333333333,57.02838827838829,UWW,Hope Flying Dutchmen,True
-"Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo",8.0,17.0,-1.0,1.0,8.0,-1.0,1.0,0.0,-5.0,-0.8333333333333333,0.0,-5.0,UWW,Hope Flying Dutchmen,True
-"Rashad Rogers, Trent Grunewald, Zavier Castillo",3.61,9.0,5.0,1.0,3.61,5.0,1.0,0.0,55.4016620498615,4.586104104563173,-2.0827909398594118,57.484452989720914,UWW,Hope Flying Dutchmen,True
-"Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",5.550000000000001,12.0,2.0,2.0,5.550000000000001,2.0,2.0,0.0,14.414414414414411,1.7563117453347972,-1.0592285285550358,15.473642942969446,UWW,Hope Flying Dutchmen,True
-"Avery Sanchez, Ben Mehendale, Drew Kozel",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Ben Mehendale, Johnny Lake",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Ben Mehendale, Justin Fisher",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Brendan Cargill",22.2,49.0,8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Carter Bishop",5.0,6.0,-5.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Carter Goodyke",1.5,0.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Drew Kozel",0.6,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Jared Ryg",2.1,9.0,3.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Justin Fisher",3.8000000000000003,5.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Kaden Grau",1.5,0.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Kyle Blauch",3.0,5.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Orion Yant",15.6,45.0,21.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Sean Wesolek",16.5,33.0,8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brady Miller, Tucker Walther",8.9,11.0,-9.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Carter Bishop",27.8,59.0,11.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Drew Kozel",5.4,20.0,9.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Jared Ryg",10.8,16.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Justin Fisher",8.1,12.0,7.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Kaden Grau",2.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Kyle Blauch",46.9,94.0,19.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Orion Yant",72.39999999999999,164.0,52.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Sean Wesolek",30.6,58.0,12.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Brendan Cargill, Tucker Walther",50.9,103.0,11.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Carter Goodyke",1.5,0.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Drew Kozel",1.4,2.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Jared Ryg",2.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Justin Fisher",2.8,5.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Kaden Grau",1.5,0.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Kyle Blauch",8.9,15.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Orion Yant",19.7,46.0,14.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Sean Wesolek",13.4,24.0,8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Bishop, Tucker Walther",8.399999999999999,24.0,3.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Carter Goodyke, Kaden Grau",1.5,0.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Drew Kozel, Jared Ryg",3.0,9.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Drew Kozel, Johnny Lake",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Drew Kozel, Justin Fisher",6.8,16.0,7.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Drew Kozel, Kyle Blauch",3.8,16.0,8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Drew Kozel, Orion Yant",6.2,22.0,9.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Drew Kozel, Sean Wesolek",3.4,9.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Drew Kozel, Tucker Walther",3.0,12.0,6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Jared Ryg, Justin Fisher",4.2,9.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Jared Ryg, Kaden Grau",3.3,6.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Jared Ryg, Kyle Blauch",5.2,4.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Jared Ryg, Orion Yant",10.4,18.0,3.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Jared Ryg, Sean Wesolek",7.9,16.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Jared Ryg, Tucker Walther",2.4,4.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Johnny Lake, Justin Fisher",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Justin Fisher, Kaden Grau",2.9000000000000004,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Justin Fisher, Kyle Blauch",5.6000000000000005,9.0,9.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Justin Fisher, Orion Yant",2.1,4.0,4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Justin Fisher, Sean Wesolek",7.4,10.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Justin Fisher, Tucker Walther",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Kaden Grau, Kyle Blauch",4.0,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Kaden Grau, Sean Wesolek",1.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Kaden Grau, Tucker Walther",2.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Kyle Blauch, Orion Yant",37.8,77.0,21.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Kyle Blauch, Sean Wesolek",0.2,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Kyle Blauch, Tucker Walther",34.9,70.0,12.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Orion Yant, Sean Wesolek",25.4,58.0,28.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Orion Yant, Tucker Walther",45.3,94.0,22.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Avery Sanchez, Sean Wesolek, Tucker Walther",8.8,9.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Brady Miller, Jacob Van Hekken",1.6,8.0,4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Brady Miller, Jared Ryg",1.6,8.0,4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Brady Miller, Johnny Lake",1.0,7.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Brady Miller, Kaden Grau",0.6,1.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Carter Goodyke, Drew Kozel",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Carter Goodyke, Jacob Van Hekken",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Carter Goodyke, Johnny Lake",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Drew Kozel, Jacob Van Hekken",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Drew Kozel, Johnny Lake",6.5,11.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Drew Kozel, Justin Fisher",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Jacob Van Hekken, Jared Ryg",1.6,8.0,4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Jacob Van Hekken, Johnny Lake",3.3,9.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Jacob Van Hekken, Kaden Grau",0.6,1.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Jared Ryg, Johnny Lake",1.0,7.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Jared Ryg, Kaden Grau",0.6,1.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Ben Mehendale, Johnny Lake, Justin Fisher",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Carter Bishop",14.4,23.0,2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Drew Kozel",0.6,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Jared Ryg",14.8,36.0,6.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Justin Fisher",3.2,3.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Kaden Grau",1.8,6.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Kyle Blauch",5.7,11.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Orion Yant",26.5,68.0,24.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Sean Wesolek",28.1,49.0,5.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Brendan Cargill, Tucker Walther",21.3,38.0,-12.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Carter Goodyke",1.6,0.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Drew Kozel",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Jared Ryg",12.200000000000001,26.0,9.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Justin Fisher",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Kaden Grau",5.0,7.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Kyle Blauch",2.3,4.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Orion Yant",10.0,21.0,11.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Sean Wesolek",15.3,20.0,0.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Bishop, Tucker Walther",9.700000000000001,13.0,5.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Goodyke, Drew Kozel",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Goodyke, Jacob Van Hekken",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Goodyke, Jared Ryg",0.1,0.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Goodyke, Justin Fisher",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Carter Goodyke, Kaden Grau",1.6,0.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Drew Kozel, Jacob Van Hekken",3.0,6.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Drew Kozel, Jared Ryg",3.0,6.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Drew Kozel, Justin Fisher",6.1,11.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Drew Kozel, Sean Wesolek",0.1,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Drew Kozel, Tucker Walther",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jacob Van Hekken, Jared Ryg",4.8,14.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jacob Van Hekken, Johnny Lake",1.0,7.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jacob Van Hekken, Justin Fisher",2.9,6.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jacob Van Hekken, Kaden Grau",0.8,1.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jacob Van Hekken, Sean Wesolek",0.30000000000000004,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jared Ryg, Johnny Lake",1.0,7.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jared Ryg, Justin Fisher",6.9,14.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jared Ryg, Kaden Grau",4.3,8.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jared Ryg, Kyle Blauch",3.5,8.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jared Ryg, Orion Yant",14.1,35.0,10.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jared Ryg, Sean Wesolek",14.4,26.0,8.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Jared Ryg, Tucker Walther",13.200000000000001,25.0,0.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Justin Fisher, Kyle Blauch",1.2000000000000002,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Justin Fisher, Orion Yant",3.4000000000000004,6.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Justin Fisher, Sean Wesolek",5.4,7.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Justin Fisher, Tucker Walther",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Kaden Grau, Orion Yant",3.3,7.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Kaden Grau, Sean Wesolek",3.6,10.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Kaden Grau, Tucker Walther",0.3,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Kyle Blauch, Orion Yant",2.8,7.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Kyle Blauch, Tucker Walther",1.0,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Orion Yant, Sean Wesolek",18.5,39.0,19.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Orion Yant, Tucker Walther",14.1,24.0,-3.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brady Miller, Sean Wesolek, Tucker Walther",15.100000000000001,20.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Carter Bishop, Drew Kozel",1.0,2.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Carter Bishop, Jared Ryg",7.2,10.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Carter Bishop, Justin Fisher",2.8,5.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Carter Bishop, Kyle Blauch",9.7,19.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Carter Bishop, Orion Yant",24.099999999999998,55.0,21.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Carter Bishop, Sean Wesolek",22.7,31.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Carter Bishop, Tucker Walther",13.9,30.0,-2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Drew Kozel, Justin Fisher",0.6,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Drew Kozel, Kyle Blauch",3.8,16.0,8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Drew Kozel, Orion Yant",4.8,18.0,7.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Drew Kozel, Tucker Walther",3.0,12.0,6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Jared Ryg, Kaden Grau",1.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Jared Ryg, Kyle Blauch",8.8,12.0,-8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Jared Ryg, Orion Yant",15.8,30.0,1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Jared Ryg, Sean Wesolek",10.3,12.0,-10.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Jared Ryg, Tucker Walther",15.8,27.0,-9.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Justin Fisher, Kaden Grau",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Justin Fisher, Kyle Blauch",4.3,9.0,9.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Justin Fisher, Orion Yant",2.1,4.0,4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Justin Fisher, Sean Wesolek",3.2,1.0,-4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Justin Fisher, Tucker Walther",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Kaden Grau, Kyle Blauch",2.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Kaden Grau, Orion Yant",2.0,6.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Kaden Grau, Sean Wesolek",2.3,8.0,3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Kaden Grau, Tucker Walther",1.8,4.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Kyle Blauch, Orion Yant",38.699999999999996,79.0,18.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Kyle Blauch, Sean Wesolek",0.2,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Kyle Blauch, Tucker Walther",36.4,74.0,6.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Orion Yant, Sean Wesolek",29.1,61.0,22.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Orion Yant, Tucker Walther",53.0,112.0,18.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Brendan Cargill, Sean Wesolek, Tucker Walther",16.0,20.0,-11.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Carter Goodyke, Jared Ryg",0.1,0.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Carter Goodyke, Kaden Grau",1.6,0.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Drew Kozel, Justin Fisher",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Drew Kozel, Orion Yant",1.4,2.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Drew Kozel, Sean Wesolek",0.4,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Drew Kozel, Tucker Walther",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Jared Ryg, Kaden Grau",3.5,7.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Jared Ryg, Kyle Blauch",3.2,4.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Jared Ryg, Orion Yant",6.3,12.0,6.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Jared Ryg, Sean Wesolek",9.0,13.0,0.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Jared Ryg, Tucker Walther",5.4,4.0,-4.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Justin Fisher, Kyle Blauch",1.8,5.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Justin Fisher, Sean Wesolek",1.0,0.0,-2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Justin Fisher, Tucker Walther",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Kaden Grau, Orion Yant",1.8,3.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Kaden Grau, Sean Wesolek",1.6,4.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Kyle Blauch, Orion Yant",2.4,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Kyle Blauch, Sean Wesolek",0.2,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Kyle Blauch, Tucker Walther",3.3,8.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Orion Yant, Sean Wesolek",15.0,28.0,14.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Orion Yant, Tucker Walther",7.5,20.0,7.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Bishop, Sean Wesolek, Tucker Walther",6.6000000000000005,6.0,-6.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Goodyke, Drew Kozel, Jacob Van Hekken",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Goodyke, Drew Kozel, Johnny Lake",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Goodyke, Drew Kozel, Justin Fisher",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Goodyke, Jacob Van Hekken, Johnny Lake",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Goodyke, Jacob Van Hekken, Justin Fisher",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Carter Goodyke, Jared Ryg, Kaden Grau",0.1,0.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jacob Van Hekken, Jared Ryg",3.6,8.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jacob Van Hekken, Johnny Lake",2.3,2.0,-3.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jacob Van Hekken, Justin Fisher",2.9,6.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jacob Van Hekken, Kaden Grau",0.6,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jacob Van Hekken, Sean Wesolek",0.7,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jared Ryg, Justin Fisher",4.9,11.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jared Ryg, Kaden Grau",0.6,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jared Ryg, Orion Yant",1.0,4.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Jared Ryg, Sean Wesolek",3.7,11.0,4.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Johnny Lake, Justin Fisher",4.2,9.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Justin Fisher, Kaden Grau",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Justin Fisher, Sean Wesolek",2.0,5.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Justin Fisher, Tucker Walther",2.6,3.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Kaden Grau, Sean Wesolek",0.6,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Kyle Blauch, Orion Yant",3.8,16.0,8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Kyle Blauch, Tucker Walther",3.0,12.0,6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Orion Yant, Sean Wesolek",1.4,4.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Drew Kozel, Orion Yant, Tucker Walther",3.0,12.0,6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jacob Van Hekken, Jared Ryg, Johnny Lake",1.0,7.0,5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jacob Van Hekken, Jared Ryg, Justin Fisher",2.9,6.0,-5.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jacob Van Hekken, Jared Ryg, Kaden Grau",1.4,3.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jacob Van Hekken, Jared Ryg, Sean Wesolek",0.9,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jacob Van Hekken, Kaden Grau, Sean Wesolek",0.8,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Justin Fisher, Kaden Grau",1.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Justin Fisher, Kyle Blauch",0.8,2.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Justin Fisher, Orion Yant",3.4000000000000004,6.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Justin Fisher, Sean Wesolek",6.8,13.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Kaden Grau, Kyle Blauch",1.7,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Kaden Grau, Orion Yant",1.8,3.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Kaden Grau, Sean Wesolek",4.0,8.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Kyle Blauch, Orion Yant",5.1000000000000005,4.0,-1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Kyle Blauch, Tucker Walther",3.2,4.0,-8.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Orion Yant, Sean Wesolek",7.7,14.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Orion Yant, Tucker Walther",9.7,18.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Jared Ryg, Sean Wesolek, Tucker Walther",8.200000000000001,11.0,-1.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Justin Fisher, Kaden Grau, Kyle Blauch",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Justin Fisher, Kaden Grau, Sean Wesolek",1.6,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Justin Fisher, Kaden Grau, Tucker Walther",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Justin Fisher, Kyle Blauch, Orion Yant",2.9000000000000004,6.0,6.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Justin Fisher, Kyle Blauch, Tucker Walther",1.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Justin Fisher, Orion Yant, Sean Wesolek",2.6,4.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Kaden Grau, Kyle Blauch, Tucker Walther",2.3,0.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Kaden Grau, Orion Yant, Sean Wesolek",2.0,6.0,1.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Kaden Grau, Orion Yant, Tucker Walther",0.5,2.0,0.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Kaden Grau, Sean Wesolek, Tucker Walther",0.8,4.0,2.0,1.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Kyle Blauch, Orion Yant, Tucker Walther",30.7,64.0,12.0,4.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
-"Orion Yant, Sean Wesolek, Tucker Walther",7.2,8.0,2.0,2.0,,,,,,,,,Opponent,Hope Flying Dutchmen,False
+"Brock Marino, Collin Madson, Darius Chestnut",5.67,9.0,-3.0,1.0,5.67,-3.0,1.0,0.0,-21.164021164021165,-2.627545434639807,0.7602153943617357,-21.9242365583829,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Collin Madson, Isaiah Robinson",6.390000000000001,11.0,5.0,1.0,6.390000000000001,5.0,1.0,0.0,31.298904538341155,4.311273981461522,-1.2728314134792849,32.57173595182044,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Collin Madson, JR Lukenbill",2.64,6.0,4.0,1.0,2.64,4.0,1.0,0.0,60.60606060606061,3.7523452157598496,-0.994530084535057,61.600590690595666,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Collin Madson, Kelton McEwen",13.11,22.0,4.0,1.0,13.11,4.0,1.0,0.0,12.204424103737605,3.0126153266804745,-1.063759058573233,13.268183162310837,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Collin Madson, Trent Grunewald",5.45,10.0,5.0,1.0,5.45,5.0,1.0,0.0,36.69724770642202,4.4004400440044,-1.265262225596255,37.96250993201827,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Collin Madson, Tyshawn Teague-Johnson",6.07,8.0,-3.0,1.0,6.07,-3.0,1.0,0.0,-19.769357495881383,-2.6047319296722375,0.762146713242299,-20.531504209123682,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Darius Chestnut, Isaiah Robinson",1.52,2.0,-1.0,1.0,1.52,-1.0,1.0,0.0,-26.315789473684212,-0.9633911368015413,0.24691358024691357,-26.562703053931127,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Darius Chestnut, JR Lukenbill",1.67,0.0,-5.0,1.0,1.67,-5.0,1.0,0.0,-119.76047904191617,-4.799616030717543,1.235712079085573,-120.99619112100174,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Darius Chestnut, Kelton McEwen",7.34,9.0,-8.0,1.0,7.34,-8.0,1.0,0.0,-43.59673024523161,-6.759611322348964,2.048917915226021,-45.64564816045763,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Darius Chestnut, Trent Grunewald",4.04,5.0,-1.0,1.0,4.04,-1.0,1.0,0.0,-9.900990099009901,-0.9082652134423251,0.25081514923501375,-10.151805248244914,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Darius Chestnut, Tyshawn Teague-Johnson",3.15,6.0,-3.0,1.0,3.15,-3.0,1.0,0.0,-38.095238095238095,-2.7809965237543457,0.7482696264887447,-38.84350772172684,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Darius Chestnut, Zavier Castillo",3.19,2.0,-6.0,1.0,3.19,-6.0,1.0,0.0,-75.23510971786834,-5.556841861542024,1.4969126177259402,-76.73202233559428,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Isaiah Robinson, JR Lukenbill",2.64,6.0,4.0,1.0,2.64,4.0,1.0,0.0,60.60606060606061,3.7523452157598496,-0.994530084535057,61.600590690595666,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Isaiah Robinson, Kelton McEwen",6.390000000000001,11.0,5.0,1.0,6.390000000000001,5.0,1.0,0.0,31.298904538341155,4.311273981461522,-1.2728314134792849,32.57173595182044,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Isaiah Robinson, Trent Grunewald",3.4,7.0,2.0,1.0,3.4,2.0,1.0,0.0,23.529411764705884,1.8433179723502304,-0.49962528103922055,24.029037045745106,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Isaiah Robinson, Tyshawn Teague-Johnson",1.87,0.0,-2.0,1.0,1.87,-2.0,1.0,0.0,-42.7807486631016,-1.9106759016001913,0.4948963810702134,-43.27564504417181,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Isaiah Robinson, Zavier Castillo",1.52,2.0,-1.0,1.0,1.52,-1.0,1.0,0.0,-26.315789473684212,-0.9633911368015413,0.24691358024691357,-26.562703053931127,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, JR Lukenbill, Kelton McEwen",4.3100000000000005,6.0,-1.0,1.0,4.3100000000000005,-1.0,1.0,0.0,-9.28074245939675,-0.9027307605506657,0.25124049996859493,-9.531982959365346,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, JR Lukenbill, Zavier Castillo",1.67,0.0,-5.0,1.0,1.67,-5.0,1.0,0.0,-119.76047904191617,-4.799616030717543,1.235712079085573,-120.99619112100174,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Kelton McEwen, Trent Grunewald",5.45,10.0,5.0,1.0,5.45,5.0,1.0,0.0,36.69724770642202,4.4004400440044,-1.265262225596255,37.96250993201827,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Kelton McEwen, Tyshawn Teague-Johnson",6.07,8.0,-3.0,1.0,6.07,-3.0,1.0,0.0,-19.769357495881383,-2.6047319296722375,0.762146713242299,-20.531504209123682,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Kelton McEwen, Zavier Castillo",1.67,0.0,-5.0,1.0,1.67,-5.0,1.0,0.0,-119.76047904191617,-4.799616030717543,1.235712079085573,-120.99619112100174,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Trent Grunewald, Tyshawn Teague-Johnson",1.05,2.0,2.0,1.0,1.05,2.0,1.0,0.0,76.19047619047619,1.94884287454324,-0.49239859666399954,76.6828747871402,UWW,Gustavus Adolphus Golden Gusties,True
+"Brock Marino, Trent Grunewald, Zavier Castillo",1.52,2.0,-1.0,1.0,1.52,-1.0,1.0,0.0,-26.315789473684212,-0.9633911368015413,0.24691358024691357,-26.562703053931127,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Isaiah Robinson",21.23,44.0,-2.0,4.0,21.23,-2.0,4.0,0.0,-3.768252472915685,-1.3065490772497141,0.5622320612832946,-4.3304845341989795,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, JR Lukenbill",28.7,55.0,1.0,4.0,28.7,1.0,4.0,0.0,1.3937282229965156,0.5822416302765647,-0.29669188547693215,1.6904201084734476,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Kelton McEwen",29.01,55.0,1.0,4.0,29.01,1.0,4.0,0.0,1.3788348845225784,0.5796261411389654,-0.2973756598022451,1.6762105443248236,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Luke Paddock",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-0.740101147156778,87.69662288628723,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Rashad Rogers",22.89,51.0,9.0,3.0,22.89,9.0,3.0,0.0,15.727391874180865,5.724280489743997,-2.5599089810140088,18.287300855194875,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Taveon Vann",9.49,17.0,1.0,2.0,9.49,1.0,2.0,0.0,4.214963119072708,0.8082440897150939,-0.2596896708433422,4.474652789916051,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Trent Grunewald",10.2,28.0,11.0,2.0,10.2,11.0,2.0,0.0,43.13725490196079,8.764940239043824,-2.8698147665014346,46.00706966846222,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Tyshawn Teague-Johnson",20.8,38.0,-8.0,4.0,20.8,-8.0,4.0,0.0,-15.384615384615383,-5.263157894736842,2.2421524663677133,-17.626767850983097,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Darius Chestnut, Zavier Castillo",1.53,0.0,-7.0,1.0,1.53,-7.0,1.0,0.0,-183.0065359477124,-6.742114134360703,1.728501759367862,-184.73503770708027,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Isaiah Robinson, JR Lukenbill",36.94,60.0,8.0,4.0,36.94,8.0,4.0,0.0,8.662696264212236,4.159085001299714,-2.5280455048190866,11.190741769031323,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Isaiah Robinson, Kelton McEwen",77.0,123.0,8.0,4.0,77.0,8.0,4.0,0.0,4.155844155844156,2.735042735042735,-3.6985668053629217,7.854410961207078,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Isaiah Robinson, Rashad Rogers",66.49,120.0,-5.0,4.0,66.49,-5.0,4.0,0.0,-3.007971123477215,-1.8781106207155602,2.0612181799443468,-5.069189303421561,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Isaiah Robinson, Taveon Vann",5.13,3.0,-4.0,2.0,5.13,-4.0,2.0,0.0,-31.18908382066277,-3.5453135386660755,1.010164783130248,-32.199248603793016,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Isaiah Robinson, Trent Grunewald",15.16,30.0,13.0,2.0,15.16,13.0,2.0,0.0,34.30079155672823,9.427121102248005,-3.5049878673496897,37.80577942407792,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Isaiah Robinson, Tyshawn Teague-Johnson",83.05,140.0,3.0,4.0,83.05,3.0,4.0,0.0,1.444912703190849,0.9752133279154815,-1.4912389710451097,2.936151674235959,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Isaiah Robinson, Zavier Castillo",3.23,3.0,-6.0,1.0,3.23,-6.0,1.0,0.0,-74.30340557275541,-5.551700208188758,1.4972861688190153,-75.80069174157443,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, JR Lukenbill, Kelton McEwen",57.32,96.0,5.0,4.0,57.32,5.0,4.0,0.0,3.489183531053733,2.055076037813399,-1.8832391713747643,5.372422702428498,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, JR Lukenbill, Luke Paddock",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-0.740101147156778,87.69662288628723,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, JR Lukenbill, Rashad Rogers",19.82,33.0,-6.0,3.0,19.82,-6.0,3.0,0.0,-12.108980827447022,-4.012036108324975,1.6701461377870561,-13.779126965234077,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, JR Lukenbill, Taveon Vann",8.76,18.0,5.0,2.0,8.76,5.0,2.0,0.0,22.831050228310502,4.1017227235438884,-1.2923235978288963,24.1233738261394,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, JR Lukenbill, Trent Grunewald",6.87,9.0,-7.0,2.0,6.87,-7.0,2.0,0.0,-40.756914119359536,-5.973970556859398,1.7874241940631983,-42.544338313422735,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, JR Lukenbill, Tyshawn Teague-Johnson",28.34,44.0,-3.0,4.0,28.34,-3.0,4.0,0.0,-4.234297812279464,-1.7559262510974538,0.8877052818464269,-5.1220030941258905,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, JR Lukenbill, Zavier Castillo",8.879999999999999,21.0,2.0,2.0,8.879999999999999,2.0,2.0,0.0,9.00900900900901,1.6366612111292964,-0.5173305742369374,9.526339583245946,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Kelton McEwen, Rashad Rogers",70.71,131.0,5.0,4.0,70.71,5.0,4.0,0.0,2.8284542497525105,1.8065215427693975,-2.1549402004094382,4.983394450161949,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Kelton McEwen, Taveon Vann",8.98,16.0,3.0,2.0,8.98,3.0,2.0,0.0,13.3630289532294,2.449979583503471,-0.7764979940468486,14.139526947276249,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Kelton McEwen, Trent Grunewald",19.09,42.0,15.0,2.0,19.09,15.0,2.0,0.0,31.43006809848088,10.154002369267218,-4.154261580004154,35.584329678485034,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Kelton McEwen, Tyshawn Teague-Johnson",78.15,124.0,-9.0,4.0,78.15,-9.0,4.0,0.0,-4.606525911708253,-3.046974185357596,4.216938034438328,-8.823463946146582,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Kelton McEwen, Zavier Castillo",16.32,42.0,16.0,2.0,16.32,16.0,2.0,0.0,39.2156862745098,11.363636363636365,-4.3478260869565215,43.56351236146632,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Luke Paddock, Tyshawn Teague-Johnson",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-0.740101147156778,87.69662288628723,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Rashad Rogers, Trent Grunewald",12.87,36.0,21.0,2.0,12.87,21.0,2.0,0.0,65.26806526806527,15.888027236618122,-5.575838035180882,70.84390330324615,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Rashad Rogers, Tyshawn Teague-Johnson",65.51,114.0,-9.0,4.0,65.51,-9.0,4.0,0.0,-5.4953442222561435,-3.4119988626670454,3.673094582185491,-9.168438804441635,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Rashad Rogers, Zavier Castillo",13.4,34.0,11.0,2.0,13.4,11.0,2.0,0.0,32.83582089552239,8.239700374531836,-2.9309885424993336,35.766809438021724,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Taveon Vann, Tyshawn Teague-Johnson",3.04,0.0,-5.0,1.0,3.04,-5.0,1.0,0.0,-65.78947368421052,-4.646840148698884,1.246261216350947,-67.03573490056147,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Trent Grunewald, Tyshawn Teague-Johnson",7.33,13.0,6.0,1.0,7.33,6.0,1.0,0.0,32.74215552523874,5.0707796323684775,-1.5365900505794226,34.278745575818164,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Trent Grunewald, Zavier Castillo",3.6399999999999997,9.0,5.0,1.0,3.6399999999999997,5.0,1.0,0.0,54.945054945054956,4.58295142071494,-1.2509382036527394,56.19599314870769,UWW,Gustavus Adolphus Golden Gusties,True
+"Collin Madson, Tyshawn Teague-Johnson, Zavier Castillo",6.55,17.0,6.0,1.0,6.55,6.0,1.0,0.0,36.6412213740458,5.155746509129968,-1.528954577307766,38.17017595135356,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Isaiah Robinson, JR Lukenbill",11.77,23.0,-3.0,4.0,11.77,-3.0,4.0,0.0,-10.195412064570943,-2.3179447556499904,0.7907742998352553,-10.9861863644062,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Isaiah Robinson, Kelton McEwen",1.32,2.0,0.0,1.0,1.32,0.0,1.0,0.0,0.0,0.0,0.0,0.0,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Isaiah Robinson, Rashad Rogers",16.09,34.0,0.0,3.0,16.09,0.0,3.0,0.0,0.0,0.0,0.0,0.0,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Isaiah Robinson, Taveon Vann",2.8200000000000003,2.0,-3.0,2.0,2.8200000000000003,-3.0,2.0,0.0,-42.5531914893617,-2.802428771602055,0.7467330429371499,-43.29992453229885,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Isaiah Robinson, Trent Grunewald",5.97,12.0,3.0,1.0,5.97,3.0,1.0,0.0,20.100502512562816,2.6103980857080704,-0.7616629641383688,20.862165476701186,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Isaiah Robinson, Tyshawn Teague-Johnson",15.48,32.0,0.0,3.0,15.48,0.0,3.0,0.0,0.0,0.0,0.0,0.0,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Isaiah Robinson, Zavier Castillo",4.65,2.0,-12.0,2.0,4.65,-12.0,2.0,0.0,-103.2258064516129,-10.750279955207168,3.021338201044879,-106.24714465265778,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, JR Lukenbill, Kelton McEwen",21.14,36.0,-3.0,4.0,21.14,-3.0,4.0,0.0,-5.676442762535477,-1.9627085377821394,0.8428150021070375,-6.519257764642514,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, JR Lukenbill, Luke Paddock",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-0.740101147156778,87.69662288628723,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, JR Lukenbill, Rashad Rogers",11.13,20.0,3.0,1.0,11.13,3.0,1.0,0.0,10.78167115902965,2.346958732642284,-0.7874532449635802,11.569124403993229,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, JR Lukenbill, Taveon Vann",7.92,17.0,4.0,2.0,7.92,4.0,2.0,0.0,20.202020202020204,3.33889816360601,-1.0282776349614395,21.230297836981645,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, JR Lukenbill, Trent Grunewald",3.05,5.0,-5.0,1.0,3.05,-5.0,1.0,0.0,-65.57377049180329,-4.645760743321719,1.2463388795413473,-66.82010937134463,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, JR Lukenbill, Tyshawn Teague-Johnson",10.48,21.0,1.0,3.0,10.48,1.0,3.0,0.0,3.8167938931297707,0.7923930269413628,-0.2613695765812859,4.078163469711057,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, JR Lukenbill, Zavier Castillo",1.67,0.0,-5.0,1.0,1.67,-5.0,1.0,0.0,-119.76047904191617,-4.799616030717543,1.235712079085573,-120.99619112100174,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Kelton McEwen, Rashad Rogers",11.0,22.0,6.0,2.0,11.0,6.0,2.0,0.0,21.818181818181817,4.705882352941177,-1.5735641227380015,23.39174594091982,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Kelton McEwen, Taveon Vann",6.67,15.0,4.0,2.0,6.67,4.0,2.0,0.0,23.9880059970015,3.4283265481037066,-1.0200828817341407,25.00808887873564,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Kelton McEwen, Trent Grunewald",7.05,18.0,3.0,2.0,7.05,3.0,2.0,0.0,17.02127659574468,2.55047821466525,-0.7669201763916406,17.78819677213632,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Kelton McEwen, Tyshawn Teague-Johnson",6.84,8.0,-10.0,2.0,6.84,-10.0,2.0,0.0,-58.47953216374269,-8.539709649871904,2.552974214960429,-61.03250637870312,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Kelton McEwen, Zavier Castillo",1.67,0.0,-5.0,1.0,1.67,-5.0,1.0,0.0,-119.76047904191617,-4.799616030717543,1.235712079085573,-120.99619112100174,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Luke Paddock, Tyshawn Teague-Johnson",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-0.740101147156778,87.69662288628723,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Rashad Rogers, Trent Grunewald",5.93,20.0,12.0,2.0,5.93,12.0,2.0,0.0,80.94435075885329,10.450685826257349,-3.0458785455929944,83.99022930444629,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Rashad Rogers, Tyshawn Teague-Johnson",11.1,21.0,-1.0,2.0,11.1,-1.0,2.0,0.0,-3.603603603603604,-0.7827788649706457,0.26243275160740054,-3.866036355211005,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Rashad Rogers, Zavier Castillo",3.13,0.0,-11.0,2.0,3.13,-11.0,2.0,0.0,-140.57507987220447,-10.201715743102248,2.7433131741380383,-143.31839304634252,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Taveon Vann, Tyshawn Teague-Johnson",1.57,0.0,-3.0,1.0,1.57,-3.0,1.0,0.0,-76.43312101910828,-2.886697137358672,0.7409694350108058,-77.1740904541191,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Trent Grunewald, Zavier Castillo",2.8200000000000003,2.0,-5.0,1.0,2.8200000000000003,-5.0,1.0,0.0,-70.92198581560284,-4.670714619336758,1.2445550715619165,-72.16654088716476,UWW,Gustavus Adolphus Golden Gusties,True
+"Darius Chestnut, Tyshawn Teague-Johnson, Zavier Castillo",0.3,0.0,0.0,1.0,0.3,0.0,1.0,0.0,0.0,0.0,0.0,0.0,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, JR Lukenbill, Kelton McEwen",29.62,44.0,10.0,4.0,29.62,10.0,4.0,0.0,13.50438892640108,5.745475438092502,-2.9873039581777445,16.491692884578825,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, JR Lukenbill, Rashad Rogers",8.49,13.0,-5.0,3.0,8.49,-5.0,3.0,0.0,-23.55712603062426,-4.124561765312436,1.290072889118235,-24.847198919742496,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, JR Lukenbill, Taveon Vann",2.09,3.0,1.0,2.0,2.09,1.0,2.0,0.0,19.138755980861248,0.950344499881207,-0.2477854178281608,19.38654139868941,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, JR Lukenbill, Trent Grunewald",4.84,4.0,-4.0,2.0,4.84,-4.0,2.0,0.0,-33.057851239669425,-3.5682426404995535,1.008318628686665,-34.06616986835609,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, JR Lukenbill, Tyshawn Teague-Johnson",22.15,39.0,9.0,4.0,22.15,9.0,4.0,0.0,16.252821670428894,5.792437650844731,-2.5465091603593404,18.799330830788236,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, JR Lukenbill, Zavier Castillo",1.67,3.0,1.0,1.0,1.67,1.0,1.0,0.0,23.952095808383234,0.9599232061435086,-0.24714241581711457,24.19923822420035,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Kelton McEwen, Rashad Rogers",46.949999999999996,75.0,-18.0,4.0,46.949999999999996,-18.0,4.0,0.0,-15.335463258785945,-8.280621046578494,6.176546281204426,-21.51200953999037,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Kelton McEwen, Taveon Vann",2.31,1.0,-1.0,1.0,2.31,-1.0,1.0,0.0,-17.316017316017316,-0.9454029780193807,0.24812356553563675,-17.56414088155295,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Kelton McEwen, Trent Grunewald",7.38,13.0,5.0,2.0,7.38,5.0,2.0,0.0,27.100271002710027,4.221190375685943,-1.280901754835404,28.381172757545432,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Kelton McEwen, Tyshawn Teague-Johnson",62.82,97.0,-6.0,4.0,62.82,-6.0,4.0,0.0,-3.8204393505253105,-2.3341762303053883,2.383316782522343,-6.203756133047653,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Kelton McEwen, Zavier Castillo",3.15,3.0,-6.0,2.0,3.15,-6.0,2.0,0.0,-76.19047619047619,-5.561993047508691,1.4965392529774895,-77.68701544345367,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Rashad Rogers, Trent Grunewald",8.06,17.0,6.0,1.0,8.06,6.0,1.0,0.0,29.776674937965257,4.9937578027465666,-1.5438054805094557,31.320480418474713,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Rashad Rogers, Tyshawn Teague-Johnson",62.35,107.0,-12.0,4.0,62.35,-12.0,4.0,0.0,-7.698476343223737,-4.689789936492429,4.744489473163981,-12.442965816387717,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Rashad Rogers, Zavier Castillo",4.58,0.0,-18.0,3.0,4.58,-18.0,3.0,0.0,-157.2052401746725,-16.150740242261104,4.530011325028313,-161.7352514997008,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Taveon Vann, Tyshawn Teague-Johnson",3.04,0.0,-5.0,1.0,3.04,-5.0,1.0,0.0,-65.78947368421052,-4.646840148698884,1.246261216350947,-67.03573490056147,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Trent Grunewald, Tyshawn Teague-Johnson",6.279999999999999,11.0,4.0,1.0,6.279999999999999,4.0,1.0,0.0,25.477707006369428,3.4572169403630078,-1.0175527855507502,26.49525979192018,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Trent Grunewald, Zavier Castillo",2.85,2.0,-5.0,2.0,2.85,-5.0,2.0,0.0,-70.17543859649122,-4.667444574095683,1.2447874525424782,-71.4202260490337,UWW,Gustavus Adolphus Golden Gusties,True
+"Isaiah Robinson, Tyshawn Teague-Johnson, Zavier Castillo",1.75,0.0,-7.0,2.0,1.75,-7.0,2.0,0.0,-160.0,-6.706586826347305,1.7308524448290783,-161.73085244482908,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Kelton McEwen, Rashad Rogers",18.95,30.0,-6.0,3.0,18.95,-6.0,3.0,0.0,-12.66490765171504,-4.071246819338422,1.6600954554886904,-14.325003107203731,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Kelton McEwen, Taveon Vann",7.51,16.0,5.0,2.0,7.51,5.0,2.0,0.0,26.63115845539281,4.209640075773521,-1.2819691045445802,27.91312755993739,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Kelton McEwen, Trent Grunewald",5.85,9.0,-5.0,2.0,5.85,-5.0,2.0,0.0,-34.188034188034194,-4.362050163576881,1.268472125325046,-35.45650631335924,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Kelton McEwen, Tyshawn Teague-Johnson",23.310000000000002,30.0,-8.0,3.0,23.310000000000002,-8.0,3.0,0.0,-13.728013728013726,-5.0544937608592635,2.2822908494401255,-16.01030457745385,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Kelton McEwen, Zavier Castillo",10.55,21.0,-3.0,3.0,10.55,-3.0,3.0,0.0,-11.374407582938389,-2.3738872403560833,0.7844675426554226,-12.158875125593811,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Luke Paddock, Tyshawn Teague-Johnson",1.38,3.0,3.0,1.0,1.38,3.0,1.0,0.0,86.95652173913045,2.899951667472209,-0.740101147156778,87.69662288628723,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Rashad Rogers, Tyshawn Teague-Johnson",6.0,5.0,-11.0,3.0,6.0,-11.0,3.0,0.0,-73.33333333333333,-9.565217391304348,2.793296089385475,-76.1266294227188,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Rashad Rogers, Zavier Castillo",4.46,13.0,4.0,1.0,4.46,4.0,1.0,0.0,35.87443946188341,3.598740440845704,-1.0059097196026656,36.880349181486075,UWW,Gustavus Adolphus Golden Gusties,True
+"JR Lukenbill, Tyshawn Teague-Johnson, Zavier Castillo",2.75,5.0,-3.0,1.0,2.75,-3.0,1.0,0.0,-43.63636363636363,-2.807017543859649,0.7464079119238664,-44.3827715482875,UWW,Gustavus Adolphus Golden Gusties,True
+"Kelton McEwen, Rashad Rogers, Trent Grunewald",6.109999999999999,19.0,11.0,1.0,6.109999999999999,11.0,1.0,0.0,72.01309328968904,9.542398612014747,-2.7952480782669458,74.80834136795599,UWW,Gustavus Adolphus Golden Gusties,True
+"Kelton McEwen, Rashad Rogers, Tyshawn Teague-Johnson",51.03,82.0,-21.0,4.0,51.03,-21.0,4.0,0.0,-16.46090534979424,-9.227727122926508,7.467330429371499,-23.92823577916574,UWW,Gustavus Adolphus Golden Gusties,True
+"Kelton McEwen, Rashad Rogers, Zavier Castillo",13.32,34.0,11.0,2.0,13.32,11.0,2.0,0.0,33.03303303303303,8.252063015753938,-2.9294274300932086,35.962460463126234,UWW,Gustavus Adolphus Golden Gusties,True
+"Kelton McEwen, Taveon Vann, Tyshawn Teague-Johnson",1.47,0.0,-2.0,1.0,1.47,-2.0,1.0,0.0,-54.42176870748299,-1.9291053773812394,0.4936747917309472,-54.915443499213936,UWW,Gustavus Adolphus Golden Gusties,True
+"Kelton McEwen, Trent Grunewald, Tyshawn Teague-Johnson",2.7,6.0,6.0,1.0,2.7,6.0,1.0,0.0,88.88888888888887,5.620608899297423,-1.492351697550056,90.38124058643892,UWW,Gustavus Adolphus Golden Gusties,True
+"Kelton McEwen, Trent Grunewald, Zavier Castillo",3.6399999999999997,9.0,5.0,1.0,3.6399999999999997,5.0,1.0,0.0,54.945054945054956,4.58295142071494,-1.2509382036527394,56.19599314870769,UWW,Gustavus Adolphus Golden Gusties,True
+"Kelton McEwen, Tyshawn Teague-Johnson, Zavier Castillo",8.0,17.0,-1.0,1.0,8.0,-1.0,1.0,0.0,-5.0,-0.8333333333333333,0.257201646090535,-5.257201646090535,UWW,Gustavus Adolphus Golden Gusties,True
+"Rashad Rogers, Trent Grunewald, Tyshawn Teague-Johnson",4.63,7.0,0.0,1.0,4.63,0.0,1.0,0.0,0.0,0.0,0.0,0.0,UWW,Gustavus Adolphus Golden Gusties,True
+"Rashad Rogers, Trent Grunewald, Zavier Castillo",4.91,9.0,1.0,2.0,4.91,1.0,2.0,0.0,8.146639511201629,0.8906702293475842,-0.25219090851774795,8.398830419719378,UWW,Gustavus Adolphus Golden Gusties,True
+"Rashad Rogers, Tyshawn Teague-Johnson, Zavier Castillo",5.550000000000001,12.0,2.0,2.0,5.550000000000001,2.0,2.0,0.0,14.414414414414411,1.7563117453347972,-0.506425270621004,14.920839685035414,UWW,Gustavus Adolphus Golden Gusties,True
+"Andrew Olson, Andrew Quam, Ethan Sonju",0.5,0.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Andrew Quam, Landon Dimler",0.0,2.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Andrew Quam, Obinna Izuora",0.5,2.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Andrew Quam, Tavian Crawford",0.5,2.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Emmett Olson, John Mueller",1.0,3.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Emmett Olson, Mark Graff",1.9,3.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Emmett Olson, Tate Olson",0.9,0.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Emmett Olson, Tommy Shunmugavelu",1.9,3.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Ethan Sonju, John Mueller",1.7,4.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Ethan Sonju, Landon Dimler",1.7,4.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Ethan Sonju, Obinna Izuora",2.2,4.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Ethan Sonju, Tavian Crawford",0.5,0.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, John Mueller, Landon Dimler",1.7,4.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, John Mueller, Mark Graff",1.0,3.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, John Mueller, Obinna Izuora",1.7,4.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, John Mueller, Tommy Shunmugavelu",1.0,3.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Landon Dimler, Obinna Izuora",1.7,6.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Landon Dimler, Tavian Crawford",0.0,2.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Mark Graff, Tate Olson",0.9,0.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Mark Graff, Tommy Shunmugavelu",1.9,3.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Obinna Izuora, Tavian Crawford",0.5,2.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Olson, Tate Olson, Tommy Shunmugavelu",0.9,0.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, Ethan Sonju",12.1,35.0,15.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, Jake Schmitt",38.3,97.0,26.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, John Mueller",2.6,7.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, Landon Dimler",9.2,20.0,3.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, Max Buslee",3.8,4.0,-1.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, Myles Barnette",33.7,88.0,15.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, Obinna Izuora",31.0,71.0,22.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Drew Kolander, Tavian Crawford",13.9,28.0,10.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ethan Sonju, Jake Schmitt",16.7,49.0,18.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ethan Sonju, John Mueller",10.7,31.0,13.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ethan Sonju, Landon Dimler",3.0999999999999996,14.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ethan Sonju, Max Buslee",6.6,10.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ethan Sonju, Myles Barnette",14.2,45.0,21.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ethan Sonju, Obinna Izuora",9.4,28.0,17.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ethan Sonju, Tavian Crawford",5.9,7.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, John Mueller",31.4,65.0,9.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, Landon Dimler",52.5,112.0,25.0,4.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, Mason Uhlenbrauck",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, Max Buslee",19.7,32.0,1.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, Myles Barnette",88.2,191.0,19.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, Obinna Izuora",75.6,156.0,21.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, Ryker Van Nostrand",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Jake Schmitt, Tavian Crawford",9.7,20.0,6.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, John Mueller, Landon Dimler",8.7,21.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, John Mueller, Max Buslee",28.2,56.0,12.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, John Mueller, Myles Barnette",26.5,61.0,11.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, John Mueller, Obinna Izuora",20.8,53.0,11.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, John Mueller, Tavian Crawford",5.8,6.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Landon Dimler, Mason Uhlenbrauck",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Landon Dimler, Max Buslee",4.4,7.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Landon Dimler, Myles Barnette",50.1,108.0,18.0,4.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Landon Dimler, Obinna Izuora",47.5,100.0,17.0,4.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Landon Dimler, Ryker Van Nostrand",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Landon Dimler, Tavian Crawford",1.5,2.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Mason Uhlenbrauck, Max Buslee",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Mason Uhlenbrauck, Myles Barnette",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Mason Uhlenbrauck, Obinna Izuora",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Mason Uhlenbrauck, Ryker Van Nostrand",10.7,32.0,15.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Mason Uhlenbrauck, Tommy Shunmugavelu",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Max Buslee, Myles Barnette",22.0,45.0,5.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Max Buslee, Obinna Izuora",8.8,20.0,8.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Max Buslee, Ryker Van Nostrand",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Max Buslee, Tavian Crawford",7.0,6.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Max Buslee, Tommy Shunmugavelu",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Myles Barnette, Obinna Izuora",69.0,146.0,11.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Myles Barnette, Ryker Van Nostrand",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Myles Barnette, Tavian Crawford",7.1,20.0,4.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Obinna Izuora, Ryker Van Nostrand",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Obinna Izuora, Tavian Crawford",9.2,17.0,1.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Andrew Quam, Ryker Van Nostrand, Tommy Shunmugavelu",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Devin Pass, Emmett Olson, Mark Graff",1.3,6.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Devin Pass, Emmett Olson, Tate Olson",1.3,6.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Devin Pass, Emmett Olson, Tommy Shunmugavelu",1.3,6.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Devin Pass, Mark Graff, Tate Olson",1.3,6.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Devin Pass, Mark Graff, Tommy Shunmugavelu",1.3,6.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Devin Pass, Tate Olson, Tommy Shunmugavelu",1.3,6.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Ethan Sonju, Jake Schmitt",14.5,31.0,9.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Ethan Sonju, John Mueller",3.8,18.0,8.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Ethan Sonju, Landon Dimler",10.1,25.0,13.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Ethan Sonju, Max Buslee",5.6,18.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Ethan Sonju, Myles Barnette",20.5,54.0,17.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Ethan Sonju, Obinna Izuora",14.1,32.0,20.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Ethan Sonju, Tavian Crawford",15.6,33.0,17.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Jake Schmitt, John Mueller",2.6999999999999997,10.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Jake Schmitt, Landon Dimler",9.6,21.0,4.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Jake Schmitt, Max Buslee",4.3,7.0,0.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Jake Schmitt, Myles Barnette",33.5,77.0,6.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Jake Schmitt, Obinna Izuora",26.6,59.0,18.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Jake Schmitt, Tavian Crawford",13.9,24.0,6.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, John Mueller, Max Buslee",4.0,18.0,8.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, John Mueller, Myles Barnette",3.5,15.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, John Mueller, Obinna Izuora",2.4,7.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, John Mueller, Tavian Crawford",0.2,0.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Landon Dimler, Max Buslee",2.1,2.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Landon Dimler, Myles Barnette",15.1,35.0,10.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Landon Dimler, Obinna Izuora",11.4,25.0,11.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Landon Dimler, Tavian Crawford",10.0,24.0,14.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Max Buslee, Myles Barnette",8.1,22.0,3.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Max Buslee, Obinna Izuora",5.7,5.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Max Buslee, Tavian Crawford",5.3999999999999995,5.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Myles Barnette, Obinna Izuora",26.6,60.0,9.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Myles Barnette, Tavian Crawford",19.5,41.0,12.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Drew Kolander, Obinna Izuora, Tavian Crawford",14.8,28.0,11.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Ethan Sonju, John Mueller",2.0,9.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Ethan Sonju, Landon Dimler",1.6,5.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Ethan Sonju, Max Buslee",2.0,9.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Ethan Sonju, Tavian Crawford",3.6,14.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Ethan Sonju, Tommy Shunmugavelu",1.6,5.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, John Mueller, Mark Graff",1.0,3.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, John Mueller, Max Buslee",2.0,9.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, John Mueller, Tavian Crawford",2.0,9.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, John Mueller, Tommy Shunmugavelu",1.0,3.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Landon Dimler, Tavian Crawford",1.6,5.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Landon Dimler, Tommy Shunmugavelu",1.6,5.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Mark Graff, Tate Olson",2.2,6.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Mark Graff, Tommy Shunmugavelu",3.2,9.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Max Buslee, Tavian Crawford",2.0,9.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Tate Olson, Tommy Shunmugavelu",2.2,6.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Emmett Olson, Tavian Crawford, Tommy Shunmugavelu",1.6,5.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Jake Schmitt, John Mueller",14.299999999999999,43.0,21.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Jake Schmitt, Landon Dimler",4.2,10.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Jake Schmitt, Max Buslee",8.7,14.0,2.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Jake Schmitt, Myles Barnette",19.1,50.0,19.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Jake Schmitt, Obinna Izuora",12.5,30.0,13.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Jake Schmitt, Tavian Crawford",7.2,7.0,-5.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Jake Schmitt, Tommy Shunmugavelu",1.2,0.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, John Mueller, Landon Dimler",6.1,13.0,6.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, John Mueller, Max Buslee",17.6,51.0,25.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, John Mueller, Myles Barnette",16.6,60.0,38.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, John Mueller, Obinna Izuora",10.6,35.0,17.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, John Mueller, Tavian Crawford",4.2,9.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Landon Dimler, Mason Uhlenbrauck",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Landon Dimler, Max Buslee",2.7,3.0,0.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Landon Dimler, Myles Barnette",10.0,26.0,17.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Landon Dimler, Obinna Izuora",7.7,20.0,8.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Landon Dimler, Ryker Van Nostrand",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Landon Dimler, Tavian Crawford",13.3,38.0,21.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Landon Dimler, Tommy Shunmugavelu",2.8,5.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Mason Uhlenbrauck, Ryker Van Nostrand",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Mason Uhlenbrauck, Tavian Crawford",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Max Buslee, Myles Barnette",10.8,33.0,18.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Max Buslee, Obinna Izuora",5.1,6.0,-2.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Max Buslee, Tavian Crawford",4.2,9.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Myles Barnette, Obinna Izuora",9.4,32.0,20.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Myles Barnette, Tavian Crawford",9.5,18.0,9.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Myles Barnette, Tommy Shunmugavelu",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Obinna Izuora, Tavian Crawford",5.8,14.0,10.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Ryker Van Nostrand, Tavian Crawford",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Ethan Sonju, Tavian Crawford, Tommy Shunmugavelu",2.8,5.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, John Mueller, Landon Dimler",12.4,25.0,12.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, John Mueller, Max Buslee",25.7,48.0,11.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, John Mueller, Myles Barnette",31.099999999999998,69.0,19.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, John Mueller, Obinna Izuora",20.599999999999998,46.0,6.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, John Mueller, Tavian Crawford",1.0,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Landon Dimler, Mason Uhlenbrauck",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Landon Dimler, Max Buslee",5.5,11.0,6.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Landon Dimler, Myles Barnette",57.1,118.0,25.0,4.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Landon Dimler, Obinna Izuora",48.0,96.0,14.0,4.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Landon Dimler, Ryker Van Nostrand",4.9,20.0,9.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Landon Dimler, Tavian Crawford",2.4,2.0,-4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Landon Dimler, Tommy Shunmugavelu",1.2,0.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Mason Uhlenbrauck, Myles Barnette",6.5,23.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Mason Uhlenbrauck, Obinna Izuora",6.5,23.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Mason Uhlenbrauck, Ryker Van Nostrand",6.5,23.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Max Buslee, Myles Barnette",22.6,39.0,3.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Max Buslee, Obinna Izuora",6.3999999999999995,5.0,-3.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Max Buslee, Tavian Crawford",1.2999999999999998,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Myles Barnette, Obinna Izuora",65.1,138.0,8.0,5.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Myles Barnette, Ryker Van Nostrand",6.5,23.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Myles Barnette, Tavian Crawford",8.9,16.0,0.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Myles Barnette, Tommy Shunmugavelu",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Obinna Izuora, Ryker Van Nostrand",6.5,23.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Obinna Izuora, Tavian Crawford",3.3000000000000003,3.0,-2.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jake Schmitt, Tavian Crawford, Tommy Shunmugavelu",1.2,0.0,-3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Mark Graff, Mason Uhlenbrauck",0.7,5.0,1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Mark Graff, Na'Sean Hardy",0.1,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Mark Graff, Ryker Van Nostrand",0.7,5.0,1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Mark Graff, Tate Olson",0.6,5.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Mason Uhlenbrauck, Na'Sean Hardy",0.1,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Mason Uhlenbrauck, Ryker Van Nostrand",0.7,5.0,1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Mason Uhlenbrauck, Tate Olson",0.6,5.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Na'Sean Hardy, Ryker Van Nostrand",0.1,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Jedidiah Streed, Ryker Van Nostrand, Tate Olson",0.6,5.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Landon Dimler, Max Buslee",14.200000000000001,24.0,5.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Landon Dimler, Myles Barnette",16.4,29.0,9.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Landon Dimler, Obinna Izuora",12.5,26.0,6.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Landon Dimler, Tavian Crawford",2.1,2.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Mark Graff, Tommy Shunmugavelu",1.0,3.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Mason Uhlenbrauck, Max Buslee",2.5,11.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Mason Uhlenbrauck, Myles Barnette",2.5,11.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Mason Uhlenbrauck, Ryker Van Nostrand",2.5,11.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Max Buslee, Myles Barnette",37.3,94.0,30.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Max Buslee, Obinna Izuora",15.5,32.0,8.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Max Buslee, Ryker Van Nostrand",2.5,11.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Max Buslee, Tavian Crawford",7.4,15.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Myles Barnette, Obinna Izuora",18.4,47.0,16.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Myles Barnette, Ryker Van Nostrand",2.5,11.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Myles Barnette, Tavian Crawford",1.2,2.0,2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"John Mueller, Obinna Izuora, Tavian Crawford",3.1,8.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Mason Uhlenbrauck, Myles Barnette",6.0,20.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Mason Uhlenbrauck, Obinna Izuora",6.0,20.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Mason Uhlenbrauck, Ryker Van Nostrand",9.3,33.0,12.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Mason Uhlenbrauck, Tavian Crawford",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Max Buslee, Myles Barnette",11.6,21.0,4.0,3.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Max Buslee, Obinna Izuora",5.9,8.0,-2.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Max Buslee, Tavian Crawford",2.5,2.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Myles Barnette, Obinna Izuora",52.6,98.0,9.0,4.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Myles Barnette, Ryker Van Nostrand",6.0,20.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Myles Barnette, Tavian Crawford",6.0,14.0,8.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Myles Barnette, Tommy Shunmugavelu",0.0,0.0,0.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Obinna Izuora, Ryker Van Nostrand",6.0,20.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Obinna Izuora, Tavian Crawford",5.8,16.0,12.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Ryker Van Nostrand, Tavian Crawford",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Landon Dimler, Tavian Crawford, Tommy Shunmugavelu",2.8,5.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mark Graff, Mason Uhlenbrauck, Na'Sean Hardy",0.1,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mark Graff, Mason Uhlenbrauck, Ryker Van Nostrand",0.7,5.0,1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mark Graff, Mason Uhlenbrauck, Tate Olson",0.6,5.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mark Graff, Na'Sean Hardy, Ryker Van Nostrand",0.1,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mark Graff, Ryker Van Nostrand, Tate Olson",0.6,5.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mark Graff, Tate Olson, Tommy Shunmugavelu",2.2,6.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Max Buslee, Myles Barnette",2.5,11.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Max Buslee, Ryker Van Nostrand",8.3,23.0,10.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Max Buslee, Tommy Shunmugavelu",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Myles Barnette, Obinna Izuora",7.6000000000000005,23.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Myles Barnette, Ryker Van Nostrand",10.100000000000001,34.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Na'Sean Hardy, Ryker Van Nostrand",0.1,0.0,-2.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Obinna Izuora, Ryker Van Nostrand",7.6000000000000005,23.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Ryker Van Nostrand, Tate Olson",0.6,5.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Ryker Van Nostrand, Tavian Crawford",3.3,13.0,7.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Mason Uhlenbrauck, Ryker Van Nostrand, Tommy Shunmugavelu",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Max Buslee, Myles Barnette, Obinna Izuora",10.8,24.0,8.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Max Buslee, Myles Barnette, Ryker Van Nostrand",2.5,11.0,4.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Max Buslee, Myles Barnette, Tavian Crawford",2.5999999999999996,3.0,-1.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Max Buslee, Obinna Izuora, Tavian Crawford",5.4,11.0,5.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Max Buslee, Ryker Van Nostrand, Tommy Shunmugavelu",5.8,12.0,6.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Myles Barnette, Obinna Izuora, Ryker Van Nostrand",7.6000000000000005,23.0,3.0,1.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
+"Myles Barnette, Obinna Izuora, Tavian Crawford",7.8999999999999995,15.0,-1.0,2.0,,,,,,,,,Opponent,Gustavus Adolphus Golden Gusties,False
