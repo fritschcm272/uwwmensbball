@@ -1,0 +1,395 @@
+{
+ "kind": "court_calibration",
+ "arena": "Hope",
+ "game": "2026-11-06|AndersonIND@Hope",
+ "coach": "Corey",
+ "saved": "2026-11-25T10:25:02+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/1_94747496_t051.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1195.4,
+     "py": 570.3
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1107.5,
+     "py": 556.7
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 248.1,
+     "py": 539.1
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 427.8,
+     "py": 400.4
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 849.6,
+     "py": 619.2
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 972.7,
+     "py": 462.9
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/31_adfe46f2_t017a.jpg",
+   "points": [
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 628.2,
+     "py": 225.7
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1251.7,
+     "py": 579.6
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1171.9,
+     "py": 559.0
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 638.8,
+     "py": 217.4
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 233.7,
+     "py": 538.3
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 890.7,
+     "py": 627.0
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1017.6,
+     "py": 461.0
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 957.1,
+     "py": 533.2
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 427.8,
+     "py": 390.6
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/69_6d43b9cd_t018.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 638.5,
+     "py": 581.3
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 730.1,
+     "py": 569.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1028.1,
+     "py": 627.1
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 883.1,
+     "py": 462.8
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 952.2,
+     "py": 541.1
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1693.4,
+     "py": 535.1
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1502.1,
+     "py": 389.0
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1295.7,
+     "py": 231.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/107_8eac0512_t017.jpg",
+   "points": [
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 1262.9,
+     "py": 583.3
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 1174.2,
+     "py": 571.9
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 891.9,
+     "py": 631.6
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 1020.0,
+     "py": 466.4
+    },
+    {
+     "landmark": "LEFT free-throw line, middle",
+     "px": 959.7,
+     "py": 544.2
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, near",
+     "px": 248.5,
+     "py": 540.9
+    },
+    {
+     "landmark": "LEFT lane, baseline corner, far",
+     "px": 434.2,
+     "py": 396.7
+    },
+    {
+     "landmark": "LEFT corner 3 at baseline, far",
+     "px": 625.7,
+     "py": 247.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/143_64e7ea05_t018.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 619.5,
+     "py": 583.6
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 714.0,
+     "py": 571.4
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1021.2,
+     "py": 630.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 871.5,
+     "py": 461.3
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 942.9,
+     "py": 541.9
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1705.5,
+     "py": 535.0
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1508.8,
+     "py": 384.9
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1296.3,
+     "py": 222.8
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/180_99b9c5a4_t026a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 1249.3,
+     "py": 553.2
+    },
+    {
+     "landmark": "LEFT 3-pt arc, top of key",
+     "px": 650.4,
+     "py": 525.2
+    },
+    {
+     "landmark": "LEFT free-throw circle, top",
+     "px": 579.3,
+     "py": 521.9
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, near",
+     "px": 358.9,
+     "py": 592.1
+    },
+    {
+     "landmark": "LEFT lane, free-throw corner, far",
+     "px": 443.5,
+     "py": 441.9
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 1267.9,
+     "py": 274.7
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1879.9,
+     "py": 582.7
+    },
+    {
+     "landmark": "LEFT baseline x far sideline",
+     "px": 140.6,
+     "py": 253.9
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 1236.4,
+     "py": 943.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/222_fd6ecb7b_t033a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 85.6,
+     "py": 641.3
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 91.4,
+     "py": 734.7
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 80.4,
+     "py": 558.4
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 67.4,
+     "py": 348.4
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 759.0,
+     "py": 560.6
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1024.7,
+     "py": 528.8
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 836.1,
+     "py": 551.3
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1084.9,
+     "py": 607.9
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 970.7,
+     "py": 457.9
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1502.9,
+     "py": 397.9
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1669.9,
+     "py": 533.2
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1297.3,
+     "py": 231.4
+    }
+   ]
+  },
+  {
+   "file": "Nov_6_2026_AndersonIND@Hope/track1920v2/255_e063beda_t049a.jpg",
+   "points": [
+    {
+     "landmark": "center circle, middle",
+     "px": 3.0,
+     "py": 648.1
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 16.9,
+     "py": 748.0
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 734.3,
+     "py": 564.7
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1017.0,
+     "py": 532.5
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1078.4,
+     "py": 616.6
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 961.0,
+     "py": 455.8
+    },
+    {
+     "landmark": "RIGHT baseline x far sideline",
+     "px": 1316.8,
+     "py": 210.4
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, near",
+     "px": 1724.7,
+     "py": 537.1
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1541.1,
+     "py": 390.6
+    }
+   ]
+  }
+ ]
+}
