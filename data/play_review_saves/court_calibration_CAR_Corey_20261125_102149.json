@@ -1,0 +1,115 @@
+{
+ "kind": "court_calibration",
+ "arena": "CAR",
+ "game": "2026-11-07|WWW@CAR",
+ "coach": "Corey",
+ "saved": "2026-11-25T10:21:49+00:00",
+ "source": "streamlit app",
+ "frames": [
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/1_4da44fa7_t053a.jpg",
+   "points": [
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1200.3,
+     "py": 535.6
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1068.4,
+     "py": 466.8
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1134.8,
+     "py": 498.1
+    },
+    {
+     "landmark": "RIGHT free-throw circle, top",
+     "px": 955.1,
+     "py": 505.9
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1537.2,
+     "py": 443.4
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1341.9,
+     "py": 380.9
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 220.7,
+     "py": 552.8
+    },
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 252.0,
+     "py": 845.7
+    }
+   ]
+  },
+  {
+   "file": "Nov_7_2026_UWWhitewater@Carroll_WI/track1920v2/2_13de1697_t028.jpg",
+   "points": [
+    {
+     "landmark": "mid-court x near sideline",
+     "px": 472.7,
+     "py": 830.1
+    },
+    {
+     "landmark": "mid-court x far sideline",
+     "px": 431.7,
+     "py": 400.4
+    },
+    {
+     "landmark": "center circle, near",
+     "px": 449.2,
+     "py": 584.0
+    },
+    {
+     "landmark": "center circle, far",
+     "px": 439.5,
+     "py": 474.6
+    },
+    {
+     "landmark": "center circle, middle",
+     "px": 449.2,
+     "py": 527.4
+    },
+    {
+     "landmark": "RIGHT 3-pt arc, top of key",
+     "px": 1080.1,
+     "py": 502.0
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, near",
+     "px": 1421.9,
+     "py": 533.2
+    },
+    {
+     "landmark": "RIGHT lane, free-throw corner, far",
+     "px": 1289.1,
+     "py": 455.1
+    },
+    {
+     "landmark": "RIGHT lane, baseline corner, far",
+     "px": 1748.1,
+     "py": 431.7
+    },
+    {
+     "landmark": "RIGHT free-throw line, middle",
+     "px": 1355.5,
+     "py": 494.2
+    },
+    {
+     "landmark": "RIGHT corner 3 at baseline, far",
+     "px": 1574.3,
+     "py": 377.0
+    }
+   ]
+  }
+ ]
+}
