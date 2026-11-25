@@ -1,9 +1,8 @@
 scouted_opponent,perspective,team,order,kind,text
-Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,1,formation,"When they are running no formation, be aware that they run Motion the most (100%, 0.67 PPP). It's also their most successful play call out of no formation."
-Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,2,formation,"When they are running 5 Out, be aware that they run Post Set #1 the most (100%, 0.00 PPP)."
-Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,3,oob,"On BLOB (2 possessions, 0.00 PPP), they run BLOB Blob #1 the most (50%)."
-Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,4,success,"Most successful play calls overall: Motion (3x, 0.67 PPP) (team average 0.44 PPP)."
-Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,5,scorers,Top scorers on tagged plays: Dimler 2 pts (1) · Barnette 2 pts (1).
+Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,1,formation,"When they are running no formation, be aware that they run Motion the most (100%, 1.00 PPP). It's also their most successful play call out of no formation."
+Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,2,oob,"On BLOB (2 possessions, 0.00 PPP), they run BLOB Blob #1 the most (50%)."
+Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,3,success,"Most successful play calls overall: Motion (2x, 1.00 PPP) (team average 0.57 PPP)."
+Gustavus Adolphus Golden Gusties,Opponent,Gustavus Adolphus Golden Gusties,4,scorers,Top scorers on tagged plays: Dimler 2 pts (1) · Barnette 2 pts (1).
 Gustavus Adolphus Golden Gusties,UWW,UW-Whitewater,1,formation,"When we run no formation, we run Motion the most (19%, 0.77 PPP). Ball-screen coverage of Hedge / Show slowed it down best (3x, 0.00 PPP). We were most successful running RAM SCREEN (2%, 2.00 PPP)."
 Gustavus Adolphus Golden Gusties,UWW,UW-Whitewater,2,formation,"When we run 5 Out, we run 5 Out Motion the most (69%, 1.00 PPP). It's also our most successful play call out of 5 Out."
 Gustavus Adolphus Golden Gusties,UWW,UW-Whitewater,3,oob,"On BLOB (13 possessions, 1.09 PPP), we run Motion the most (23%, 0.00 PPP). We were most successful running BLOB (15%, 2.50 PPP)."

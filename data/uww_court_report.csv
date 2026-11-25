@@ -1,1 +1,5 @@
-
+game,arena,calibrated,frames,mapped_pct,mapped_by_chaining,calibration_frames,calibration_error_ft,calibration_page,players_on_court_pct,shots_zone_agrees_with_2_or_3_pct,shots_checked
+2026-11-07|UWWhitewater@Carroll(WI),Carroll(WI),True,896,100,886,8,0.98,,99,17,6
+2026-11-07|WWW@CAR,CAR,True,328,100,326,2,0.64,,86,17,6
+2026-11-14|Elmhurst@Hope,Hope,True,247,100,246,16,0.35,,100,0,1
+2026-11-14|Ripon@UWWhitewater,UWWhitewater,True,253,100,251,8,1.11,,100,0,1
