@@ -1,5 +1,5 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Gustavus Adolphus Golden Gusties,2026-11-28,Offense,1,📋,Win the rebounding and free throw battles,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Gustavus Adolphus on every shot.,Keys to Victory,,,True,80.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Offense,1,📋,Win the rebounding and free throw battles,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Obinna Izuora on every shot.,Keys to Victory,,,True,80.0
 Gustavus Adolphus Golden Gusties,2026-11-28,Offense,2,🎯,Attack their weakest look: Drive to the basket,"Opponents shot 13/23 · 57% FG · 57% eFG · 1.13 pts/attempt · +0.18 vs all looks · 26% of attempts on this against Gustavus Adolphus Golden Gusties
 Best on this shot:
 • Madson, Robinson, Lukenbill, McEwen, Teague-Johnson 5/6 · 83%
@@ -19,7 +19,7 @@ Gustavus Adolphus Golden Gusties,2026-11-28,Defense,7,⚠️,Opponent strength: 
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,8,⚠️,Opponent strength: Spread you out and drive to the rim relentlessly,,,Team Strengths,,,True,49.5
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,9,⚠️,Opponent strength: Apply constant defensive pressure to turn you over,,,Team Strengths,,,True,49.5
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,10,🛡️,What Gustavus Adolphus Golden Gusties goes to most: Drive to the basket,"46 attempts, 52% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-Gustavus Adolphus Golden Gusties,2026-11-28,Defense,11,,Finish every defensive possession with a box-out,"They grab 40% of their own misses -- we usually allow 35%, so this is above our norm; most by Gustavus Adolphus, Obinna Izuora.",They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Gustavus Adolphus on every shot.,Data-Driven,0.7055555555555557,1.0,True,78.2
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,11,,Finish every defensive possession with a box-out,"They grab 40% of their own misses -- we usually allow 35%, so this is above our norm; most by Obinna Izuora, Drew Kolander.",They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Obinna Izuora on every shot.,Data-Driven,0.7055555555555557,1.0,True,78.2
 Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,12,🔒,"Attack lineup of Quam, Schmitt, Dimler, Barnette, Izuora","Worst +/- lineups:
 -2.0 in 33.5 min, 37% FG — Quam, Schmitt, Dimler, Barnette, Izuora
 Highest TO rate (per 40 min):
