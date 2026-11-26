@@ -3122,6 +3122,45 @@ if RUN_FRAME_CAPTURE and not (SYNERGY_EDITOR_TEST and SYNERGY_EDITOR_TEST_ONLY):
             _vis_sources.append((_lab_, _g["video_url"], pd.Timestamp(_gd) if _gd is not None else pd.Timestamp.min))
     # VISION_ONLY_GAME (requested: test on one named game). Matched by the date in the name (within a day:
     # Synergy's clip page dates the Oshkosh game Jan 2, the export and files say 1/3) AND the opponent's
+    # CONFIRMED CHANGE (requested: "Banked game that has already been captured under its normal label shouldn't be registered
+    # again"). A banked game (BANK_GAMES / ADD_GAMES) is dropped from this run when the same Synergy game id is already a
+    # page of this run under its normal label (schedule / Synergy lookup) or was captured earlier under a non-banked label.
+    # Before this Gustavus @ WashU sat in uww_clip_frames.csv twice (197 + 197 rows), which made 24 plays "have no frames"
+    # and stopped the run (11/25). The banked entry is only a stand-in for a game nothing else brings in.
+    try:
+        import re as _re_bk
+        _gid_of = lambda u: (_re_bk.search(r"games(?:/|%2[fF])([0-9a-f]{20,})", str(u)) or [None, None])[1]
+        _bk_urls = {x[1] for x in _vis_sources if x[0].endswith("(banked)") or "(banked for " in x[0]}
+        _other_gids = {_gid_of(x[1]) for x in _vis_sources if x[1] not in _bk_urls}
+        if isinstance(clip_frames, pd.DataFrame) and not clip_frames.empty and "source_label" in clip_frames.columns:
+            _cfb = clip_frames[~clip_frames["source_label"].astype(str).str.contains("banked", na=False)]
+            _other_gids |= {_gid_of(u) for u in _cfb["source_url"].dropna()}
+        _other_gids.discard(None)
+        _drop_bk = [x for x in _vis_sources if x[1] in _bk_urls and _gid_of(x[1]) in _other_gids]
+        if _drop_bk:
+            _vis_sources = [x for x in _vis_sources if x not in _drop_bk]
+            for x in _drop_bk:
+                print(f"  [bank] {x[0]}: already captured under its normal label -- not registered again", flush=True)
+        # CONFIRMED CHANGE (11/26: Gustavus @ Transylvania was in the frames file twice, once under Synergy's boxscore page and
+        # once under the editor-web page -- same game id, different URL). A page whose game id was already captured under a
+        # DIFFERENT url is not captured again, and two pages of one game in the same run keep only the first.
+        _seen_gid = {}
+        if isinstance(clip_frames, pd.DataFrame) and not clip_frames.empty and "source_url" in clip_frames.columns:
+            for _u in clip_frames["source_url"].dropna().unique():
+                if _gid_of(_u):
+                    _seen_gid.setdefault(_gid_of(_u), set()).add(_u)
+        _keep_s, _run_gid = [], set()
+        for x in _vis_sources:
+            _g_ = _gid_of(x[1])
+            if _g_ and ((_g_ in _seen_gid and x[1] not in _seen_gid[_g_]) or _g_ in _run_gid):
+                print(f"  [frames] {x[0]}: this game is already captured under another page of it -- not captured again", flush=True)
+                continue
+            if _g_:
+                _run_gid.add(_g_)
+            _keep_s.append(x)
+        _vis_sources = _keep_s
+    except Exception as _bde:
+        print(f"  [bank] duplicate check skipped ({type(_bde).__name__}: {_bde})", flush=True)
     # name. Pages listed by hand in VISION_PLAYLIST_URLS are always kept.
     if VISION_ONLY_GAME:
         _odate, _owords = _vision_named_game()

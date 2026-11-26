@@ -42,9 +42,11 @@ PARSER_MODES = {
         # (quiet_show): problems ("!!"), the Synergy export, the court calibration and the starters check.
         "quiet": True,
         # (+ the tracking scorecard and the jersey-vote test -- requested: compare the new tracking with the old)
-        "quiet_show": r"!!|\[synergy-login\] Synergy emailed|\[export\]|\[court\]|\[starters\]|\[scorecard\]|jersey vote \(|Starters to validate|calibrat|STOP",
+        "quiet_show": r"!!|\[synergy-login\] Synergy emailed|\[export\]|\[court\]|\[starters\]|\[scorecard\]|jersey vote \(|Starters to validate|calibrat|STOP"
+                      r"|\[videos\] (\d+ new|pushing|push failed|\d+ of \d+|.*nothing to push)|\[clip cache\]|\[play review\] copied",
         # the one updating status line: each section's steps and progress (see _PmQuietBuf)
-        "quiet_status": r"\[(tracking|court|play review|tag model[^\]]*|recognizer|jersey|outfit|reid|frame archive|frame capture|saves)\]|min left|so far|step \d|clip videos written|Frame capture",
+        "quiet_status": r"\[(tracking|court|play review|tag model[^\]]*|recognizer|jersey|outfit|reid|frame archive|frame capture|saves)\]|min left|so far|step \d|clip videos written|Frame capture"
+                        r"|\[videos\]|\[clip cache\]|\[film tagging\]|Film Tagging:|\[play review\]|\[disk\]",
     },
     "tagging": {
         "label": "New clips for Film Tagging, fast (no automatic Titles, no tracking)",

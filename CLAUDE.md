@@ -3091,3 +3091,31 @@ Re-checked on the Gustavus keys: "Attack their weakest look" now stands alone; "
 - 83 (key E): the reasoning is now one sentence about THE FIVE -- "This five is +X points per 40 minutes against opponent units like <opp>'s most-used lineup (<names>)." (from the key's own per-minute rate x 40). The target profile and "Measured across N units, M min" moved into the EVIDENCE (app, key opened).
 - 87 `_ktv_merge_related`: the "Counter with" + "Feature the ... combo" merge is OFF (`BRIEF_KTV_MERGE_LINEUPS = True` restores it). The trio key stands on its own again.
 Not seen in a real run (needs parser_models for 83, then parser_brief).
+
+
+## 2026-11-25 -- a banked game is not registered again once it has its normal label
+
+Requested: "Banked game that has already been captured under its normal label shouldn't be registered again."
+The 11/25 `parser_models` run stopped (`FramesNotReady`): `2026-11-07 GustavusAdolphus@Wash(StLouis): 24 of 394 tagged
+plays have no frames`. The game sat in `inputs/uww_clip_frames.csv` TWICE (197 rows under "banked game 6af13923... (banked)"
+from 11/22 + 197 under the normal "2026-11-07 Gustavus Adolphus ... vs Washington-St. Louis" label from 11/25), which broke
+the frame-to-play matching. Data fix: the 197 banked rows were removed (backup `uww_clip_frames.csv.bak_20261125_dupgustavus`).
+Code fix (46, just before the VISION_ONLY_GAME block): a banked source is dropped from the run when the same Synergy game id
+(`games/<id>` or the url-encoded `games%2f<id>`) is already another page of this run or was captured earlier under a
+non-banked label; prints `[bank] <label>: already captured under its normal label -- not registered again`. Not seen in a
+real run yet. Still open: 158 duplicate (clip number 0) rows in uww_plays.csv for that game (counted nowhere, harmless).
+
+**11/26 follow-up:** the next run stopped on `2026-11-06 GustavusAdolphus@TransylvaniaUni: 29 of 394 tagged plays have no frames` --
+same duplicate, but under ONE label with TWO urls (Synergy boxscore page captured 11/23, editor-web page 11/25, same game id).
+Removed the older 197 rows (backup `uww_clip_frames.csv.bak_20261126_dupurl`); no other game had 2+ urls. 46's guard now also
+skips a page whose game id is already captured under a different url, and keeps one page per game id per run (`[frames] ...
+not captured again`). Not seen in a real run yet.
+
+## 2026-11-26 -- parser_models shows what it is doing during the long quiet steps
+
+Requested: "I need the print statements in the parser_models that help me when it feels like this is stuck" (55c_play_review
+ran 27 min with one line at the end). `00_parser_modes.py` models mode: `quiet_status` now also follows `[videos]`, `[clip cache]`,
+`[film tagging]`, `Film Tagging:`, `[play review]`, `[disk]` (the updating "... 55c_play_review (N min): ..." line), and
+`quiet_show` prints the clip-push milestones (`[videos] N new ...`, `pushing`, `i of n`, `push failed`) and `[clip cache]` as they
+happen. 55c's push now announces each silent step: asking GitHub what it has, how many are new, adding files to the videos git
+folder, clearing old clips. Everything also goes to the log as before. Not seen in a real run yet.

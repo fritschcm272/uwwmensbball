@@ -2394,10 +2394,13 @@ def _push_clip_videos():
         os.remove(env["GIT_INDEX_FILE"])
     except OSError:
         pass
-    # what GitHub has now (so only NEW clips are uploaded)
+    # CONFIRMED CHANGE (requested: "I need the print statements in the parser_models that help me when it feels like this is
+    # stuck"): every silent step of this push says what it is doing, so the status line keeps moving during the long ones.
+    print(f"  [videos] asking GitHub which of the {len(rels)} clip file(s) it already has...", flush=True)
     g("fetch", "--no-tags", "origin", f"+refs/heads/{br}:refs/remotes/origin/{br}", t=3600)
     _has_remote = g("rev-parse", "--verify", "-q", f"refs/remotes/origin/{br}").returncode == 0
     _on_github = set(g("ls-tree", "-r", "--name-only", f"refs/remotes/origin/{br}", t=900).stdout.splitlines()) if _has_remote else set()
+    print(f"  [videos] GitHub has {len(_on_github & set(rels))} of them; {len(set(rels) - _on_github)} are new", flush=True)
 
     # CONFIRMED CHANGE (requested: "Can you write code to do the 'Push in chunks' part when there is more than 1 game to
     # push?"). One push of every new clip is 5+ GB in a single transfer, and GitHub's smart HTTP answers 500 and drops it
@@ -2424,6 +2427,7 @@ def _push_clip_videos():
     _per_game = bool(globals().get("VIDEOS_PUSH_PER_GAME", True)) and len(_new_games) > 1
 
     def _add(_paths):
+        print(f"  [videos] adding {len(_paths)} clip file(s) to the videos git folder (reading each file)...", flush=True)
         _r = g("add", "-f", "--pathspec-from-file=-", t=3600, inp="\n".join(_paths) + "\n")
         if _r.returncode != 0:
             print(f"  [videos] git add failed: {_r.stderr.strip()[:300]}", flush=True)
@@ -2535,6 +2539,7 @@ def _push_clip_videos():
     g("update-ref", f"refs/heads/{br}", commit)
     g("update-ref", f"refs/remotes/origin/{br}", commit)
     g("reflog", "expire", "--expire=now", "--all")
+    print("  [videos] clearing old clips out of the videos git folder...", flush=True)
     g("prune", "--expire=now", t=1800)               # earlier runs' clips no longer in any batch
     print(f"  [videos] '{br}' branch = {len(rels)} clip file(s) ({time.time() - t0:.0f}s)", flush=True)
     # main: ignore and stop tracking them (the files stay on disk; GitHub Desktop shows them as removed -- commit that)
