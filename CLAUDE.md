@@ -3023,3 +3023,71 @@ Tested offline against the real CSVs; not seen in a real parser_brief run yet.
 **Offered, NOT approved (do nothing unless Corey says so):** dropping strength notes, Game Plan keys 19-22, combining keys 12 and 14, raising the KTV cutoff to 60.
 
 **Traps met this session:** my patch scripts write the file before `ast.parse`, so a failed parse leaves a broken file (patch it, don't re-apply); no backslash inside f-string expressions on Python 3.10; a recursive grep over `data/` on the mount times out (120 s); use `mcp__remote-devices__device_bash`, not `Bash`, for his files.
+
+
+## 2026-11-25 -- "Foul first" on the late-game foul list
+
+**CONFIRMED CHANGE (requested: "why aren't players shooting under 70% FT considered somebody to foul? I think you have to foul at least one of the starters" -> "I like the foul first option to be built").**
+Why it was missing: `Foul` needs 8+ FTA and a rate shrunk toward 70% (6 pretend attempts) at or under 62%, so a 68% shooter (Hope's Yant, 17-for-25) was Neutral and Neutral prints no chip.
+Now, in `86_game_plan.py` (after the foul loop): when NOBODY got `Foul`, the weakest shrunk-FT% player among the main rotation (20+ min/game, `_GP_FOUL_FIRST_MPG`; their 5 most-played when minutes are missing) with 8+ FTA, below their own team FT% and at or under `_GP_FOUL_FIRST_MAX_PCT` (74), gets call `Foul first` plus a note ("weakest free-throw shooter among the main rotation (71% as a team)"). It never replaces a real `Foul`. `_GP_FOUL_FIRST = False` turns it off.
+87 shows it like Foul (check icon / green) with the words "Foul him first late" on roster cards, the stacked header and the starters strip, in the late-game table, and in the legend/footnote; the app's Late-game foul list colours it as Foul (`streamlit_app.py`).
+Tested offline on Hope's real box scores: Yant -> Foul first (68.4 adj vs 71% team), the rest unchanged. Not seen in a real run: run `parser_brief` (the list is written in 86, part of the brief job); the app needs a commit and push.
+
+
+## 2026-11-25 -- jersey numbers on the starters' photos
+**CONFIRMED CHANGE (requested: "The starters numbers need to be listed by their photos.")** `_starter_strip` (87): a purple `#N` badge (`.sf-num`, inside `.sf-phw`) sits on the corner of each starter's photo, both teams; number from the bio's `jersey`, else the `#N` at the front of the bio line; no badge when there is none. The `#N` stays in the bio line too. Drawn with CSS (no symbols), prints fine. Not seen in a real run.
+
+
+## 2026-11-25 -- recent results as five cards across
+**CONFIRMED CHANGE (requested: "Make these look more like 5 cards across similar to other formatting.")** 87 `_rs_cards()`: each of the last five games is an `lc` card (date, "vs / @ opponent", W / L score in green / red), five across (`.lcards.rs-cards`, each card one fifth of the row so fewer than five stay the same size); the "Every other game" expander holds the older ones in further rows of five. The record line above is unchanged. `_rs_chip` is no longer used here. Not seen in a real run.
+
+
+## 2026-11-25 -- Gustavus brief: three fixes after reading its Keys to Victory
+**CONFIRMED BUG (fixed; requested "fix all of those things")**
+1. **A team rebound was named as a player** ("find Gustavus Adolphus on every shot", "Gustavus Adolphus the most (11)"; also first in the Rebounding tendencies table). The play-by-play credits team boards to the SHORT name ("Gustavus Adolphus") while the team column is "Gustavus Adolphus Golden Gusties", so `rebound_pairs` (83) only nulled exact matches. It now also nulls a rebounder whose whole name (4+ letters) sits inside his own team's name or the scouted team's name. Fixes the key, the summary rows, the tendencies table and the brief's lede at once (all read `rebound_pairs`). The CSVs on disk keep the old name until the next `parser_models` / brief run.
+2. **"Myles Barnette ... 0% from three"** (TEAM COMPARISON, `_wm_face`, 87): he was 0-for-2. A three-point rate now needs 5+ attempts; below that the clause gives free-throw attempts a game when that is 4+ (he takes 9 a game), else nothing.
+**CONFIRMED CHANGE: three more merge groups in `_ktv_merge_related`** -- the two staff on-ball keys ("Guarding the ball 1 on 1", "Being strong with the ball and handling pressure") join the pressure group (regex also matches "guarding the ball", "1 on 1", "on-ball"); "drive to the rim" joins the paint group; and a Game Plan + Team Strengths pair quoting the SAME per-game scoring figure ("leads them at 24.4 a night" / "#13 ... (24.4ppg)") merge as one scorer, led by the Game Plan key that names him. Offline test on the Gustavus keys: 13 -> 7, Quam's key and the "Attack lineup" key correctly left alone. Not seen in a real run.
+
+
+## 2026-11-25 (later) -- CONFIRMED BUG: merged keys must be about the same SIDE of the ball
+Corey: "We need to be more careful with combining keys based on who's offensive and defensive data it is. You combined 'Attack their weakest look: Drive to the basket' with 'What Gustavus goes to most: Drive to the basket'." The first is THEIR DEFENSE (what we do with the ball, 57% shot against them), the second THEIR OFFENSE (what we defend). The topic regexes alone merged them, and the 11/25 additions (drive to the rim, on-ball) made it worse.
+Fix (87 `_ktv_merge_related`, `_side(h)`): every key gets a side from its wording -- `off` = about their defense / what we do with the ball (attack their ..., weakest, handling pressure, defensive pressure, turn you over, our best set, call / feature our) -- `def` = about their offense / what we defend (goes to most, go-to, take away, funnel, spread you out, relentlessly, guarding, 1 on 1, box-out, crash, defensive possession). Inside a topic, keys of opposite sides are split into separate groups and never merged; a key with no cue (e.g. "Win the rebounding and free throw battles") joins only when the sided keys agree. Scorer and lineup groups unchanged.
+Re-checked on the Gustavus keys: "Attack their weakest look" now stands alone; "What Gustavus goes to most" + "Spread you out and drive to the rim" merge (both their offense); "Being strong with the ball and handling pressure" + "Opponent strength: Apply constant defensive pressure" merge (both their defense); "Guarding the ball 1 on 1" stands alone (our defense of their offense), correcting my own 11/25 suggestion that it belonged with the pressure keys. RULE for any future key merge: decide whose possession the data is about before merging, not just the topic.
+
+
+## 2026-11-25 (later) -- merged keys score higher
+**CONFIRMED CHANGE (requested: "If there are things that get combined, I think the Score values should increase because we are saying that the keys are being noticed more often.")** 87 `_ktv_merge_related`: the lead key keeps the group's best score PLUS `KTV_MERGE_BONUS` (4) per key folded into it, capped at `KTV_MERGE_BONUS_MAX` (12) and never over 100 (override in parser_nb). Stored in a `merge_bonus` column; the all-keys table's "Why N" line now reads "noticed by 3 keys +8" instead of an unexplained adjustment. The merge runs before the brief's selection, so a merged key can rank into the cards it would have missed. Tested on a rebounding trio (80 -> 88) and a 98 key (capped at 100). Not seen in a real run.
+
+
+## 2026-11-25 (later) -- KTV card reasoning as bullets
+**CONFIRMED CHANGE (requested: "Make these bullet points.")** 87, KTV cards: a key's reasoning of two or more sentences (a merged key carries several) prints as a `<ul class="ktv-bul">`, one sentence a bullet, "From the numbers:" dropped; a one-sentence reasoning stays a plain line. Cards only -- the all-keys table's expanded row is unchanged. Not seen in a real run.
+
+
+## 2026-11-25 (later) -- all-keys table: no "on a card above" text
+**CONFIRMED CHANGE (requested: "Remove this and just leave them as a different color")** 87: the "★ on a card above" note is gone from the all-keys table rows; keys shown on a card keep only the row tint (`.pcs-r.ktv-on`, now #fff3c4, a little stronger than the old #fffbe9). Not seen in a real run.
+
+
+## 2026-11-25 (later) -- one word, PLAY CALL, and one "best": the key, the offense card and the table agree
+**CONFIRMED CHANGE (requested: "These 3 sections are very confusing for coaches because they are showing some different information ... you are calling it a 'set' in one location and 'plays' in another and 'play call' in another ... the card within the Offense section should match the one from the Keys to Victory because Cheetah being the most PPP should be the headline for Play Calls.")**
+- **Wording:** "set" / "plays" / "named sets" are gone from these three. The KTV keys are now "Go to our best play call: X", "Know their best play call: X", "Take away their go-to play call: X" (83; reasoning text says play call too); the offense card is "PLAY CALLS" (was "Plays") with "N play calls on film"; the table was already "Play call summary". `_KTV_OURS` / `_KTV_SET_KEYS` (83), the Game Plan `_side` regex (87) and the app's topic regex (`go-to set|best set|go-to play call|best play call`) accept BOTH wordings, so older keys / saved files still match.
+- **Headline:** the card's headline is now the play call the key names -- best PPP ranked exactly as 83 does it (PPP shrunk toward the side's own average by 8 possessions, 4+ uses, above that average; `_KTV_PLAY_MIN_USES`). Gustavus: Cheetah, 1.80 PPP (5 Poss), then "Best play call by points a possession · <finisher> in N · into <action>". The most-used play call (Gold, 0.70 PPP, 12 Poss) moved to the note ("Most used: Gold, ..."). The old "Most successful: BLOB 2.50 PPP (2 Poss), ..." list is dropped from this card (small samples that contradicted the headline). When no play call has 4+ uses above average, the card falls back to the most used, as before. Checked against `uww_play_call_summary.csv`: Cheetah (adj 1.22) > SLOB (1.05) > Motion - Zoom (0.98).
+- Not changed: the table's order (most possessions first), the Actions card's "Most successful" line. Not seen in a real run.
+
+
+## 2026-11-25 (later) -- MORE FROM THE APP is one collapsed section
+**CONFIRMED CHANGE (requested: "All of these should be within the 'More from this App' section, which should be collapsed.")** 87: "MORE FROM THE APP" came out of `_SB_FIXED` (default of `BRIEF_FIXED_SECTIONS`), so `_sb_collapse` wraps the header and all its blocks in one closed `<details class="secdet">`; the blocks inside stay closed. Printing and "Expand all" open it like every other section. Not seen in a real run.
+
+
+## 2026-11-25 (later) -- BLOB / SLOB summary, out of the Play call summary
+**CONFIRMED CHANGE (requested: "Let's make a BLOB and SLOB summary here and removed those from the Play Call Summary")** 87, in the offense section's detail block (both sides, ours and theirs): the `uww_offense_breakdown` play-call rows whose situation is BLOB or SLOB (ATO suffix ignored) are split off (`_sp_oob`). The "Play call summary" now counts every other situation only (its clip lists use `sits=("Half court","ATO")`), and a new closed `<details class="ob-det">` "BLOB / SLOB summary (N)" follows it, same layout (Play call / Poss / PPP, every row opens to its plays with the Synergy "watch N plays" links): for each of BLOB and SLOB an "All BLOB" / "All SLOB" row (every play call out of it, `any_call=True`) and then each play call run out of it, indented. `_pcs_clips` / `_pcs_body` gained `sits`, `any_call` and `title` arguments. Gustavus (ours): BLOB 13 (Flow 8 at 1.17, Motion 3, BLOB 2 at 2.50), SLOB 14 (SLOB 7, SLOB Motion 6, Flow 1). The Play call summary's count in its title drops by the BLOB / SLOB rows. Data checked; the brief itself not run (syntax only) -- not seen in a real run.
+
+
+## 2026-11-25 (later) -- no "N play calls on film" on the offense card
+**CONFIRMED CHANGE (requested: "I don't think we should be saying anything about how many play calls on the film ... It should fully be about possessions.")** 87 `_off_cards`: the PLAY CALLS card no longer says "25 play calls on film" (either branch); the count of distinct play calls is not shown anywhere on the card -- only possessions and PPP. Not seen in a real run.
+
+
+## 2026-11-25 (later) -- "Counter with <five>": one supporting sentence, and no trio merged into it
+**CONFIRMED CHANGE (requested: "I'm not sure all of this information is necessary and correct to the headline")** The card showed four bullets under "Counter with Marino, Madson, Robinson, Lukenbill, McEwen": the comparable-units sentence, the target profile ("3 guard, 2 forward · avg 6'3" ..."), "Measured across 12 comparable opponent unit(s), 40 min" and "Our best trio ... +2.7 per 40" -- the last being the merged "Feature the Madson, Robinson, McEwen combo" key, a different claim about three of the players, not the five in the headline.
+- 83 (key E): the reasoning is now one sentence about THE FIVE -- "This five is +X points per 40 minutes against opponent units like <opp>'s most-used lineup (<names>)." (from the key's own per-minute rate x 40). The target profile and "Measured across N units, M min" moved into the EVIDENCE (app, key opened).
+- 87 `_ktv_merge_related`: the "Counter with" + "Feature the ... combo" merge is OFF (`BRIEF_KTV_MERGE_LINEUPS = True` restores it). The trio key stands on its own again.
+Not seen in a real run (needs parser_models for 83, then parser_brief).

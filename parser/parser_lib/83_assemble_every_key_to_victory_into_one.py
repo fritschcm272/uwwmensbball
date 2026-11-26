@@ -700,12 +700,18 @@ try:
         _caption = "\n".join(
             f"{_r['rate']:+.2f}/min \u2014 {_ktv_last_names(_r['uww_lineup'])}"
             for _, _r in _rows)
-        _reason = [f"UWW's best net margin against opponent units that resemble {_ktv_short}'s most-used "
-                   f"lineup ({_ktv_last_names(_target)})."]
+        # CONFIRMED CHANGE (requested 11/25: "I'm not sure all of this information is necessary and correct to the headline"):
+        # the reasoning is the ONE sentence that supports the headline's five -- how that five does against units like their
+        # most-used lineup, in points per 40 minutes. The target profile and "measured across N comparable units, M min"
+        # are method and sample, so they move to the EVIDENCE (the app shows it when the key is opened).
+        _r0 = _rows[0][1]
+        _reason = [f"This five is {float(_r0['rate']) * 40:+.1f} points per 40 minutes against opponent units like "
+                   f"{_ktv_short}'s most-used lineup ({_ktv_last_names(_target)})."]
+        _ev_more = []
         if _target_desc:
-            _reason.append(f"Target profile: {_target_desc}.")
-        _reason.append(f"Measured across {_n_similar} comparable opponent unit(s), {_matched_min:.0f} min "
-                       f"this season.")
+            _ev_more.append(f"Target profile: {_target_desc}.")
+        _ev_more.append(f"Measured across {_n_similar} comparable opponent unit(s), {_matched_min:.0f} min this season.")
+        _caption = _caption + "\n" + " ".join(_ev_more)
         _ktv_add("\U0001f512", f"Counter with {_ktv_last_names(_rows[0][1]['uww_lineup'])}",
                  _caption, " ".join(_reason), "Lineup Scouting", "Personnel",
                  impact=_rows[0][1]['rate'] * 2, confidence=_matched_min / 60)
@@ -987,6 +993,15 @@ def rebound_pairs(pbp, team):
     _rp_norm = df["reb_player"].astype(str).str.strip().str.lower()
     _rt_norm = df["reb_team"].astype(str).str.strip().str.lower()
     df.loc[df["reb_player"].notna() & (_rp_norm == _rt_norm), "reb_player"] = None
+    # CONFIRMED BUG (fixed 11/25, Gustavus Adolphus brief: "find Gustavus Adolphus on every shot", "Gustavus Adolphus the
+    # most (11)"): the play-by-play credited team boards to the SHORT school name ("Gustavus Adolphus") while the team
+    # column says "Gustavus Adolphus Golden Gusties", so the exact match above missed them. A rebounder whose whole name
+    # sits inside his own team's name (or the scouted team's name) is the team, not a player.
+    _pl_n = df["reb_player"].astype(str).str.strip().str.lower()
+    _tm_all = str(team).strip().lower()
+    _inside = [bool(p) and p not in ("nan", "none") and len(p) >= 4 and (p in t or (bool(_tm_all) and p in _tm_all))
+               for p, t in zip(_pl_n, _rt_norm)]
+    df.loc[df["reb_player"].notna() & pd.Series(_inside, index=df.index), "reb_player"] = None
     df["is_them"] = df["shooter_team"] == str(team)
     if not df["is_them"].any() and str(team).strip():   # names can carry a mascot in the pbp
         df["is_them"] = df["shooter_team"].str.lower().str.contains(str(team).lower().split()[0], na=False)
@@ -1243,7 +1258,7 @@ try:
         if not _theirs_half.empty:
             _t = _theirs_half.iloc[0]
             _who, _act = _ktv_set_finisher(_t), _ktv_set_action(_t)
-            _lead = "Their most-called half-court set."   # (requested: no "(22 times in 1 games)" -- the counts are in the evidence)
+            _lead = "Their most-called half-court play call."   # (requested: no "(22 times in 1 games)" -- the counts are in the evidence)
             if _who and _act:
                 _do = f"{_who} finishes it most, usually off the {_act} -- take away the {_act} and make someone else beat us."
             elif _who:
@@ -1268,7 +1283,7 @@ try:
                  if not _theirs_oob.empty else ""),
                 f"Tagged as: {_t['example_titles']}" if isinstance(_t.get("example_titles"), str) else ""]
             _ev = "\n".join(x for x in _ev_lines if x)
-            _ktv_add("\U0001f4cb", f"Take away their go-to set: {_t['name']}", _ev, _reason,
+            _ktv_add("\U0001f4cb", f"Take away their go-to play call: {_t['name']}", _ev, _reason,
                      "Data-Driven", "Defense",
                      impact=_t['uses'] / max(_t['games'], 1) / 4, confidence=_t['uses'] / 20)
             # Their most productive set with volume, when it isn't the same one.
@@ -1277,10 +1292,10 @@ try:
                     and _eff.iloc[0]["ppp"] >= _eff.iloc[0]["team_ppp"] + 0.15:
                 _e = _eff.iloc[0]
                 _ew = _ktv_set_finisher(_e)
-                _ktv_add("\U0001f4cb", f"Know their best set: {_e['name']}",
+                _ktv_add("\U0001f4cb", f"Know their best play call: {_e['name']}",
                          f"{_e['ppp']:.2f} PPP on {int(_e['uses'])} uses vs {_e['team_ppp']:.2f} overall"
                          + (f"\nFinished most by {_e['top_player']}" if _ew else ""),
-                         "Their most productive set -- recognize the alignment and call it out before the action starts"
+                         "Their most productive play call -- recognize the alignment and call it out before the action starts"
                          + (f"; {_ew} is usually the one finishing it." if _ew else "."),
                          "Data-Driven", "Defense",
                          impact=(_e['ppp'] - _e['team_ppp']) / 0.5, confidence=_e['uses'] / 20)
@@ -1289,11 +1304,11 @@ try:
         if not _ours.empty and pd.notna(_ours.iloc[0].get("team_ppp")) and _ours.iloc[0]["_ppp_adj"] > _ours.iloc[0]["team_ppp"]:
             _o = _ours.iloc[0]
             _ow = _ktv_set_finisher(_o)
-            _ktv_add("\U0001f4cb", f"Call our best set: {_o['name']}",
+            _ktv_add("\U0001f4cb", f"Go to our best play call: {_o['name']}",
                      f"{_o['ppp']:.2f} PPP on {int(_o['uses'])} uses vs our {_o['team_ppp']:.2f} overall"
                      + (f" · {int(_o['fgm'])}/{int(_o['fga'])} FG" if int(_o.get("fga") or 0) else "")
                      + (f"\nFinished most by {_o['top_player']}" if _ow else ""),
-                     "Our most productive set this season -- go to it when we need a good look"
+                     "Our most productive play call this season -- go to it when we need a good look"
                      + (f", with {_ow} finishing." if _ow else "."),
                      "Data-Driven", "Offense",
                      impact=(_o['_ppp_adj'] - _o['team_ppp']) / 0.5, confidence=_o['uses'] / 20)
@@ -1513,8 +1528,9 @@ def ktv_select_for_brief(keys):
 #      numbers: ...". Its evidence says which key ("Linked data key: ..."). The staff's headline is never changed.
 KTV_HOW_MIN_POSS = int(globals().get("KTV_HOW_MIN_POSS", 2) or 2)
 _KTV_MIN_GAMES = int(globals().get("READ_MIN_GAMES", 3) or 3)
-_KTV_OURS = ("counter with", "feature the", "call our best set")
-_KTV_SET_KEYS = ("take away their go-to set:", "know their best set:", "call our best set:")
+_KTV_OURS = ("counter with", "feature the", "call our best set", "go to our best play call")
+_KTV_SET_KEYS = ("take away their go-to set:", "know their best set:", "call our best set:",
+                  "take away their go-to play call:", "know their best play call:", "go to our best play call:")
 _KTV_LINK_TOPICS = (
     ("rebounding", r"rebound|\bglass\b|box[- ]?out|second[- ]chance|\bcrash"),
     ("paint", r"\bpaint\b|\bbasket\b|\brim\b|\bdrives?\b"),

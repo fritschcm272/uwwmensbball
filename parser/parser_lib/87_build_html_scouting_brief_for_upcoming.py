@@ -1576,6 +1576,10 @@ details.rosdet + .lc-lab, details.rosdet + .tier-h { margin-top: 22px; }
 .lcards + details.rosdet, .lcards + details.ob-det, .card + details.ob-det { margin-top: 12px; }
 .lc-lab + .lcards, .lc-lab + .ro-strip { margin-top: 4px; }
 .lcards { display: flex; gap: 8px; align-items: stretch; margin: 0 0 10px; }
+.lcards.rs-cards { flex-wrap: wrap; }
+.lcards.rs-cards .lc { flex: 0 0 calc((100% - 32px) / 5); }
+.lcards.rs-cards .lc-v.w { color: #1b5e20; }
+.lcards.rs-cards .lc-v.l { color: #b71c1c; }
 .lcards .lc { flex: 1 1 0; min-width: 0; border: 1px solid var(--edge); border-radius: 8px; padding: 8px 10px;
               break-inside: avoid; }
 .lcards .lc-t { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
@@ -1603,6 +1607,8 @@ details.rosdet + .lc-lab, details.rosdet + .tier-h { margin-top: 22px; }
 .lcards.ktv-cards .lc-x.ktv-more { border-top: 0; padding-top: 0; margin-top: 5px; font-weight: 700; font-size: 0.74rem; }
 .lcards.ktv-cards .lc-x.ktv-more a { color: inherit; }
 .lcards.ktv-cards .lc-x.mini { font-weight: 400; color: var(--dim); }
+.lcards.ktv-cards ul.ktv-bul { margin: 4px 0 0; padding-left: 16px; font-size: 0.68rem; color: var(--dim); line-height: 1.35; }
+.lcards.ktv-cards ul.ktv-bul li { margin: 0 0 2px; }
 .lcards.ktv-cards .lc-s.ktv-why { font-variant-numeric: normal; line-height: 1.35; margin-top: 4px; }
 /* CONFIRMED BUG (fixed 11/19: "All keys table is way too wide"). The page's own `td` rule is
    `white-space: nowrap`, which is right for a stat cell and wrong for a sentence: each key's reasoning sat on one
@@ -1617,7 +1623,7 @@ table.ktv-tbl th:nth-child(4), table.ktv-tbl td:nth-child(4) { width: 28%; }
 table.ktv-tbl th:nth-child(5), table.ktv-tbl td:nth-child(5) { width: 12%; }
 table.ktv-tbl td { vertical-align: top; }
 table.ktv-tbl tr.ktv-on td { background: #fffbe9; }
-.pcs-r.ktv-on > summary { background: #fffbe9; }
+.pcs-r.ktv-on > summary { background: #fff3c4; }
 /* requested 11/24: a Source column in the all-keys table (the play-call table keeps its three) */
 .pcs-ktv .pcs-h, .pcs-ktv .pcs-r > summary { grid-template-columns: 1fr 60px 130px 150px; }
 .pcs-ktv .ktv-srccol { text-align: left; white-space: nowrap; }
@@ -1627,6 +1633,10 @@ table.ktv-tbl .mini { color: var(--dim); font-weight: 400; }
 .sfive .sf { flex: 1 1 0; min-width: 0; border: 1px solid var(--edge); border-radius: 8px; padding: 8px;
              text-align: center; break-inside: avoid; }
 .sfive .sf-ph .photo-thumb { width: 54px; height: 54px; margin: 0 auto 4px; }
+.sfive .sf-phw { position: relative; display: inline-block; }
+.sfive .sf-num { position: absolute; right: -8px; bottom: 2px; background: var(--warhawk-purple, #4E2A84); color: #fff;
+                 font-size: 0.66rem; font-weight: 800; line-height: 1; padding: 2px 5px; border-radius: 9px;
+                 border: 1.5px solid #fff; font-variant-numeric: tabular-nums; }
 .sfive .sf-nm { font-weight: 800; font-size: 0.86rem; line-height: 1.2; }
 .sfive .sf-bio { font-size: 0.68rem; color: var(--dim); margin-top: 1px; }
 .sfive .sf-st { font-size: 0.74rem; font-variant-numeric: tabular-nums; margin-top: 3px; }
@@ -2798,7 +2808,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         call = _sb_clean(r.get("call"))
         # Icon rather than words (requested): a check means foul him, a cross means don't. The words stay in
         # the cell's tooltip and are spelled out under the table, so the icon is never the only explanation.
-        icon, cls = {"Foul": ("\u2714", "call-foul"),
+        icon, cls = {"Foul": ("\u2714", "call-foul"), "Foul first": ("\u2714", "call-foul"),
                      "Do not foul": ("\u2718", "call-nofoul")}.get(call, ("\u2013", "mini"))
         return (f'<td class="{cls} foul-icon" title="{_sb_esc(call)} \u2014 {_sb_fmt(r.get("ft_pct"))}% FT">'
                 f'{icon}</td>')
@@ -3459,6 +3469,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 _fr = _foul_by.get(_norm(name))
                 _call = _sb_clean(_fr.get("call")) if _fr is not None else ""
                 _foul = {"Foul": '<span class="pc-foul yes">\u2714 Foul him late</span>',
+                         "Foul first": '<span class="pc-foul yes">\u2714 Foul him first late</span>',
                          "Do not foul": '<span class="pc-foul no">\u2718 Don\u2019t foul late</span>'}.get(
                     _call, '<span class="pc-foul">Late foul: \u2013</span>')
             add('<table class="pc2"><tbody>')
@@ -3543,11 +3554,11 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _fr = _foul_by.get(_norm(name)) if side == "Opponent" else None
             if _fr is not None:
                 _call = _sb_clean(_fr.get("call"))
-                if _call in ("Foul", "Do not foul"):
+                if _call in ("Foul", "Foul first", "Do not foul"):
                     # Built outside the f-string: a backslash escape inside an f-string EXPRESSION is a
                     # SyntaxError before Python 3.12.
-                    _fl = "Foul him late" if _call == "Foul" else "Don\u2019t foul late"
-                    _fc = "call-foul" if _call == "Foul" else "call-nofoul"
+                    _fl = {"Foul": "Foul him late", "Foul first": "Foul him first late"}.get(_call, "Don\u2019t foul late")
+                    _fc = "call-nofoul" if _call == "Do not foul" else "call-foul"
                     _foul = (f'<span class="ph-foul {_fc}">{_fl} '
                              f'<span class="mini">({_sb_fmt(_fr.get("ft_pct"))}% FT)</span></span>')
             _foul = "".join(f'<span class="ph-foul ph-clutch" title="{_sb_esc(_cttl)}">\u2605 {_sb_esc(_ct)}</span>'
@@ -3763,7 +3774,15 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     break
             _team_q = short if side == "Opponent" else _SB_UWW
             add('<div class="sf">')
-            add(f'<div class="sf-ph">{photo_cell(_url, _nm, side)}</div>')
+            # CONFIRMED CHANGE (requested 11/25: "The starters numbers need to be listed by their photos."): the jersey
+            # number is a badge on the photo's corner (from the bio, else the "#N" at the front of the bio line).
+            _jn = _sb_clean(_bio.get("jersey")) if _bio is not None else ""
+            if not _jn:
+                _jm = re.search(r"#\s*(\d{1,2})", re.sub(r"<[^>]+>", "", str(_r.get("bits_bio") or "")))
+                _jn = _jm.group(1) if _jm else ""
+            _jn = re.sub(r"\.0$", "", _jn)
+            _badge = f'<span class="sf-num">#{_sb_esc(_jn)}</span>' if _jn else ""
+            add(f'<div class="sf-ph"><div class="sf-phw">{photo_cell(_url, _nm, side)}{_badge}</div></div>')
             add('<div class="sf-nm">'
                 + name_link(_nm, page="upcoming", tab="personnel", player=_nm, team=_team_q) + "</div>")
             if _r["bits_bio"]:
@@ -3791,10 +3810,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if side == "Opponent":
                 _fr = _foul_by.get(_norm(_nm))
                 _call = _sb_clean(_fr.get("call")) if _fr is not None else ""
-                if _call in ("Foul", "Do not foul"):
-                    _fl = "Foul him late" if _call == "Foul" else "Don\u2019t foul late"
-                    _ic = "\u2714 " if _call == "Foul" else "\u2718 "
-                    _cls = "yes" if _call == "Foul" else "no"
+                if _call in ("Foul", "Foul first", "Do not foul"):
+                    _fl = {"Foul": "Foul him late", "Foul first": "Foul him first late"}.get(_call, "Don\u2019t foul late")
+                    _ic = "\u2718 " if _call == "Do not foul" else "\u2714 "
+                    _cls = "no" if _call == "Do not foul" else "yes"
                     add(f'<div class="sf-foul"><span class="pc-foul {_cls}">{_ic}{_sb_esc(_fl)}</span></div>')
             add("</div>")
         add("</div>")
@@ -3861,7 +3880,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 + (" (the minimums: " + ", ".join(_mins) + ")" if _mins else "") + ".</p>")
         if side == "Opponent" and _foul_by:
             add('<p class="mini">Late game foul: <span class="call-foul">\u2714</span> foul him '
-                '(62% or worse on 8+ attempts) &middot; <span class="call-nofoul">\u2718</span> do not foul '
+                '(62% or worse on 8+ attempts) or foul him first (weakest rotation shooter when nobody is that bad) &middot; <span class="call-nofoul">\u2718</span> do not foul '
                 '(75% or better, or 85%+ on as few as 4 attempts) &middot; \u2013 neutral or too few '
                 'attempts to say.</p>')
         # ONE link out of the roster, not two (requested). Under-8-minute players are tiered but no longer
@@ -4804,11 +4823,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         _hd = df["headline"].map(lambda v: _txt(v).lower())
 
         def _topic(h):
-            if re.search(r"drive to the basket|\bpaint\b", h):
+            # CONFIRMED CHANGE (requested 11/25, Gustavus brief): "Spread you out and drive to the rim relentlessly" belongs with
+            # "Drive to the basket" -- the rim is the paint -- and the two staff keys on guarding the ball (1 on 1, handling
+            # pressure) with the pressure key.
+            if re.search(r"drive to the (basket|rim)|\bpaint\b", h):
                 return "paint"
             if re.search(r"rebound|box-?out|\bglass\b|free throw", h):
                 return "rebounding"
-            if "pressure" in h:
+            if re.search(r"pressure|guarding the ball|\b1 on 1\b|on[- ]ball", h):
                 return "pressure"
             return None
         _grp = {}
@@ -4816,10 +4838,52 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _t = _topic(_h)
             if _t:
                 _grp.setdefault(_t, []).append(_i)
+        # CONFIRMED BUG (fixed 11/25: "We need to be more careful with combining keys based on who's offensive and defensive data
+        # it is. You combined 'Attack their weakest look: Drive to the basket' with 'What Gustavus goes to most: Drive to the
+        # basket'"): the first is THEIR DEFENSE (our offense), the second THEIR OFFENSE (our defense). A topic is not enough
+        # to merge on: every key is also given a side from its wording, and two keys on OPPOSITE sides never merge. A key with
+        # no side cue ("Win the rebounding battle") may join a topic only when the sided keys in it all agree.
+        def _side(h):
+            if re.search(r"attack their|weakest|handling pressure|handle .*pressure|defensive pressure|turn you over|"
+                         r"beat the (press|trap)|against (their|the) (press|zone)|our best set|our best play call|our best look|"
+                         r"feature our|call our", h):
+                return "off"          # about their defense = what WE do with the ball
+            if re.search(r"goes to (the )?(most|first)|go-to|take away|funnel|their (offense|offensive)|spread you out|"
+                         r"relentlessly|guarding|1 on 1|on[- ]ball defense|defensive possession|box-?out|crash|"
+                         r"stop |don.t help|help off", h):
+                return "def"          # about their offense = what WE do without it
+            return None
+        _split = {}
+        for _t, _ix in _grp.items():
+            _by = {"off": [], "def": [], None: []}
+            for _i in _ix:
+                _by[_side(_hd[_i])].append(_i)
+            _sd = [k for k in ("off", "def") if _by[k]]
+            if len(_sd) == 1:
+                _split[_t] = _by[_sd[0]] + _by[None]
+            elif len(_sd) == 2:
+                _split[_t + "|off"], _split[_t + "|def"] = _by["off"], _by["def"]
+            else:
+                _split[_t] = _by[None]
+        _grp = _split
+        # CONFIRMED CHANGE (requested 11/25): one scorer, two keys -- "Myles Barnette leads them at 24.4 a night" (Game Plan) and
+        # "Opponent strength: #13 capable of taking over a game (24.4ppg)" (Team Strengths) are the same man. Both quote the
+        # same per-game figure, so a Game Plan / Team Strengths pair sharing one is a group, led by the one that names him.
+        _pn = {}
+        for _i, _h in _hd.items():
+            if _txt(df.at[_i, "source"]) in ("Game Plan", "Team Strengths"):
+                _m = re.search(r"(\d{1,2}\.\d)\s*(?:ppg|a night|a game|per game|points)", _h)
+                if _m:
+                    _pn.setdefault(_m.group(1), []).append(_i)
+        for _v, _ix2 in _pn.items():
+            if len(_ix2) >= 2 and len({_txt(df.at[j, "source"]) for j in _ix2}) >= 2:
+                _grp["scorer " + _v] = _ix2
         # lineup pair: "Counter with A, B, C" and "Feature the A, B, C combo" sharing 2+ names
         _cn = [i for i, h in _hd.items() if h.startswith("counter with ")]
         _ft = [i for i, h in _hd.items() if h.startswith("feature the ") and "combo" in h]
-        for _a in _cn:
+        # CONFIRMED CHANGE (requested 11/25, "Counter with <five>" showed a bullet about the best TRIO): a five and a trio are
+        # different claims about different players, so the pair is no longer merged. BRIEF_KTV_MERGE_LINEUPS = True brings it back.
+        for _a in (_cn if globals().get("BRIEF_KTV_MERGE_LINEUPS", False) else []):
             for _b in _ft:
                 _na = {w for w in re.split(r"[^a-z\-]+", _hd[_a].replace("counter with ", "")) if len(w) > 2}
                 _nb = {w for w in re.split(r"[^a-z\-]+", _hd[_b].replace("feature the ", "").replace("combo", "")) if len(w) > 2}
@@ -4836,6 +4900,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             _sub = df.loc[_ix]
             _staff = _sub[_sub["source"].astype(str) == "Keys to Victory"]
             _pool = _staff if len(_staff) else _sub
+            if str(_t).startswith("scorer"):          # the Game Plan key names the player; the strength key says "#13"
+                _gpk = _sub[_sub["source"].astype(str) == "Game Plan"]
+                _pool = _gpk if len(_gpk) else _pool
             _ps = pd.to_numeric(_pool.get("priority_score"), errors="coerce").fillna(0)
             _lead = _ps.idxmax()
             _lead_txt = _txt(df.at[_lead, "reasoning"]) if "reasoning" in df.columns else ""
@@ -4855,8 +4922,17 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if _extra and "reasoning" in df.columns:
                 df.at[_lead, "reasoning"] = (_lead_txt.rstrip(".") + ". " if _lead_txt else "") + ". ".join(_extra[:2]) + "."
             _best = pd.to_numeric(_sub.get("priority_score"), errors="coerce").max()
+            # CONFIRMED CHANGE (requested 11/25: "If there are things that get combined, I think the Score values should
+            # increase because we are saying that the keys are being noticed more often"): the merged key keeps the best score
+            # of its group PLUS _KTV_MERGE_BONUS (4) for every key folded into it, at most _KTV_MERGE_BONUS_MAX (12), never over
+            # 100. The bonus is its own column so the "Why" line can name it instead of calling it an adjustment.
             if pd.notna(_best) and "priority_score" in df.columns:
-                df.at[_lead, "priority_score"] = _best
+                _bn = min(int(globals().get("KTV_MERGE_BONUS_MAX", 12)), int(globals().get("KTV_MERGE_BONUS", 4)) * (len(_ix) - 1))
+                _bn = max(0, min(_bn, 100 - int(round(_best))))
+                if "merge_bonus" not in df.columns:
+                    df["merge_bonus"] = 0
+                df.at[_lead, "priority_score"] = float(_best) + _bn
+                df.at[_lead, "merge_bonus"] = _bn
             df.at[_lead, "merged_keys"] = " | ".join(_also)
             _drop += [_o for _o in _ix if _o != _lead]
             _n_merged += len(_ix) - 1
@@ -4981,8 +5057,16 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     _kh = _ktv_key_html(_kr, link=False)[0]
                     _kw = _ktv_sentence(_sb_clean(_kr.get("reasoning")).rstrip(".") or _sb_clean(_kr.get("evidence")).rstrip("."))
                     _kst = ' style="margin-top:10px"' if _n_ else ""
-                    _kb.append(f'<div class="lc-n"{_kst}>{_kh}</div>'
-                               + (f'<div class="lc-s ktv-why">{_sb_esc(_kw)}.</div>' if _kw else ""))
+                    # CONFIRMED CHANGE (requested 11/25: "Make these bullet points"): a reasoning of two or more sentences
+                    # (a merged key carries several) is a bullet list, one sentence each, the "From the numbers:" lead-in
+                    # dropped; one sentence stays a plain line.
+                    _kw_s = [x.strip().rstrip(".") for x in re.split(r"(?<=[.!?])\s+(?=[A-Z])",
+                             re.sub(r"(?i)^from the numbers:\s*", "", _kw)) if x.strip().rstrip(".")]
+                    if len(_kw_s) >= 2:
+                        _kw_html = ('<ul class="ktv-bul">' + "".join(f"<li>{_sb_esc(x)}.</li>" for x in _kw_s) + "</ul>")
+                    else:
+                        _kw_html = f'<div class="lc-s ktv-why">{_sb_esc(_kw)}.</div>' if _kw else ""
+                    _kb.append(f'<div class="lc-n"{_kst}>{_kh}</div>' + _kw_html)
                 _cards_out.append(f'<div class="lc"><div class="lc-t">{_gname}</div>' + "".join(_kb) + "</div>")
             if _cards_out:
                 add('<div class="lcards ktv-cards">' + "".join(_cards_out) + "</div>")
@@ -5069,6 +5153,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                                  else f"data behind it {'staff-written' if staff else 'default'} +{15 * conf:.0f}")
                     parts.append(f"{'an instruction' if act == 15 else 'a description'} +{act}")
                     calc = sp + 40 * imp + 15 * conf + act
+                    _mb = pd.to_numeric(k.get("merge_bonus"), errors="coerce")
+                    if pd.notna(_mb) and _mb > 0:
+                        parts.append(f"noticed by {int(round(_mb / max(int(globals().get('KTV_MERGE_BONUS', 4)), 1))) + 1} keys +{int(_mb)}")
+                        calc += float(_mb)
                     if pd.notna(_total) and abs(calc - float(_total)) >= 1:
                         parts.append(f"other adjustment {float(_total) - calc:+.0f}")
                     return " \u00b7 ".join(parts)
@@ -5099,7 +5187,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                 _ktv_rows.append(
                     f'<details class="pcs-r{" ktv-on" if _star else ""}"><summary>'
                     f'<span class="l">{_sb_esc(_hl)}'
-                    + (f' <span class="mini">{_sb_esc(_star)}</span>' if _star else "")
+                    # CONFIRMED CHANGE (requested 11/25: "Remove this and just leave them as a different color"): no "on a card
+                    # above" text -- the row's background (.ktv-on) is the only mark.
+                    + ""
                     + f'</span><span class="t1">{_sc}</span><span class="t1">{_sb_esc(_area)}</span>'
                     f'<span class="t1 ktv-srccol">{(source_badge(k.get("source")) or "--").strip()}</span></summary>'
                     f'<div class="pcs-b">{_body}</div></details>')
@@ -5309,7 +5399,15 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
             if k == "eFG":
                 _r = _e.sort_values("PTS", ascending=False).iloc[0]
-                _3 = f", {float(_r['FG3M']) / float(_r['FG3A']) * 100:.0f}% from three" if float(_r["FG3A"]) else ""
+                # CONFIRMED BUG (fixed 11/25): "Myles Barnette ... 0% from three" was 0-for-2 -- true, and meaningless. A three-point
+                # rate needs 5+ attempts; below that the clause says what he does do (the line) when that is real, else nothing.
+                _fta_g = float(_r["FTA"]) / _gt if "FTA" in _r.index and pd.notna(_r["FTA"]) else 0
+                if float(_r["FG3A"]) >= 5:
+                    _3 = f", {float(_r['FG3M']) / float(_r['FG3A']) * 100:.0f}% from three"
+                elif _fta_g >= 4:
+                    _3 = f", {_fta_g:.1f} free throw attempts a game"
+                else:
+                    _3 = ""
                 return _nm(_r), f"is the one to take away ({float(_r['PTS']) / _gt:.1f} a game{_3})"
             if k == "FTR":          # net our way = WE are the ones getting there, so the man is whoever fouls
                 return (_top_by("PF", "fouls the most ({v:.1f} a game) \u2014 go at him",
@@ -5742,7 +5840,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add('<div class="gcell">')
         section("\u23f1\ufe0f LATE-GAME FOUL LIST" + footnote(
             "From their own free-throw shooting on film. The two calls need different evidence: FOUL him takes 8+ "
-            "attempts and a rate at 62% or worse, because it's a deliberate act; DO NOT FOUL takes 8+ attempts "
+            "attempts and a rate at 62% or worse, because it's a deliberate act; when nobody is that bad, FOUL FIRST names the weakest shooter in the main rotation (20+ minutes a game, 8+ attempts, below their team's own rate and 74% or lower) so a late game still has a man to go at; DO NOT FOUL takes 8+ attempts "
             "at 75% or better, OR as few as 4 attempts when he hasn't missed (85%+) -- avoiding a shooter "
             "costs nothing if we're wrong. Rates are shrunk toward a 70% baseline before the call, so 6-for-6 "
             "doesn't read as a true 100% shooter; the makes-attempts pair shown is raw. Check who is actually "
@@ -5750,7 +5848,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         add('<div class="card"><table class="compact"><thead><tr><th style="text-align:left">Player</th>'
             '<th style="text-align:left">Call</th><th>FT%</th><th>FTM-FTA</th></tr></thead><tbody>')
         for _, _f in _foul.iterrows():
-            _cls = {"Foul": "call-foul", "Do not foul": "call-nofoul"}.get(_sb_clean(_f.get("call")), "")
+            _cls = {"Foul": "call-foul", "Foul first": "call-foul", "Do not foul": "call-nofoul"}.get(_sb_clean(_f.get("call")), "")
             # Games-played detail removed from this table (requested) -- thin samples are flagged on page 1.
             add(f'<tr><td class="nm">{_sb_esc(_f["player"])}</td>'
                 f'<td class="{_cls}">{_sb_esc(_f["call"])}</td><td>{_sb_fmt(_f["ft_pct"])}</td>'
@@ -5790,6 +5888,21 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     f'{_sb_esc(_sb_strip_mascot(g.get("vs_opponent")))} <b class="{"w" if _o == "W" else "l"}">'
                     f'{_sb_esc(_o)}{_sc}</b></span>')
 
+        # CONFIRMED CHANGE (requested 11/25: "Make these look more like 5 cards across similar to other formatting"): a game is
+        # a card (date and home / away on the top strip, the opponent, then the result) and the cards run five across, the
+        # same markup as every other card row; older games wrap onto further rows of five.
+        def _rs_cards(gs):
+            _cs = []
+            for _, g in gs.iterrows():
+                _o = _sb_clean(g.get("outcome")).upper()
+                _sc = (f' {int(g["team_score"])}-{int(g["opponent_score"])}'
+                       if pd.notna(g.get("team_score")) and pd.notna(g.get("opponent_score")) else "")
+                _home = _sb_clean(g.get("location")).lower() == "home"
+                _cs.append(f'<div class="lc"><div class="lc-t">{_sb_esc(g.get("game_date"))}</div>'
+                           f'<div class="lc-n">{"vs" if _home else "@"} {_sb_esc(_sb_strip_mascot(g.get("vs_opponent")))}</div>'
+                           f'<div class="lc-v {"w" if _o == "W" else "l"}">{_sb_esc(_o)}{_sb_esc(_sc)}</div></div>')
+            return '<div class="lcards rs-cards">' + "".join(_cs) + "</div>"
+
         add('<div class="card">')
         _rs_all = opp_before
         _rs_last = _rs_all.tail(5)
@@ -5807,19 +5920,14 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             if _aw + _al:
                 _bits.append(f"{_aw}-{_al} away")
             add('<p class="mini">' + _sb_esc(" \u00b7 ".join(_bits)) + "</p>")
-        add('<div class="results">')
-        for _, g in _rs_last.iterrows():
-            add(_rs_chip(g))
-        add("</div>")
+        add(_rs_cards(_rs_last))
         _rs_rest = _rs_all.iloc[:-len(_rs_last)] if len(_rs_all) > len(_rs_last) else _rs_all.iloc[0:0]
         if not _rs_rest.empty:
             add('<details class="rosdet"><summary><span class="rd-open">Every other game</span>'
                 f'<span class="rd-sub">{len(_rs_rest)} earlier game'
                 f'{"s" if len(_rs_rest) != 1 else ""} this season</span></summary>')
-            add('<div class="results">')
-            for _, g in _rs_rest.iterrows():
-                add(_rs_chip(g))
-            add("</div></details>")
+            add(_rs_cards(_rs_rest))
+            add("</details>")
         add("</div>")
 
     _sm_unused = None
@@ -6853,6 +6961,11 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
         # PPP): every play call added up over all situations / formations, most possessions first.
         try:
             _sp = ob[ob["level"].astype(str) == "play_call"].copy()
+            # CONFIRMED CHANGE (requested 11/25: "Let's make a BLOB and SLOB summary here and removed those from the Play Call
+            # Summary"): out-of-bounds play calls (situation BLOB / SLOB) are their own summary below; this one is every other
+            # situation.
+            _sp_oob = _sp[_sp["situation"].astype(str).str.upper().str.replace(r"\s*\(ATO\)$", "", regex=True).isin(["BLOB", "SLOB"])].copy()
+            _sp = _sp.drop(index=_sp_oob.index)
             _sp["_n"] = pd.to_numeric(_sp["possessions"], errors="coerce").fillna(0)
             _sp["_pts"] = _sp["_n"] * pd.to_numeric(_sp["ppp"], errors="coerce")
             _sp["_pn"] = _sp["_n"].where(pd.to_numeric(_sp["ppp"], errors="coerce").notna(), 0)
@@ -6889,7 +7002,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                         return "--" if pd.isna(period) or str(period).lower() == "nan" else str(period)
                     return f"{period} {int(_sec // 60)}:{int(_sec % 60):02d}"
 
-                def _pcs_clips(label):
+                def _pcs_clips(label, sits=("Half court", "ATO"), any_call=False):
                     """The clips behind one row: the same side, possessions only, this play call as the coaches tagged it."""
                     _cl = _pcc_all
                     if not isinstance(_cl, pd.DataFrame) or _cl.empty or not {"play_call", "offense_team"} <= set(_cl.columns):
@@ -6915,7 +7028,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     # rebounds and openers are in the app's tables but not in this count.
                     _sit = _cl["play_situation"].astype(str).str.replace(r"\s*\(ATO\)$", "", regex=True) \
                         if "play_situation" in _cl.columns else pd.Series("", index=_cl.index)
-                    _cl = _cl[_sit.isin(["Half court", "BLOB", "SLOB", "ATO"])]
+                    _cl = _cl[_sit.isin(list(sits))]
+                    if any_call:                      # the BLOB / SLOB "all" rows: every play call in that situation
+                        return _cl.sort_values(["game_date", "clip_number"], ascending=[False, True]) \
+                            if {"game_date", "clip_number"} <= set(_cl.columns) else _cl
                     _pc = _cl["play_call"].astype(str).str.strip()
                     _hit = _pc.str.lower() == str(label).strip().lower()
                     # "No Play Call" (our side: "Flow", which 47 renames it to) is every clip with NO call.
@@ -6937,8 +7053,9 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     return ("https://editor-web.synergysports.com/video?playlistUrl=" + _up.quote(_api, safe="")
                             + "&title=" + _up.quote(title))
 
-                def _pcs_body(label):
-                    _cl = _pcs_clips(label)
+                def _pcs_body(label, sits=("Half court", "ATO"), any_call=False, title=None):
+                    _cl = _pcs_clips(label, sits, any_call)
+                    _label0, label = label, (title or label)
                     if _cl.empty:
                         return ""
                     _gh = []
@@ -7014,6 +7131,44 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
                     '<div class="pcs-h"><span class="l">Play call <span class="mini">(click one to see its plays)</span></span>'
                     '<span class="t1">Poss</span><span class="t1">PPP</span></div>'
                     + "".join(_pcs_rows) + '</div></details>')
+                # CONFIRMED CHANGE (requested 11/25): BLOB / SLOB SUMMARY, laid out like the play call summary above -- for each
+                # of BLOB and SLOB an "All" row (every play call out of it, with its clips) and then each play call run out of it,
+                # possessions and PPP, every row opening to the plays behind it with the Synergy links.
+                try:
+                    if len(_sp_oob):
+                        _sp_oob["_n"] = pd.to_numeric(_sp_oob["possessions"], errors="coerce").fillna(0)
+                        _sp_oob["_pts"] = _sp_oob["_n"] * pd.to_numeric(_sp_oob["ppp"], errors="coerce")
+                        _sp_oob["_pn"] = _sp_oob["_n"].where(pd.to_numeric(_sp_oob["ppp"], errors="coerce").notna(), 0)
+                        _sk_ = _sp_oob["situation"].astype(str).str.upper().str.replace(r"\s*\(ATO\)$", "", regex=True)
+                        _o_rows, _o_n = [], 0
+                        for _st in ("BLOB", "SLOB"):
+                            _q = _sp_oob[_sk_ == _st]
+                            if _q.empty:
+                                continue
+                            _g2 = _q.groupby(_q["label"].astype(str)).agg(n=("_n", "sum"), pts=("_pts", "sum"), pn=("_pn", "sum"))
+                            _g2 = _g2[_g2["n"] > 0].sort_values("n", ascending=False)
+                            if _g2.empty:
+                                continue
+                            _o_n += len(_g2)
+                            _items = [(f"All {_st}", _g2["n"].sum(), _g2["pts"].sum(), _g2["pn"].sum(), True, "")]
+                            _items += [(_nm, _r2.n, _r2.pts, _r2.pn, False, ' style="padding-left:18px"') for _nm, _r2 in _g2.iterrows()]
+                            for _nm, _n2, _p2, _pn2, _all, _sty in _items:
+                                _hd2 = (f'<span class="l"{_sty}>{"<b>" if _all else ""}{_sb_esc(_nm)}{"</b>" if _all else ""}</span>'
+                                        f'<span class="t1">{int(_n2)}</span><span class="t1">{_sb_fmt(_p2 / _pn2, 2) if _pn2 else "--"}</span>')
+                                try:
+                                    _bd2 = _pcs_body(_nm if not _all else _st, (_st,), _all, f"{_st} - {_nm}" if not _all else f"All {_st}")
+                                except Exception as _pbe2:
+                                    print(f"  (BLOB / SLOB clips not shown for {_nm}: {type(_pbe2).__name__}: {_pbe2})", flush=True)
+                                    _bd2 = ""
+                                _o_rows.append(f'<details class="pcs-r"><summary>{_hd2}</summary>{_bd2}</details>' if _bd2
+                                               else f'<div class="pcs-r pcs-none"><div class="pcs-sum">{_hd2}</div></div>')
+                        if _o_rows:
+                            add('<details class="ob-det"><summary>BLOB / SLOB summary (' + str(_o_n) + ')</summary><div class="card pcs">'
+                                '<div class="pcs-h"><span class="l">Play call <span class="mini">(click one to see its plays)</span></span>'
+                                '<span class="t1">Poss</span><span class="t1">PPP</span></div>'
+                                + "".join(_o_rows) + '</div></details>')
+                except Exception as _obe:
+                    print(f"  (BLOB / SLOB summary not built: {type(_obe).__name__}: {_obe})", flush=True)
                 # CONFIRMED CHANGE (requested 11/23): CLUTCH SITUATIONS, laid out like the play call summary -- every clutch
                 # possession by game with its play call, action and result, and Synergy links: one for ALL of them, one per game.
                 try:
@@ -7711,12 +7866,35 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
             plays = calls[~calls["name"].astype(str).str.contains(_MOT + r"|blob|slob", regex=True, na=False)]
             if not plays.empty and plays["_u"].sum():
                 _top = plays.iloc[0]
-                _bn = _best_line("success", plays)
-                cards.append(_card("Plays", _sb_clean(_top["name"]), _poss(_top["_u"], _n(_top, "ppp")),
-                                   _dot("Most used", _who(_top), _into(_top), f"{len(plays)} named sets"),
-                                   _dot(_bn, f"nothing run more than {int(_top['_u'])} times yet"
-                                        if _top["_u"] < 3 else "") + ("." if _bn or _top["_u"] < 3 else ""),
-                                   split=_formation_line()))
+                # CONFIRMED CHANGE (requested 11/25: the Keys to Victory ("Call our best set: Cheetah"), this card (headline "Gold",
+                # the MOST USED) and the Play call summary table showed three different things under three different names --
+                # "set", "plays", "play call"). One word now, PLAY CALL, and the card's headline is the same play call the key
+                # names: the best points a possession, ranked exactly as 83 ranks it (PPP shrunk toward the side's own average
+                # by 8 possessions, 4+ uses, above that average). The most-used play call moves to the note.
+                _best = None
+                try:
+                    _cb = calls[(calls["_u"] >= int(globals().get("_KTV_PLAY_MIN_USES", 4))) & calls["_p"].notna()].copy()
+                    if len(_cb) and _team is not None:
+                        _pts_ = pd.to_numeric(_cb["points"], errors="coerce") if "points" in _cb.columns else _cb["_p"] * _cb["_u"]
+                        _pwp_ = pd.to_numeric(_cb["poss_with_points"], errors="coerce") if "poss_with_points" in _cb.columns else _cb["_u"]
+                        _cb["_adj"] = (_pts_ + _team * 8) / (_pwp_ + 8)
+                        _cb = _cb.sort_values(["_adj", "_u"], ascending=False)
+                        if float(_cb.iloc[0]["_adj"]) > _team:
+                            _best = _cb.iloc[0]
+                except Exception:
+                    _best = None
+                _mu = f"Most used: {_sb_clean(_top['name'])}, {_poss(_top['_u'], _n(_top, 'ppp'))}"
+                if _best is not None:
+                    cards.append(_card("Play calls", _sb_clean(_best["name"]), _poss(_best["_u"], _n(_best, "ppp")),
+                                       _dot("Best play call by points a possession", _who(_best), _into(_best)),
+                                       _mu + ".",
+                                       split=_formation_line()))
+                else:
+                    cards.append(_card("Play calls", _sb_clean(_top["name"]), _poss(_top["_u"], _n(_top, "ppp")),
+                                       _dot("Most used", _who(_top), _into(_top)),
+                                       (f"Nothing run more than {int(_top['_u'])} times yet, so no play call has earned a \"best\" yet."
+                                        if _top["_u"] < 3 else ""),
+                                       split=_formation_line()))
 
         # 3. Actions -- what they run into, and how it has gone against each coverage
         if not act.empty and act["_u"].sum():
@@ -7860,7 +8038,7 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
 
         if len(cards) < 2:
             return _sb_pc_top(side)                        # not enough tagged yet -- the one-line headline instead
-        _r1 = [c for c in cards if any(f'lc-t">{t}<' in c for t in ("Motion", "Plays", "Actions", "Clutch"))]
+        _r1 = [c for c in cards if any(f'lc-t">{t}<' in c for t in ("Motion", "Play calls", "Actions", "Clutch"))]
         _r2 = [c for c in cards if c not in _r1]
         _rows = [r for r in (_r1, _r2) if r]
         return "".join('<div class="lcards wm-cards">' + "".join(r) + "</div>" for r in _rows)
@@ -9061,7 +9239,10 @@ def _sb_build_html(_sb_d, game, scheduled_name, short):
     # is what holds the cards, the bench and the reads -- only the five-across strip is always on the page.
     _SB_FIXED = [str(t).upper() for t in (globals().get("BRIEF_FIXED_SECTIONS")
                                           or ("KEYS TO VICTORY", "ROSTER", "RECENT RESULTS",
-                                              "HOW THEY FINISHED LAST SEASON", "MORE FROM THE APP"))]
+                                              "HOW THEY FINISHED LAST SEASON"))]
+    # CONFIRMED CHANGE (requested 11/25: "All of these should be within the 'More from the app' section, which should be
+    # collapsed"): MORE FROM THE APP is NOT in this list, so _sb_collapse wraps the whole section -- header and every block --
+    # in one closed expander; the blocks inside are closed too.
     # (the lineup blocks have no section header of their own any more -- requested -- so they ride inside the
     # roster section above them, which is itself always visible)
 

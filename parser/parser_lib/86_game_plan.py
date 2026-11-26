@@ -189,6 +189,34 @@ if not _gp_opp.empty and "FTA" in _gp_opp.columns:
                            "ft_pct": r["ft_pct"], "ft_pct_adj": r["ft_pct_adj"],
                            "ftm": int(r["FTM"]), "fta": int(r["FTA"]),
                            "games": int(r["games"]), "note": _note})
+# CONFIRMED CHANGE (requested 11/25: "why aren't players shooting under 70% FT considered somebody to foul? I think you
+# have to foul at least one of the starters" -> "I like the foul first option to be built"). The 62% rule only names a
+# player who is clearly bad; when nobody meets it a late game still needs a man to put on the line. So the weakest
+# free-throw shooter among their main rotation (_GP_FOUL_FIRST_MPG+ minutes a game, or their 5 most-played when minutes
+# are missing) gets "Foul first": 8+ attempts, shrunk rate under their own team's rate and under _GP_FOUL_FIRST_MAX_PCT.
+# Never replaces a "Foul"; only used when nobody got one. _GP_FOUL_FIRST = False turns it off.
+_GP_FOUL_FIRST = globals().get("_GP_FOUL_FIRST", True)
+_GP_FOUL_FIRST_MPG = 20
+_GP_FOUL_FIRST_MAX_PCT = 74
+try:
+    if _GP_FOUL_FIRST and _foul_rows and not any(x["call"] == "Foul" for x in _foul_rows) and not _gp_opp.empty:
+        _tm_ft = 100 * _gp_opp["FTM"].sum() / max(_gp_opp["FTA"].sum(), 1)
+        _cand = _gp_opp[_gp_opp["FTA"] >= _GP_FOUL_MIN_FTA].copy()
+        if "MIN" in _cand.columns and _gp_opp["MIN"].sum() > 0:
+            _cand = _cand[(_cand["MIN"] / _cand["games"].clip(lower=1)) >= _GP_FOUL_FIRST_MPG]
+        else:
+            _cand = _cand[_cand["player"].isin(_gp_opp.head(5)["player"])]
+        if not _cand.empty:
+            _cand["adj"] = (100 * _cand["FTM"] + _GP_FOUL_PRIOR_PCT * _GP_FOUL_SHRINK_N) / (_cand["FTA"] + _GP_FOUL_SHRINK_N)
+            _w = _cand.sort_values("adj").iloc[0]
+            if _w["adj"] < _tm_ft and _w["adj"] <= _GP_FOUL_FIRST_MAX_PCT:
+                for x in _foul_rows:
+                    if x["player"] == _w["player"]:
+                        x["call"] = "Foul first"
+                        x["note"] = (f"Their weakest free-throw shooter among the main rotation "
+                                     f"({_tm_ft:.0f}% as a team)" + (f"; {x['note'].lower()}" if x["note"] else ""))
+except Exception as _gpe:
+    print(f"  (foul first not set: {type(_gpe).__name__}: {_gpe})", flush=True)
 late_game_foul_list = pd.DataFrame(_foul_rows, columns=["opponent", "player", "call", "ft_pct", "ft_pct_adj",
                                                         "ftm", "fta", "games", "note"])
 late_game_foul_list["is_sample"] = False

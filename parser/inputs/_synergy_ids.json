@@ -5122,13 +5122,13 @@
   },
   "6ad7a1030b11c4d393421d00": {
    "date": "2026-11-25",
-   "name": "LongBeachState@SouthernUtah",
-   "home": "Southern Utah Thunderbirds",
-   "home_short": "SouthernUtah",
-   "home_id": "54457dd4300969b132fcff69",
-   "away": "Long Beach State 49ers",
-   "away_short": "LongBeachState",
-   "away_id": "54457dd4300969b132fcff51"
+   "name": "SouthernUtah@LongBeachState",
+   "home": "Long Beach State 49ers",
+   "home_short": "LongBeachState",
+   "home_id": "54457dd4300969b132fcff51",
+   "away": "Southern Utah Thunderbirds",
+   "away_short": "SouthernUtah",
+   "away_id": "54457dd4300969b132fcff69"
   },
   "6ad7a1030b11c4d393421cfb": {
    "date": "2026-11-25",
@@ -5162,13 +5162,13 @@
   },
   "6ada6d30a569f57ef7c22a31": {
    "date": "2026-11-25",
-   "name": "WrightState@Yale",
-   "home": "Yale Bulldogs",
-   "home_short": "Yale",
-   "home_id": "54457dd3300969b132fcfeea",
-   "away": "Wright State Raiders",
-   "away_short": "WrightState",
-   "away_id": "54457dd4300969b132fcff83"
+   "name": "Yale@WrightState",
+   "home": "Wright State Raiders",
+   "home_short": "WrightState",
+   "home_id": "54457dd4300969b132fcff83",
+   "away": "Yale Bulldogs",
+   "away_short": "Yale",
+   "away_id": "54457dd3300969b132fcfeea"
   },
   "6ad7a1030b11c4d393421d10": {
    "date": "2026-11-25",
@@ -5192,33 +5192,33 @@
   },
   "6ad7a1030b11c4d393421cfa": {
    "date": "2026-11-25",
-   "name": "Marquette@Virginia",
-   "home": "Virginia Cavaliers",
-   "home_short": "Virginia",
-   "home_id": "54457dd4300969b132fcff0e",
-   "away": "Marquette Golden Eagles",
-   "away_short": "Marquette",
-   "away_id": "54457dd3300969b132fcfee2"
+   "name": "Virginia@Marquette",
+   "home": "Marquette Golden Eagles",
+   "home_short": "Marquette",
+   "home_id": "54457dd3300969b132fcfee2",
+   "away": "Virginia Cavaliers",
+   "away_short": "Virginia",
+   "away_id": "54457dd4300969b132fcff0e"
   },
   "6ad7a1030b11c4d393421cf8": {
    "date": "2026-11-25",
-   "name": "Ohio@Rice",
-   "home": "Rice Owls",
-   "home_short": "Rice",
-   "home_id": "54457dd4300969b132fcff79",
-   "away": "Ohio Bobcats",
-   "away_short": "Ohio",
-   "away_id": "54457dd3300969b132fcfecf"
+   "name": "Rice@Ohio",
+   "home": "Ohio Bobcats",
+   "home_short": "Ohio",
+   "home_id": "54457dd3300969b132fcfecf",
+   "away": "Rice Owls",
+   "away_short": "Rice",
+   "away_id": "54457dd4300969b132fcff79"
   },
   "6ad7a1030d6a5de5bbebd490": {
    "date": "2026-11-25",
-   "name": "Charlotte@NorthernIowa",
-   "home": "Northern Iowa Panthers",
-   "home_short": "NorthernIowa",
-   "home_id": "54457dd4300969b132fcff26",
-   "away": "Charlotte 49ers",
-   "away_short": "Charlotte",
-   "away_id": "54457dd3300969b132fcfe9a"
+   "name": "NorthernIowa@Charlotte",
+   "home": "Charlotte 49ers",
+   "home_short": "Charlotte",
+   "home_id": "54457dd3300969b132fcfe9a",
+   "away": "Northern Iowa Panthers",
+   "away_short": "NorthernIowa",
+   "away_id": "54457dd4300969b132fcff26"
   },
   "6ad7a1030d6a5de5bbebd48f": {
    "date": "2026-11-25",
@@ -5232,33 +5232,33 @@
   },
   "6ad7a1030d6a5de5bbebd48e": {
    "date": "2026-11-25",
-   "name": "Belmont@StBonaventure",
-   "home": "St. Bonaventure Bonnies",
-   "home_short": "StBonaventure",
-   "home_id": "54457dd4300969b132fcff7b",
-   "away": "Belmont Bruins",
-   "away_short": "Belmont",
-   "away_id": "54457dd4300969b132fcff21"
+   "name": "StBonaventure@Belmont",
+   "home": "Belmont Bruins",
+   "home_short": "Belmont",
+   "home_id": "54457dd4300969b132fcff21",
+   "away": "St. Bonaventure Bonnies",
+   "away_short": "StBonaventure",
+   "away_id": "54457dd4300969b132fcff7b"
   },
   "6ad7a1030d6a5de5bbebd48d": {
    "date": "2026-11-25",
-   "name": "KansasState@Gonzaga",
-   "home": "Gonzaga Bulldogs",
-   "home_short": "Gonzaga",
-   "home_id": "54457dd3300969b132fcfe7f",
-   "away": "Kansas State Wildcats",
-   "away_short": "KansasState",
-   "away_id": "54457dd4300969b132fcff03"
+   "name": "Gonzaga@KansasState",
+   "home": "Kansas State Wildcats",
+   "home_short": "KansasState",
+   "home_id": "54457dd4300969b132fcff03",
+   "away": "Gonzaga Bulldogs",
+   "away_short": "Gonzaga",
+   "away_id": "54457dd3300969b132fcfe7f"
   },
   "6ad7a1030d6a5de5bbebd48c": {
    "date": "2026-11-24",
-   "name": "Stanford@Colorado",
-   "home": "Colorado Buffaloes",
-   "home_short": "Colorado",
-   "home_id": "54457dd3300969b132fcfe9f",
-   "away": "Stanford Cardinal",
-   "away_short": "Stanford",
-   "away_id": "54457dd3300969b132fcfe9e"
+   "name": "Colorado@Stanford",
+   "home": "Stanford Cardinal",
+   "home_short": "Stanford",
+   "home_id": "54457dd3300969b132fcfe9e",
+   "away": "Colorado Buffaloes",
+   "away_short": "Colorado",
+   "away_id": "54457dd3300969b132fcfe9f"
   },
   "6ad7a1030d6a5de5bbebd48b": {
    "date": "2026-11-24",
@@ -6002,13 +6002,13 @@
   },
   "6ad7a103a35d5a7b0bed1f86": {
    "date": "2026-11-25",
-   "name": "JacksonvilleState@Pacific",
-   "home": "Pacific Tigers",
-   "home_short": "Pacific",
-   "home_id": "54457dd4300969b132fcff1d",
-   "away": "Jacksonville State Gamecocks",
-   "away_short": "JacksonvilleState",
-   "away_id": "54457dd4300969b132fcffe5"
+   "name": "Pacific@JacksonvilleState",
+   "home": "Jacksonville State Gamecocks",
+   "home_short": "JacksonvilleState",
+   "home_id": "54457dd4300969b132fcffe5",
+   "away": "Pacific Tigers",
+   "away_short": "Pacific",
+   "away_id": "54457dd4300969b132fcff1d"
   },
   "6ad7a103a35d5a7b0bed1f85": {
    "date": "2026-11-25",
@@ -6042,13 +6042,13 @@
   },
   "6ad7a103a35d5a7b0bed1f81": {
    "date": "2026-11-25",
-   "name": "UCDavis@Nebraska-Omaha",
-   "home": "Nebraska-Omaha Mavericks",
-   "home_short": "Nebraska-Omaha",
-   "home_id": "54457dd6300969b132fd019a",
-   "away": "UC Davis Aggies",
-   "away_short": "UCDavis",
-   "away_id": "54457dd3300969b132fcfeeb"
+   "name": "Nebraska-Omaha@UCDavis",
+   "home": "UC Davis Aggies",
+   "home_short": "UCDavis",
+   "home_id": "54457dd3300969b132fcfeeb",
+   "away": "Nebraska-Omaha Mavericks",
+   "away_short": "Nebraska-Omaha",
+   "away_id": "54457dd6300969b132fd019a"
   },
   "6ad7a103a35d5a7b0bed1f80": {
    "date": "2026-11-25",
@@ -6102,23 +6102,23 @@
   },
   "6ad7a103a35d5a7b0bed1f7b": {
    "date": "2026-11-25",
-   "name": "UtahState@SouthernMethodist",
-   "home": "Southern Methodist Mustangs",
-   "home_short": "SouthernMethodist",
-   "home_id": "54457dd4300969b132fcffdd",
-   "away": "Utah State Aggies",
-   "away_short": "UtahState",
-   "away_id": "54457dd4300969b132fcff06"
+   "name": "SouthernMethodist@UtahState",
+   "home": "Utah State Aggies",
+   "home_short": "UtahState",
+   "home_id": "54457dd4300969b132fcff06",
+   "away": "Southern Methodist Mustangs",
+   "away_short": "SouthernMethodist",
+   "away_id": "54457dd4300969b132fcffdd"
   },
   "6ad7a103a35d5a7b0bed1f7a": {
    "date": "2026-11-25",
-   "name": "Duke@Connecticut",
-   "home": "Connecticut Huskies",
-   "home_short": "Connecticut",
-   "home_id": "54457dd3300969b132fcfea2",
-   "away": "Duke Blue Devils",
-   "away_short": "Duke",
-   "away_id": "54457dd3300969b132fcfe80"
+   "name": "Connecticut@Duke",
+   "home": "Duke Blue Devils",
+   "home_short": "Duke",
+   "home_id": "54457dd3300969b132fcfe80",
+   "away": "Connecticut Huskies",
+   "away_short": "Connecticut",
+   "away_id": "54457dd3300969b132fcfea2"
   },
   "6ad7a103a35d5a7b0bed1f79": {
    "date": "2026-11-25",
@@ -6202,23 +6202,23 @@
   },
   "6ad7a103a35d5a7b0bed1f82": {
    "date": "2026-11-25",
-   "name": "TexasState@AlcornState",
-   "home": "Alcorn State Braves",
-   "home_short": "AlcornState",
-   "home_id": "54457dd4300969b132fcff4f",
-   "away": "Texas State Bobcats",
-   "away_short": "TexasState",
-   "away_id": "54457dd4300969b132fcffbe"
+   "name": "AlcornState@TexasState",
+   "home": "Texas State Bobcats",
+   "home_short": "TexasState",
+   "home_id": "54457dd4300969b132fcffbe",
+   "away": "Alcorn State Braves",
+   "away_short": "AlcornState",
+   "away_id": "54457dd4300969b132fcff4f"
   },
   "6ad7a103a35d5a7b0bed1f73": {
    "date": "2026-11-25",
-   "name": "PennState@Memphis",
-   "home": "Memphis Tigers",
-   "home_short": "Memphis",
-   "home_id": "54457dd3300969b132fcfe81",
-   "away": "Penn State Nittany Lions",
-   "away_short": "PennState",
-   "away_id": "54457dd3300969b132fcfee6"
+   "name": "Memphis@PennState",
+   "home": "Penn State Nittany Lions",
+   "home_short": "PennState",
+   "home_id": "54457dd3300969b132fcfee6",
+   "away": "Memphis Tigers",
+   "away_short": "Memphis",
+   "away_id": "54457dd3300969b132fcfe81"
   },
   "6ad7a1030b11c4d393421d15": {
    "date": "2026-11-25",
@@ -6252,13 +6252,13 @@
   },
   "6ad7a1030b11c4d393421d13": {
    "date": "2026-11-25",
-   "name": "USC@SouthCarolina",
-   "home": "South Carolina Gamecocks",
-   "home_short": "SouthCarolina",
-   "home_id": "54457dd4300969b132fcff04",
-   "away": "USC Trojans",
-   "away_short": "USC",
-   "away_id": "54457dd3300969b132fcfeb0"
+   "name": "SouthCarolina@USC",
+   "home": "USC Trojans",
+   "home_short": "USC",
+   "home_id": "54457dd3300969b132fcfeb0",
+   "away": "South Carolina Gamecocks",
+   "away_short": "SouthCarolina",
+   "away_id": "54457dd4300969b132fcff04"
   },
   "6ad7a1030b11c4d393421d12": {
    "date": "2026-11-25",
@@ -6272,13 +6272,13 @@
   },
   "6ad7a1030b11c4d393421d11": {
    "date": "2026-11-25",
-   "name": "FloridaGulfCoast@GeorgiaState",
-   "home": "Georgia State Panthers",
-   "home_short": "GeorgiaState",
-   "home_id": "54457dd4300969b132fcff33",
-   "away": "Florida Gulf Coast Eagles",
-   "away_short": "FloridaGulfCoast",
-   "away_id": "54457dd4300969b132fcffcf"
+   "name": "GeorgiaState@FloridaGulfCoast",
+   "home": "Florida Gulf Coast Eagles",
+   "home_short": "FloridaGulfCoast",
+   "home_id": "54457dd4300969b132fcffcf",
+   "away": "Georgia State Panthers",
+   "away_short": "GeorgiaState",
+   "away_id": "54457dd4300969b132fcff33"
   },
   "6ad7a1030b11c4d393421d0f": {
    "date": "2026-11-25",
@@ -6322,13 +6322,13 @@
   },
   "6ad7a1030b11c4d393421d0b": {
    "date": "2026-11-25",
-   "name": "AppalachianState@Akron",
-   "home": "Akron Zips",
-   "home_short": "Akron",
-   "home_id": "54457dd4300969b132fcff0d",
-   "away": "Appalachian State Mountaineers",
-   "away_short": "AppalachianState",
-   "away_id": "54457dd4300969b132fcffe2"
+   "name": "Akron@AppalachianState",
+   "home": "Appalachian State Mountaineers",
+   "home_short": "AppalachianState",
+   "home_id": "54457dd4300969b132fcffe2",
+   "away": "Akron Zips",
+   "away_short": "Akron",
+   "away_id": "54457dd4300969b132fcff0d"
   },
   "6ad7a1030b11c4d393421d0a": {
    "date": "2026-11-25",
@@ -6342,13 +6342,13 @@
   },
   "6ad7a1030b11c4d393421d09": {
    "date": "2026-11-25",
-   "name": "Xavier@TexasA&M",
-   "home": "Texas A&M Aggies",
-   "home_short": "TexasA&M",
-   "home_id": "54457dd3300969b132fcfefa",
-   "away": "Xavier Musketeers",
-   "away_short": "Xavier",
-   "away_id": "54457dd4300969b132fcff08"
+   "name": "TexasA&M@Xavier",
+   "home": "Xavier Musketeers",
+   "home_short": "Xavier",
+   "home_id": "54457dd4300969b132fcff08",
+   "away": "Texas A&M Aggies",
+   "away_short": "TexasA&M",
+   "away_id": "54457dd3300969b132fcfefa"
   },
   "6ad7a1030b11c4d393421d08": {
    "date": "2026-11-25",
@@ -6442,13 +6442,13 @@
   },
   "6ad7a1030b11c4d393421d01": {
    "date": "2026-11-25",
-   "name": "Davidson@Tulane",
-   "home": "Tulane Green Wave",
-   "home_short": "Tulane",
-   "home_id": "54457dd4300969b132fcff94",
-   "away": "Davidson Wildcats",
-   "away_short": "Davidson",
-   "away_id": "54457dd3300969b132fcfee1"
+   "name": "Tulane@Davidson",
+   "home": "Davidson Wildcats",
+   "home_short": "Davidson",
+   "home_id": "54457dd3300969b132fcfee1",
+   "away": "Tulane Green Wave",
+   "away_short": "Tulane",
+   "away_id": "54457dd4300969b132fcff94"
   },
   "6b05659788489e595017f450": {
    "date": "2026-11-24",
@@ -6469,6 +6469,416 @@
    "away": "Clemson Tigers",
    "away_short": "Clemson",
    "away_id": "54457dd3300969b132fcff00"
+  },
+  "6ad7a103a35d5a7b0bed1f87": {
+   "date": "2026-11-25",
+   "name": "IncarnateWord@Hawaii",
+   "home": "Hawaii Warriors",
+   "home_short": "Hawaii",
+   "home_id": "54457dd4300969b132fcff62",
+   "away": "Incarnate Word Cardinals",
+   "away_short": "IncarnateWord",
+   "away_id": "54457dd7300969b132fd01f6"
+  },
+  "6ac3b2d5a257b7e398a1c2fa": {
+   "date": "2026-11-24",
+   "name": "Chicago@WheatonIL",
+   "home": "Wheaton (IL)",
+   "home_short": "WheatonIL",
+   "home_id": "54457dda300969b132fd0417",
+   "away": "Chicago Maroons",
+   "away_short": "Chicago",
+   "away_id": "54457dd5300969b132fd00fd"
+  },
+  "6a9c8844ee48b327d741b6f6": {
+   "date": "2026-11-24",
+   "name": "Brescia@StLouisPharma",
+   "home": "University of Health Sciences and Pharmacy in St. Louis Eutectics",
+   "home_short": "StLouisPharma",
+   "home_id": "54457dd9300969b132fd0381",
+   "away": "Brescia University Bearcats",
+   "away_short": "Brescia",
+   "away_id": "54457dd4300969b132fd0006"
+  },
+  "6aa2d8487d34c13cef4e963f": {
+   "date": "2026-11-24",
+   "name": "Lyon@MissUniversityWmn",
+   "home": "Mississippi University for Women Owls",
+   "home_short": "MissUniversityWmn",
+   "home_id": "5babcc0baeda7199395f1ea5",
+   "away": "Lyon College Scots",
+   "away_short": "Lyon",
+   "away_id": "54457dd5300969b132fd0064"
+  },
+  "6a95b1a82c368b0801ad23a8": {
+   "date": "2026-11-24",
+   "name": "MidAmericaNazarene@CentralMethodist",
+   "home": "Central Methodist University Eagles",
+   "home_short": "CentralMethodist",
+   "home_id": "54457dd4300969b132fd0012",
+   "away": "MidAmerica Nazarene Pioneers",
+   "away_short": "MidAmericaNazarene",
+   "away_id": "54457dd8300969b132fd034f"
+  },
+  "6ada84a1f0370dec75f54f16": {
+   "date": "2026-11-24",
+   "name": "Indiana(PA)@LakeErie",
+   "home": "Lake Erie College Storm",
+   "home_short": "LakeErie",
+   "home_id": "54457dd6300969b132fd01be",
+   "away": "Indiana (PA) Crimson Hawks",
+   "away_short": "Indiana(PA)",
+   "away_id": "54457dd7300969b132fd0236"
+  },
+  "6aa4865d97156d3862e2a5ef": {
+   "date": "2026-11-24",
+   "name": "Neumann@Muhlenberg",
+   "home": "Muhlenberg Mules",
+   "home_short": "Muhlenberg",
+   "home_id": "54457dd8300969b132fd02af",
+   "away": "Neumann Knights",
+   "away_short": "Neumann",
+   "away_id": "54457dd6300969b132fd012e"
+  },
+  "6ac0024c4d50f24fc870e6b2": {
+   "date": "2026-11-24",
+   "name": "StNorbert@Lakeland(WI)",
+   "home": "Lakeland (WI) Muskies",
+   "home_short": "Lakeland(WI)",
+   "home_id": "54d2b0683ad33bf4a9d80751",
+   "away": "St. Norbert Green Knights",
+   "away_short": "StNorbert",
+   "away_id": "54457dd8300969b132fd02c2"
+  },
+  "6ab7d680444ecd7bb1e88593": {
+   "date": "2026-11-24",
+   "name": "RochesterNY@Hobart",
+   "home": "Hobart College Statesmen",
+   "home_short": "Hobart",
+   "home_id": "54457dda300969b132fd041d",
+   "away": "Rochester (NY) Yellowjackets",
+   "away_short": "RochesterNY",
+   "away_id": "54457dd9300969b132fd036e"
+  },
+  "6ad7f55fa35d5a7b0bed25e1": {
+   "date": "2026-11-24",
+   "name": "MissouriSouthern@Rockhurst",
+   "home": "Rockhurst Hawks",
+   "home_short": "Rockhurst",
+   "home_id": "54457dd5300969b132fd009f",
+   "away": "Missouri Southern State Lions",
+   "away_short": "MissouriSouthern",
+   "away_id": "54457dd4300969b132fcffde"
+  },
+  "6abc2e9c5676e45fb3fa628a": {
+   "date": "2026-11-24",
+   "name": "BuenaVista@GustavusAdolphus",
+   "home": "Gustavus Adolphus",
+   "home_short": "GustavusAdolphus",
+   "home_id": "54457dd8300969b132fd02fe",
+   "away": "Buena Vista Beavers",
+   "away_short": "BuenaVista",
+   "away_id": "54457dd8300969b132fd033c"
+  },
+  "6ac39332b113e65038da2061": {
+   "date": "2026-11-24",
+   "name": "Blackburn@Webster",
+   "home": "Webster University",
+   "home_short": "Webster",
+   "home_id": "54457dd7300969b132fd023f",
+   "away": "Blackburn Beavers",
+   "away_short": "Blackburn",
+   "away_id": "54457dd7300969b132fd0222"
+  },
+  "6abff1e4896023faabe15b3c": {
+   "date": "2026-11-24",
+   "name": "Benedictine IL@NorthCentralIL",
+   "home": "North Central (IL) College Cardinals",
+   "home_short": "NorthCentralIL",
+   "home_id": "54457dd8300969b132fd033d",
+   "away": "Benedictine (IL) Eagles",
+   "away_short": "Benedictine IL",
+   "away_id": "54457dd8300969b132fd02b9"
+  },
+  "6ad7b771ff0bf070ce75de5f": {
+   "date": "2026-11-24",
+   "name": "Ecclesia@OuachitaBaptist",
+   "home": "Ouachita Baptist Tigers",
+   "home_short": "OuachitaBaptist",
+   "home_id": "54457dd7300969b132fd0228",
+   "away": "Ecclesia Royals",
+   "away_short": "Ecclesia",
+   "away_id": "54457dd5300969b132fd002e"
+  },
+  "6ad37ca0da01d4fd3fc80937": {
+   "date": "2026-11-24",
+   "name": "MonroeUniversityNY@Wilmington",
+   "home": "Wilmington (DE) Wildcats",
+   "home_short": "Wilmington",
+   "home_id": "54457dd5300969b132fd00dd",
+   "away": "Monroe University (NY)",
+   "away_short": "MonroeUniversityNY",
+   "away_id": "6a8720f07a183bff5f060bf6"
+  },
+  "6acf32961e621ca5807600ff": {
+   "date": "2026-11-24",
+   "name": "Whitman@UCSantaCruz",
+   "home": "UC Santa Cruz Banana Slugs",
+   "home_short": "UCSantaCruz",
+   "home_id": "54457dd5300969b132fd00e1",
+   "away": "Whitman Blues",
+   "away_short": "Whitman",
+   "away_id": "54457dd5300969b132fd00d5"
+  },
+  "6ac4cc140c624f8b5a99f8f7": {
+   "date": "2026-11-24",
+   "name": "BethanyLutheran@UWRiverFalls",
+   "home": "Wisconsin-(River Falls) Falcons",
+   "home_short": "UWRiverFalls",
+   "home_id": "54457dd9300969b132fd03e7",
+   "away": "Bethany Lutheran College",
+   "away_short": "BethanyLutheran",
+   "away_id": "54457dd8300969b132fd02a9"
+  },
+  "6abd2bbc717eaab3c31511c9": {
+   "date": "2026-11-24",
+   "name": "Luther@StOlaf",
+   "home": "St. Olaf Oles",
+   "home_short": "StOlaf",
+   "home_id": "54457dd5300969b132fd00b2",
+   "away": "Luther",
+   "away_short": "Luther",
+   "away_id": "54457dda300969b132fd0405"
+  },
+  "6abc2d6fb41e7aa71335a590": {
+   "date": "2026-11-24",
+   "name": "NorthCentralMN@Conc(Moorhead)",
+   "home": "Concordia (Moorhead) Cobbers",
+   "home_short": "Conc(Moorhead)",
+   "home_id": "54457dd7300969b132fd020c",
+   "away": "North Central (MN) Rams",
+   "away_short": "NorthCentralMN",
+   "away_id": "54457dda300969b132fd040c"
+  },
+  "6abc2667a50466db6de7513b": {
+   "date": "2026-11-24",
+   "name": "Ripon@MarianWI",
+   "home": "Marian University (WI) Sabres",
+   "home_short": "MarianWI",
+   "home_id": "54457dd8300969b132fd02be",
+   "away": "Ripon Redhawks",
+   "away_short": "Ripon",
+   "away_id": "54457dda300969b132fd040f"
+  },
+  "6abc1bdc7b7b1c3e42616475": {
+   "date": "2026-11-24",
+   "name": "Knox@Loras",
+   "home": "Loras Duhawks",
+   "home_short": "Loras",
+   "home_id": "54457dd7300969b132fd01e5",
+   "away": "Knox",
+   "away_short": "Knox",
+   "away_id": "54457dda300969b132fd0402"
+  },
+  "6a832d408c1d7757cb053683": {
+   "date": "2026-11-24",
+   "name": "Durham@Seneca",
+   "home": "Seneca Sting",
+   "home_short": "Seneca",
+   "home_id": "5bc155b4aeda71993920fef8",
+   "away": "Durham Lords",
+   "away_short": "Durham",
+   "away_id": "5d7fcbedf52909811e0a9617"
+  },
+  "6b06ee2d7319474e68c84078": {
+   "date": "2026-11-26",
+   "name": "Tennessee@IowaState",
+   "home": "Iowa State Cyclones",
+   "home_short": "IowaState",
+   "home_id": "54457dd3300969b132fcfe95",
+   "away": "Tennessee Volunteers",
+   "away_short": "Tennessee",
+   "away_id": "54457dd3300969b132fcfe98"
+  },
+  "6ad7a103a35d5a7b0bed1f8d": {
+   "date": "2026-11-26",
+   "name": "Georgetown@TexasAustin",
+   "home": "Texas-(Austin) Longhorns",
+   "home_short": "TexasAustin",
+   "home_id": "54457dd3300969b132fcfe85",
+   "away": "Georgetown Hoyas",
+   "away_short": "Georgetown",
+   "away_id": "54457dd3300969b132fcfe8e"
+  },
+  "6ad7a103a35d5a7b0bed1f8c": {
+   "date": "2026-11-26",
+   "name": "SouthCarolina@ArizonaState",
+   "home": "Arizona State Sun Devils",
+   "home_short": "ArizonaState",
+   "home_id": "54457dd3300969b132fcfed9",
+   "away": "South Carolina Gamecocks",
+   "away_short": "SouthCarolina",
+   "away_id": "54457dd4300969b132fcff04"
+  },
+  "6ad7a103a35d5a7b0bed1f8b": {
+   "date": "2026-11-26",
+   "name": "BostonCollege@UCF",
+   "home": "UCF Knights",
+   "home_short": "UCF",
+   "home_id": "54457dd4300969b132fcff93",
+   "away": "Boston College Eagles",
+   "away_short": "BostonCollege",
+   "away_id": "54457dd3300969b132fcfe8b"
+  },
+  "6ad7a103a35d5a7b0bed1f8a": {
+   "date": "2026-11-26",
+   "name": "Army@TexasSanAntonio",
+   "home": "Texas-(San Antonio) Roadrunners",
+   "home_short": "TexasSanAntonio",
+   "home_id": "54457dd4300969b132fcff59",
+   "away": "Army Black Knights",
+   "away_short": "Army",
+   "away_id": "54457dd4300969b132fcff4e"
+  },
+  "6ad7a103a35d5a7b0bed1f89": {
+   "date": "2026-11-26",
+   "name": "Oklahoma@Purdue",
+   "home": "Purdue Boilermakers",
+   "home_short": "Purdue",
+   "home_id": "54457dd3300969b132fcfef4",
+   "away": "Oklahoma Sooners",
+   "away_short": "Oklahoma",
+   "away_id": "54457dd3300969b132fcfeb3"
+  },
+  "6ad7a103a35d5a7b0bed1f88": {
+   "date": "2026-11-26",
+   "name": "Georgia@Cincinnati",
+   "home": "Cincinnati Bearcats",
+   "home_short": "Cincinnati",
+   "home_id": "54457dd3300969b132fcfe84",
+   "away": "Georgia Bulldogs",
+   "away_short": "Georgia",
+   "away_id": "54457dd3300969b132fcfeab"
+  },
+  "6b06d338d857db4fa97929ff": {
+   "date": "2026-11-25",
+   "name": "SELouisiana@NorthDakota",
+   "home": "North Dakota Fighting Hawks",
+   "home_short": "NorthDakota",
+   "home_id": "54457dd4300969b132fcffea",
+   "away": "Southeastern Louisiana Lions",
+   "away_short": "SELouisiana",
+   "away_id": "54457dd4300969b132fcff6c"
+  },
+  "6b06d0de686ab35046a64584": {
+   "date": "2026-11-25",
+   "name": "Mississippi@Arizona",
+   "home": "Arizona Wildcats",
+   "home_short": "Arizona",
+   "home_id": "54457dd3300969b132fcfe88",
+   "away": "Mississippi Rebels",
+   "away_short": "Mississippi",
+   "away_id": "54457dd4300969b132fcff12"
+  },
+  "6b06d461c51b2b0eb92548c0": {
+   "date": "2026-11-25",
+   "name": "NorthernColorado@Detroit",
+   "home": "Detroit Titans",
+   "home_short": "Detroit",
+   "home_id": "54457dd4300969b132fcff6b",
+   "away": "Northern Colorado Bears",
+   "away_short": "NorthernColorado",
+   "away_id": "54457dd4300969b132fcff58"
+  },
+  "6adb879e9e05d6bc0795dc9d": {
+   "date": "2026-11-24",
+   "name": "CSMonterey@Dominican(CA)",
+   "home": "Dominican (CA) Penguins",
+   "home_short": "Dominican(CA)",
+   "home_id": "54457dd5300969b132fd0029",
+   "away": "Cal State Monterey Bay Otters",
+   "away_short": "CSMonterey",
+   "away_id": "54457dd5300969b132fd001f"
+  },
+  "6ac0c72d4d561a146c1617d2": {
+   "date": "2026-11-24",
+   "name": "Evergreen@PacificLutheran",
+   "home": "Pacific Lutheran Lutes",
+   "home_short": "PacificLutheran",
+   "home_id": "54457dd7300969b132fd01e4",
+   "away": "Evergreen State College Geoducks",
+   "away_short": "Evergreen",
+   "away_id": "54457dd5300969b132fd0032"
+  },
+  "6ac359c60434141c2442b10c": {
+   "date": "2026-11-24",
+   "name": "ChapmanUniversity@Occidental",
+   "home": "Occidental Tigers",
+   "home_short": "Occidental",
+   "home_id": "54457dd5300969b132fd008d",
+   "away": "Chapman University Panthers",
+   "away_short": "ChapmanUniversity",
+   "away_id": "54457dd6300969b132fd01a8"
+  },
+  "6ada5369f91f5295c1fec02f": {
+   "date": "2026-11-24",
+   "name": "Graceland@MountMercy",
+   "home": "Mount Mercy (IA) Mustangs",
+   "home_short": "MountMercy",
+   "home_id": "54457dd8300969b132fd0310",
+   "away": "Graceland University Yellowjackets",
+   "away_short": "Graceland",
+   "away_id": "54457dd8300969b132fd0302"
+  },
+  "6ae0e63b5b30dac2c387ff44": {
+   "date": "2026-11-24",
+   "name": "ParkGilbert@LewisClarkState",
+   "home": "Lewis-Clark State Warriors",
+   "home_short": "LewisClarkState",
+   "home_id": "54457dd6300969b132fd015c",
+   "away": "Park University - Gilbert",
+   "away_short": "ParkGilbert",
+   "away_id": "5d5abd8cf52909811ee07e8b"
+  },
+  "6ac0cab0b5663d0ece5267c9": {
+   "date": "2026-11-24",
+   "name": "PacificUniversity@LaVerne",
+   "home": "La Verne Leopards",
+   "home_short": "LaVerne",
+   "home_id": "54457dd5300969b132fd0059",
+   "away": "Pacific University Boxers",
+   "away_short": "PacificUniversity",
+   "away_id": "54457dd7300969b132fd01fb"
+  },
+  "6a9351473f349c34ddacae7b": {
+   "date": "2026-11-24",
+   "name": "MorningsideCollege@Waldorf",
+   "home": "Waldorf University Warriors",
+   "home_short": "Waldorf",
+   "home_id": "54457dd5300969b132fd00cb",
+   "away": "Morningside College Mustangs",
+   "away_short": "MorningsideCollege",
+   "away_id": "54457dd8300969b132fd02fa"
+  },
+  "6ac395882a33b84a9a951c09": {
+   "date": "2026-11-24",
+   "name": "Greenville@Eureka",
+   "home": "Eureka Red Devils",
+   "home_short": "Eureka",
+   "home_id": "54457dd5300969b132fd0031",
+   "away": "Greenville Panthers",
+   "away_short": "Greenville",
+   "away_id": "54457dd5300969b132fd0041"
+  },
+  "6a95ae01d57ca4d1918e3d84": {
+   "date": "2026-11-24",
+   "name": "CulverStockton@William Penn",
+   "home": "William Penn University Statesmen",
+   "home_short": "William Penn",
+   "home_id": "54457dd8300969b132fd0341",
+   "away": "Culver-Stockton Wildcats",
+   "away_short": "CulverStockton",
+   "away_id": "54457dd5300969b132fd0020"
   }
  },
  "teams": {
@@ -7873,6 +8283,75 @@
   "Montreat College Cavaliers": "54457dd5300969b132fd007c",
   "Montreat": "54457dd5300969b132fd007c",
   "Johnson & Wales (RI) University Wildcats": "54457dd9300969b132fd035c",
-  "JohnsonWalesRI": "54457dd9300969b132fd035c"
+  "JohnsonWalesRI": "54457dd9300969b132fd035c",
+  "University of Health Sciences and Pharmacy in St. Louis Eutectics": "54457dd9300969b132fd0381",
+  "StLouisPharma": "54457dd9300969b132fd0381",
+  "Brescia University Bearcats": "54457dd4300969b132fd0006",
+  "Brescia": "54457dd4300969b132fd0006",
+  "Mississippi University for Women Owls": "5babcc0baeda7199395f1ea5",
+  "MissUniversityWmn": "5babcc0baeda7199395f1ea5",
+  "Lyon College Scots": "54457dd5300969b132fd0064",
+  "Lyon": "54457dd5300969b132fd0064",
+  "MidAmerica Nazarene Pioneers": "54457dd8300969b132fd034f",
+  "MidAmericaNazarene": "54457dd8300969b132fd034f",
+  "Lake Erie College Storm": "54457dd6300969b132fd01be",
+  "LakeErie": "54457dd6300969b132fd01be",
+  "Indiana (PA) Crimson Hawks": "54457dd7300969b132fd0236",
+  "Indiana(PA)": "54457dd7300969b132fd0236",
+  "Muhlenberg Mules": "54457dd8300969b132fd02af",
+  "Muhlenberg": "54457dd8300969b132fd02af",
+  "Lakeland (WI) Muskies": "54d2b0683ad33bf4a9d80751",
+  "Lakeland(WI)": "54d2b0683ad33bf4a9d80751",
+  "Hobart College Statesmen": "54457dda300969b132fd041d",
+  "Hobart": "54457dda300969b132fd041d",
+  "Rochester (NY) Yellowjackets": "54457dd9300969b132fd036e",
+  "RochesterNY": "54457dd9300969b132fd036e",
+  "Rockhurst Hawks": "54457dd5300969b132fd009f",
+  "Rockhurst": "54457dd5300969b132fd009f",
+  "Missouri Southern State Lions": "54457dd4300969b132fcffde",
+  "MissouriSouthern": "54457dd4300969b132fcffde",
+  "Buena Vista Beavers": "54457dd8300969b132fd033c",
+  "BuenaVista": "54457dd8300969b132fd033c",
+  "Blackburn Beavers": "54457dd7300969b132fd0222",
+  "Blackburn": "54457dd7300969b132fd0222",
+  "Benedictine (IL) Eagles": "54457dd8300969b132fd02b9",
+  "Benedictine IL": "54457dd8300969b132fd02b9",
+  "Ouachita Baptist Tigers": "54457dd7300969b132fd0228",
+  "OuachitaBaptist": "54457dd7300969b132fd0228",
+  "Wilmington (DE) Wildcats": "54457dd5300969b132fd00dd",
+  "Wilmington": "54457dd5300969b132fd00dd",
+  "Monroe University (NY)": "6a8720f07a183bff5f060bf6",
+  "MonroeUniversityNY": "6a8720f07a183bff5f060bf6",
+  "Whitman Blues": "54457dd5300969b132fd00d5",
+  "Whitman": "54457dd5300969b132fd00d5",
+  "St. Olaf Oles": "54457dd5300969b132fd00b2",
+  "StOlaf": "54457dd5300969b132fd00b2",
+  "Concordia (Moorhead) Cobbers": "54457dd7300969b132fd020c",
+  "Conc(Moorhead)": "54457dd7300969b132fd020c",
+  "Loras Duhawks": "54457dd7300969b132fd01e5",
+  "Loras": "54457dd7300969b132fd01e5",
+  "Knox": "54457dda300969b132fd0402",
+  "Seneca Sting": "5bc155b4aeda71993920fef8",
+  "Seneca": "5bc155b4aeda71993920fef8",
+  "Durham Lords": "5d7fcbedf52909811e0a9617",
+  "Durham": "5d7fcbedf52909811e0a9617",
+  "Dominican (CA) Penguins": "54457dd5300969b132fd0029",
+  "Dominican(CA)": "54457dd5300969b132fd0029",
+  "Cal State Monterey Bay Otters": "54457dd5300969b132fd001f",
+  "CSMonterey": "54457dd5300969b132fd001f",
+  "Pacific Lutheran Lutes": "54457dd7300969b132fd01e4",
+  "PacificLutheran": "54457dd7300969b132fd01e4",
+  "Evergreen State College Geoducks": "54457dd5300969b132fd0032",
+  "Evergreen": "54457dd5300969b132fd0032",
+  "Chapman University Panthers": "54457dd6300969b132fd01a8",
+  "ChapmanUniversity": "54457dd6300969b132fd01a8",
+  "Lewis-Clark State Warriors": "54457dd6300969b132fd015c",
+  "LewisClarkState": "54457dd6300969b132fd015c",
+  "Park University - Gilbert": "5d5abd8cf52909811ee07e8b",
+  "ParkGilbert": "5d5abd8cf52909811ee07e8b",
+  "Waldorf University Warriors": "54457dd5300969b132fd00cb",
+  "Waldorf": "54457dd5300969b132fd00cb",
+  "William Penn University Statesmen": "54457dd8300969b132fd0341",
+  "William Penn": "54457dd8300969b132fd0341"
  }
 }

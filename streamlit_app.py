@@ -5398,9 +5398,10 @@ def render_game_plan_tab(short_opponent: str) -> None:
               [("player", "Player"), ("call", "Call"), ("ft_pct", "FT%"), ("ftm", "FTM"), ("fta", "FTA"),
                ("games", "GP"), ("note", "Note")],
               "",
-              help_text="From their own free-throw shooting on film, 8+ attempts. Foul at 62% or worse; avoid "
+              help_text="From their own free-throw shooting on film, 8+ attempts. Foul at 62% or worse (or "
+                        "'Foul first': the weakest main-rotation shooter when nobody is that bad); avoid "
                         "fouling at 75% or better.",
-              cell_class=lambda col, r: ({"Foul": "gp-foul", "Do not foul": "gp-nofoul"}.get(_gp_clean(r.get("call")), "")
+              cell_class=lambda col, r: ({"Foul": "gp-foul", "Foul first": "gp-foul", "Do not foul": "gp-nofoul"}.get(_gp_clean(r.get("call")), "")
                                          if col == "call" else ""))
     # CONFIRMED CHANGE (requested): the end-of-half 2-for-1 plan, right after the other end-of-half/game call
     render_two_for_one(short_opponent)
@@ -14854,7 +14855,7 @@ rather than taking the label's word for it.
                 (r"pressure the actions they turn it over|turnover triggers",
                  "Perimeter Defense / Ball Pressure/ Create Turnovers"),
                 # Play-call keys built from uww_plays.csv / opponent_plays.csv.
-                (r"go-to set|best set", "Play Calls"),
+                (r"go-to set|best set|go-to play call|best play call", "Play Calls"),
             )
             for _icon, _headline, _caption, _reason, _source in _keys:
                 # Data-Driven keys carry raw stat text in _caption/_reason ("Offensive Rebound: 87.7% on

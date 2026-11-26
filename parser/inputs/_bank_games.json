@@ -22,7 +22,9 @@
  },
  "_fastscout": {
   "cFEWvQ5JSr-t2qZOF1FO-A": "6ab818207c04d5284e260158",
-  "9wJIHeMUSMC4qXdofOqPuQ": "6af13923a457001dbd2ab1d6"
+  "9wJIHeMUSMC4qXdofOqPuQ": "6af13923a457001dbd2ab1d6",
+  "DtC7eFamSaWt9hcY_CcxFQ": "6ab8be88d87a12f99c5b7184",
+  "Pj1-1xBEQz2He5dlv2td9w": "6abc2e9c5676e45fb3fa628a"
  },
  "6ab818207c04d5284e260158": {
   "date": "2026-11-07",
@@ -64,6 +66,48 @@
   },
   "date": "2026-11-07",
   "label": "Washington (St. Louis) Bears vs Gustavus Adolphus",
+  "for": "Gustavus Adolphus"
+ },
+ "6ab8be88d87a12f99c5b7184": {
+  "starters": {
+   "TransylvaniaUni": [
+    "Luke Idlett",
+    "Hunter Barr",
+    "Drew Marshall",
+    "Jaxon Smith",
+    "Ian Reesor"
+   ],
+   "OlivetCollege": [
+    "Nathan Richardson",
+    "Mike Okello",
+    "Conner Schipper",
+    "Sean Shenker",
+    "Porter Kretschman"
+   ]
+  },
+  "date": "2026-11-15",
+  "label": "Transylvania University Pioneers vs Olivet Comets",
+  "for": "Transylvania University Pioneers"
+ },
+ "6abc2e9c5676e45fb3fa628a": {
+  "starters": {
+   "GustavusAdolphus": [
+    "Obinna Izuora",
+    "Myles Barnette",
+    "Landon Dimler",
+    "Jake Schmitt",
+    "Andrew Quam"
+   ],
+   "BuenaVista": [
+    "Kyle Sternberg",
+    "Shane Bierle",
+    "Carter Sievers",
+    "Jayden Brink",
+    "Jaden Jones"
+   ]
+  },
+  "date": "2026-11-24",
+  "label": "Gustavus Adolphus vs Buena Vista Beavers",
   "for": "Gustavus Adolphus"
  }
 }
