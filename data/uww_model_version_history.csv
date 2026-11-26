@@ -741,3 +741,14 @@ Tag model: screen_defender,v2026.11.25.2,2026-11-25,trained,2026-11-25T16:04:15,
 Tag model: screener,v2026.11.25.2,2026-11-25,trained,2026-11-25T16:04:15,"191 tagged clips, 7 answers learned",2026-11-25T17:34:26
 Tag model: situation,v2026.11.25.2,2026-11-25,trained,2026-11-25T16:04:15,"2408 tagged clips, 8 answers learned",2026-11-25T17:34:26
 Tag model (overall),v2026.11.25.2,2026-11-25,trained,2026-11-25T16:04:15,newest of 10 field model(s); last retrained field: situation,2026-11-25T17:34:26
+Tag model: ball_screen_coverage,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"244 tagged clips, 7 answers learned",2026-11-26T09:15:28
+Tag model: defense,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"1967 tagged clips, 2 answers learned, one answer only",2026-11-26T09:15:28
+Tag model: formation,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"745 tagged clips, 14 answers learned",2026-11-26T09:15:28
+Tag model: offball_coverage,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"107 tagged clips, 3 answers learned",2026-11-26T09:15:28
+Tag model: play_call,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"1117 tagged clips, 25 answers learned, one answer only",2026-11-26T09:15:28
+Tag model: press,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"1969 tagged clips, 5 answers learned, one answer only",2026-11-26T09:15:28
+Tag model: primary_action,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"753 tagged clips, 15 answers learned",2026-11-26T09:15:28
+Tag model: screen_defender,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"93 tagged clips, 7 answers learned, one answer only",2026-11-26T09:15:28
+Tag model: screener,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"193 tagged clips, 7 answers learned",2026-11-26T09:15:28
+Tag model: situation,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"2408 tagged clips, 8 answers learned",2026-11-26T09:15:28
+Tag model (overall),v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,newest of 10 field model(s); last retrained field: situation,2026-11-26T09:15:28
