@@ -1,1 +1,21 @@
-name,jersey_number,role,position,MIN,projected_PTS,projected_REB,projected_AST,comp_used,comp_from_game,similarity_score,projection_basis
+opponent,game_date,name,jersey_number,role,position,MIN,projected_PTS,projected_REB,projected_AST,comp_used,comp_from_game,similarity_score,projection_basis
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",John Mueller,#23,Bench,F,,31.9,9.0,4.0,Vinnie Adjahoungbeta,Elmhurst Bluejays,9.33,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Max Buslee,#14,Bench,G,,21.9,1.0,0.0,Brady Miller,Hope Flying Dutchmen,12.3,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Drew Kolander,#31,Bench,F,,14.0,3.0,1.0,Kyle Blauch,Hope Flying Dutchmen,11.1,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Myles Barnette,#13,Starter,G,,10.0,1.0,1.0,EJ Marshall,Elmhurst Bluejays,12.67,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Landon Dimler,#22,Starter,F,,4.0,0.0,0.0,Jackson Flowers,Ripon Red Hawks,12.3,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Mark Graff,#3,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Jedidiah Streed,#25,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Mason Uhlenbrauck,#0,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Ryker Van Nostrand,#24,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Tommy Shunmugavelu,#34,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Emmett Olson,#30,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Tate Olson,#15,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Devin Pass,#20,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Tavian Crawford,#2,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Jake Schmitt,#10,Starter,G,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,12.0,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Na'Sean Hardy,#33,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Ethan Sonju,#11,Bench,G,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,13.17,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Andrew Quam,#35,Starter,F,,0.0,4.0,1.0,Aidyn Boone,Elmhurst Bluejays,11.75,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Andrew Olson,#1,Bench,,,0.0,1.0,0.0,Lucas Parker,Carroll (WI) Pioneers,3.5,No season stats recorded for this player yet -- insufficient data to project.
+Gustavus Adolphus Golden Gusties,"Sat, Nov 28",Obinna Izuora,#5,Starter,G,,,,,Cahlil Jones,Carroll (WI) Pioneers,9.78,No season stats recorded for this player yet -- insufficient data to project.
