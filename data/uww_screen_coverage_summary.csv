@@ -6,7 +6,7 @@ UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,DHO,Defender
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Zoom,Defender x screen x coverage,(no jersey),High Hedge,1,100,True,,1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),Switch,2,50,True,,1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Defender x screen x coverage,(no jersey),shad,2,50,True,,1,1,1,0.0,0.0,1,0,motion-ds-straight cut- ghost: m2m (SHAD)
-UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Flare,Defender x screen x coverage,#23 Hunter Barr,Through,1,100,True,,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Flare,Defender x screen x coverage,#23 JIMMY TARJAN,Through,1,100,True,,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Screen,Defender x screen x coverage,(no jersey),press,1,100,True,,1,1,1,0.0,,0,1,motion-throw5-twirl:m2m(press)
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,High Hedge,11,45,False,(no jersey),5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Ball Screen,Screen x coverage,,Over,11,45,False,(no jersey),5,1,5,0.0,0.0,4,1,snap 30-bs:m2m(over-high hedge) | twins left-bs:m2m(over-high hedge)
@@ -15,7 +15,7 @@ UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,DHO,Screen x
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Ball screen,Zoom,Screen x coverage,,High Hedge,1,100,True,(no jersey),1,1,1,2.0,,0,0,motion-dho-zoom-bs:press(man)((over-high hedge)
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,Switch,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,"motion-ds-straight cut-bs:m2m(switch,switch)"
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Down Screen,Screen x coverage,,shad,2,50,True,(no jersey),1,1,1,0.0,0.0,1,0,motion-ds-straight cut- ghost: m2m (SHAD)
-UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Flare,Screen x coverage,,Through,1,100,True,#23 Hunter Barr,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
+UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Flare,Screen x coverage,,Through,1,100,True,#23 JIMMY TARJAN,1,1,1,0.0,0.0,1,0,Motion-ds-cobra
 UWW,Gustavus Adolphus Golden Gusties,Defenses UWW faced,Off-ball screen,Screen,Screen x coverage,,press,1,100,True,(no jersey),1,1,1,0.0,,0,1,motion-throw5-twirl:m2m(press)
 Opponent,Gustavus Adolphus Golden Gusties,Opponent defense,Ball screen,Ball Screen,Defender x screen x coverage,(no jersey),Switch,1,100,True,,1,1,1,0.0,0.0,1,0,[app] Motion: Token Press - Man-to-Man (Switch)
 Opponent,Gustavus Adolphus Golden Gusties,Opponent defense,Ball screen,Ball Screen,Screen x coverage,,Switch,1,100,True,(no jersey),1,1,1,0.0,0.0,1,0,[app] Motion: Token Press - Man-to-Man (Switch)
