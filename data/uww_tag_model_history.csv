@@ -1479,3 +1479,11 @@ run_at,field,label,accuracy_pct,baseline_pct,guess_answer,clips_scored,tagged_cl
 2026-11-26T18:23:45,primary_action,Main action,65.0,52.0,,641.0,753,model,True,65% vs 52% always guessing on 641 held-out plays (+13 pts),,,2026-11-26T07:41:00
 2026-11-26T18:23:45,ball_screen_coverage,Ball-screen coverage,30.0,30.0,,221.0,244,model,False,30% vs 30% always guessing on 221 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,,,2026-11-26T07:41:00
 2026-11-26T18:23:45,screener,Screener,74.0,20.0,,46.0,193,model,True,74% vs 20% always guessing on 46 held-out plays (+54 pts),,,2026-11-26T07:41:00
+2026-11-26T21:21:39,formation,Formation,59.0,58.0,5 Out,694.0,745,model,False,59% vs 58% always guessing on 694 held-out plays (+1 pts) -- needs +3 pts on 30+ plays,7.0,9.0,2026-11-26T20:53:09
+2026-11-26T21:21:39,play_call,Play call,63.0,63.0,Motion,862.0,1117,usual answer,False,model not better than always guessing (63% vs 63%),3.0,9.0,2026-11-26T20:53:09
+2026-11-26T21:21:39,defense,Defense,99.0,99.0,Man-to-Man,1960.0,1967,usual answer,True,the usual answer is right 99% of the time on 1960 held-out plays,19.0,20.0,2026-11-26T20:53:09
+2026-11-26T21:21:39,press,Press,86.0,86.0,None,1959.0,1969,usual answer,False,model not better than always guessing (86% vs 86%),13.0,20.0,2026-11-26T20:53:09
+2026-11-26T21:21:39,situation,Situation,77.0,63.0,Half court,2388.0,2408,model,True,77% vs 63% always guessing on 2388 held-out plays (+14 pts),14.0,20.0,2026-11-26T20:53:09
+2026-11-26T21:21:39,primary_action,Main action,65.0,52.0,Ball Screen,641.0,753,model,True,65% vs 52% always guessing on 641 held-out plays (+13 pts),1.0,4.0,2026-11-26T20:53:09
+2026-11-26T21:21:39,ball_screen_coverage,Ball-screen coverage,30.0,30.0,Switch,221.0,244,model,False,30% vs 30% always guessing on 221 held-out plays (+0 pts) -- needs +3 pts on 30+ plays,1.0,2.0,2026-11-26T20:53:09
+2026-11-26T21:21:39,screener,Screener,74.0,20.0,Collin Madson,46.0,193,model,True,74% vs 20% always guessing on 46 held-out plays (+54 pts),2.0,2.0,2026-11-26T20:53:09

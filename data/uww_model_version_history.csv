@@ -752,3 +752,15 @@ Tag model: screen_defender,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"9
 Tag model: screener,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"193 tagged clips, 7 answers learned",2026-11-26T09:15:28
 Tag model: situation,v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,"2408 tagged clips, 8 answers learned",2026-11-26T09:15:28
 Tag model (overall),v2026.11.26,2026-11-26,trained,2026-11-26T07:41:00,newest of 10 field model(s); last retrained field: situation,2026-11-26T09:15:28
+Tag model: ball_screen_coverage,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"244 tagged clips, 7 answers learned",2026-11-26T21:27:40
+Tag model: defense,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"1967 tagged clips, 2 answers learned, one answer only",2026-11-26T21:27:40
+Tag model: formation,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"745 tagged clips, 14 answers learned",2026-11-26T21:27:40
+Tag model: offball_coverage,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"107 tagged clips, 3 answers learned",2026-11-26T21:27:40
+Tag model: play_call,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"1117 tagged clips, 25 answers learned, one answer only",2026-11-26T21:27:40
+Tag model: press,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"1969 tagged clips, 5 answers learned, one answer only",2026-11-26T21:27:40
+Tag model: primary_action,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"753 tagged clips, 15 answers learned",2026-11-26T21:27:40
+Tag model: screen_defender,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"93 tagged clips, 7 answers learned, one answer only",2026-11-26T21:27:40
+Tag model: screener,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"193 tagged clips, 7 answers learned",2026-11-26T21:27:40
+Tag model: situation,v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,"2408 tagged clips, 8 answers learned",2026-11-26T21:27:40
+Tag model (overall),v2026.11.26.2,2026-11-26,trained,2026-11-26T20:53:09,newest of 10 field model(s); last retrained field: situation,2026-11-26T21:27:40
+Player comparison,v2026.11.27,2026-11-27,rules + code,dd0611319a7d,tag-based similarity; LLM blend off,2026-11-26T21:27:40
