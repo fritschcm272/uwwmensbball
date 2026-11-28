@@ -1,5 +1,8 @@
 opponent,game_date,category,key_number,icon,headline,evidence,reasoning,source,impact,confidence,brief_eligible,priority_score
-Gustavus Adolphus Golden Gusties,2026-11-28,Offense,1,📋,Win the rebounding and free throw battles,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Obinna Izuora on every shot.,Keys to Victory,,,True,80.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Offense,1,🏀,Feature our best look: Motion,"Us: 0.84 PPP on 46 tagged possessions this season vs our 0.81 average
+Them: opponents scored 0.33 PPP running this against Gustavus Adolphus Golden Gusties on 6 tagged possessions
+Runs it most: Marino, Madson, Verges, Bara, Warren
+Usually comes off 5 Out Motion","We score 0.84 a possession on it and Gustavus Adolphus Golden Gusties gives up 0.33 defending it -- go to it early, usually out of 5 Out Motion.",Data-Driven,0.3599999999999998,0.3,True,53.9
 Gustavus Adolphus Golden Gusties,2026-11-28,Offense,2,🎯,Attack their weakest look: Drive to the basket,"Opponents shot 39/68 · 57% FG · 57% eFG · 1.15 pts/attempt · +0.13 vs all looks · 28% of attempts on this against Gustavus Adolphus Golden Gusties
 Best on this shot:
 • Madson, Robinson, Lukenbill, McEwen, Teague-Johnson 5/6 · 83%
@@ -15,23 +18,33 @@ No coverage tagged against it yet","Our most productive play call this season --
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,4,📊,Take away their most efficient high-volume actions,Cut: 81.0% on 21 attempts; ISO: 58.8% on 17 attempts,"Each is 5+ points above their 48.1% overall clip on 15+ attempts. Cut: jump to the ball on every pass and see man and ball -- no back-cuts behind ball-watchers. ISO: keep a gap, show help at the level of the ball and make him score over a crowd.",Data-Driven,,,True,62.5
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,5,📊,Funnel them into their worst high-volume looks,Spot-Up: 36.7% on 98 attempts,Each is 5+ points below their 48.1% overall clip -- don't help off these actions; make them keep taking them.,Data-Driven,,,True,55.5
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,6,📊,Pressure the actions they turn it over on,Post-Up: 6 TO in 27 uses (22.2% vs 8.1% across all actions); Transition: 9 TO in 89 uses (10.1% vs 8.1% across all actions),"Loosest actions per use, not the most common ones -- load ball pressure and gap help onto these specifically rather than pressing everything.",Data-Driven,,,True,62.5
-Gustavus Adolphus Golden Gusties,2026-11-28,Defense,7,📋,Being strong with the ball and handling pressure,,,Keys to Victory,,,True,80.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,7,📋,BE STRONG WITH THE BALL V. PRESSURE,,,Keys to Victory,,,True,80.0
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,8,📋,GUARDING THE BALL 1 ON 1,,,Keys to Victory,,,True,80.0
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,9,⚠️,Opponent strength: #13 capable of taking over a game (24.4ppg),,,Team Strengths,,,True,49.5
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,10,⚠️,Opponent strength: Spread you out and drive to the rim relentlessly,,,Team Strengths,,,True,49.5
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,11,⚠️,Opponent strength: Apply constant defensive pressure to turn you over,,,Team Strengths,,,True,49.5
 Gustavus Adolphus Golden Gusties,2026-11-28,Defense,12,🛡️,What Gustavus Adolphus Golden Gusties goes to most: Drive to the basket,"112 attempts, 54% -- across their games before UWW","What their offense goes to most often, regardless of how well it's worked -- worth a specific defensive scheme item to take away.",Data-Driven,0.5,1.0,True,63.0
-Gustavus Adolphus Golden Gusties,2026-11-28,Defense,13,,Finish every defensive possession with a box-out,"They grab 40% of their own misses -- we usually allow 35%, so this is above our norm; most by Obinna Izuora, Drew Kolander.",They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Obinna Izuora on every shot.,Data-Driven,0.7055555555555557,1.0,True,78.2
-Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,14,🔒,"Attack lineup of Quam, Schmitt, Dimler, Barnette, Izuora","Worst +/- lineups:
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,13,📋,Take away their go-to play call: Motion,"8 uses in 1 games · 0.75 PPP vs their 0.84 overall · 3/6 FG · 1 TO
+Finished most by Myles Barnette
+Built on: Ball Screen
+Next most-called: Split
+Tagged as: [app] BOOTY Booty Screen: Man-to-Man | [app] 5 out motion: Man-to-Man | [app] Motion
+No coverage tagged against it yet","Their most-called half-court play call. Myles Barnette finishes it most, usually off the ball screen -- take away the ball screen and make someone else beat us. Small sample: 1 game.",Data-Driven,1.0,0.13333333333333333,True,77.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,14,📋,Know their best play call: BOOTY,"1.50 PPP on 4 uses vs 0.84 overall
+Finished most by Myles Barnette
+No coverage tagged against it yet",Their most productive play call -- recognize the alignment and call it out before the action starts; Myles Barnette is usually the one finishing it. Small sample: 1 game.,Data-Driven,1.0,0.06666666666666667,True,69.0
+Gustavus Adolphus Golden Gusties,2026-11-28,Defense,15,,Finish every defensive possession with a box-out,"They grab 40% of their own misses -- we usually allow 35%, so this is above our norm; most by Obinna Izuora, Drew Kolander.",They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Obinna Izuora on every shot.,Data-Driven,0.7055555555555557,1.0,True,78.2
+Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,16,🔒,"Attack lineup of Quam, Schmitt, Dimler, Barnette, Izuora","Worst +/- lineups:
 -2.0 in 33.5 min, 37% FG — Quam, Schmitt, Dimler, Barnette, Izuora
 Highest TO rate (per 40 min):
 17.5 TO/40 — Quam, Kolander, Schmitt, Barnette, Izuora
 10.7 TO/40 — Quam, Schmitt, Dimler, Barnette, Izuora",their worst net-rating lineups with real minutes this season,Lineup Scouting,0.11940298507462685,0.8375,True,50.3
-Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,15,🔒,"Counter with Marino, Madson, Robinson, Lukenbill, McEwen","+1.69/min — Marino, Madson, Robinson, Lukenbill, McEwen
+Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,17,🔒,"Counter with Marino, Madson, Robinson, Lukenbill, McEwen","+1.69/min — Marino, Madson, Robinson, Lukenbill, McEwen
 +1.36/min — Madson, Chestnut, Robinson, Rogers, Teague-Johnson
 +0.87/min — Madson, Chestnut, Lukenbill, McEwen, Rogers
 Target profile: 3 guard, 2 forward · avg 6'3"" · three point shooter / slasher driver / post scorer / catch and shoot. Measured across 12 comparable opponent unit(s), 40 min this season.","This five is +67.5 points per 40 minutes against opponent units like Gustavus Adolphus Golden Gusties's most-used lineup (Quam, Schmitt, Dimler, Barnette, Izuora).",Lineup Scouting,1.0,0.6691666666666667,True,83.0
-Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,16,,"Feature the Madson, Robinson, McEwen combo","Madson, Robinson, McEwen: +2.7 per 40 after shrinkage · on/off +7.9 · 77 competitive min in 4 games
+Gustavus Adolphus Golden Gusties,2026-11-28,Personnel,18,,"Feature the Madson, Robinson, McEwen combo","Madson, Robinson, McEwen: +2.7 per 40 after shrinkage · on/off +7.9 · 77 competitive min in 4 games
 Madson, Lukenbill, McEwen: +2.1 per 40 after shrinkage · on/off +5.4 · 57 competitive min in 4 games
 Madson, McEwen, Rogers: +1.8 per 40 after shrinkage · on/off +5.0 · 71 competitive min in 4 games
 On/off: +7.9 per 40 minutes (better with them on the floor)",Our best trio this season -- +2.7 per 40 minutes together; get them on the floor together.,Lineup Scouting,0.22792022792022792,0.6416666666666667,True,51.7
+Gustavus Adolphus Golden Gusties,2026-11-28,General,19,📋,WIN REBOUNDS AND FTS!!!,Linked data key: Finish every defensive possession with a box-out,From the numbers: Finish every defensive possession with a box-out. They get 40% of their own misses back -- a stop isn't a stop until we secure the rebound; find Obinna Izuora on every shot.,Keys to Victory,,,True,80.0

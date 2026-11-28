@@ -1,30 +1,30 @@
 area,measure,value,detail,games_captured,clips_captured,games_tagged,clips_tagged,games_tracked,clips_tracked,frames_tracked,player_checks,plays_checked,title_answers,plays_title_reviewed,players_from_evidence,player_slots,review_overrides_title
-Players,"Real player (not a referee, coach or fan)",858 of 1655 (52%),every box a coach checked,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right team,763 of 858 (89%),boxes that were players; 'wrong team' counts against,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- all names the film gave,"251 of 374 (67%) -- 79 not a player, 43 really someone else, 1 wrong team",named boxes a coach checked,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- named by jersey number,"198 of 274 (72%) -- 43 not a player, 33 really someone else",,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- named by appearance,"4 of 40 (10%) -- 33 not a player, 3 really someone else",,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- named by coach checked,39 of 39 (100%),,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- named by followed player,9 of 9 (100%),,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- named by same player as your check,1 of 5 (20%) -- 4 really someone else,,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- named by Synergy,"0 of 4 (0%) -- 2 really someone else, 1 wrong team, 1 not a player",,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Players,Right name -- named by lineup matching,"0 of 3 (0%) -- 2 not a player, 1 really someone else",,30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Automatic Title,Situation,"coach reviews 0 of 806 (0%)
-coach Titles, held-out plays 77% of 2388 (always guessing the usual answer: 63%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Automatic Title,Formation,"coach reviews 0 of 267 (0%)
-coach Titles, held-out plays 59% of 694 (always guessing the usual answer: 58%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Automatic Title,Play call,"coach reviews 0 of 421 (0%)
-coach Titles, held-out plays 63% of 862 (always guessing the usual answer: 63%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Automatic Title,Primary action,"coach reviews 77 of 256 (30%)
-coach Titles, held-out plays 65% of 641 (always guessing the usual answer: 52%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Automatic Title,Defense,"coach reviews 0 of 593 (0%)
-coach Titles, held-out plays 99% of 1960 (always guessing the usual answer: 99%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Automatic Title,Press,"coach reviews 0 of 59 (0%)
-coach Titles, held-out plays 86% of 1959 (always guessing the usual answer: 86%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
+Players,"Real player (not a referee, coach or fan)",858 of 1655 (52%),every box a coach checked,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right team,763 of 858 (89%),boxes that were players; 'wrong team' counts against,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- all names the film gave,"251 of 374 (67%) -- 79 not a player, 43 really someone else, 1 wrong team",named boxes a coach checked,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- named by jersey number,"198 of 274 (72%) -- 43 not a player, 33 really someone else",,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- named by appearance,"4 of 40 (10%) -- 33 not a player, 3 really someone else",,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- named by coach checked,39 of 39 (100%),,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- named by followed player,9 of 9 (100%),,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- named by same player as your check,1 of 5 (20%) -- 4 really someone else,,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- named by Synergy,"0 of 4 (0%) -- 2 really someone else, 1 wrong team, 1 not a player",,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Players,Right name -- named by lineup matching,"0 of 3 (0%) -- 2 not a player, 1 really someone else",,30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Automatic Title,Situation,"coach reviews 0 of 864 (0%)
+coach Titles, held-out plays 77% of 2388 (always guessing the usual answer: 63%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Automatic Title,Formation,"coach reviews 0 of 283 (0%)
+coach Titles, held-out plays 59% of 694 (always guessing the usual answer: 58%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Automatic Title,Play call,"coach reviews 0 of 438 (0%)
+coach Titles, held-out plays 63% of 862 (always guessing the usual answer: 63%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Automatic Title,Primary action,"coach reviews 77 of 257 (30%)
+coach Titles, held-out plays 65% of 641 (always guessing the usual answer: 52%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Automatic Title,Defense,"coach reviews 0 of 633 (0%)
+coach Titles, held-out plays 99% of 1960 (always guessing the usual answer: 99%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Automatic Title,Press,"coach reviews 0 of 73 (0%)
+coach Titles, held-out plays 86% of 1959 (always guessing the usual answer: 86%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
 Automatic Title,Ball screen coverage,"coach reviews 17 of 116 (15%)
-coach Titles, held-out plays 30% of 221 (always guessing the usual answer: 30%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
+coach Titles, held-out plays 30% of 221 (always guessing the usual answer: 30%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
 Automatic Title,Offball coverage,"coach reviews 4 of 28 (14%)
-coach Titles, held-out plays 72% of 74 (always guessing the usual answer: 57%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
-Automatic Title,Screener,"coach Titles, held-out plays 74% of 46 (always guessing the usual answer: 20%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
+coach Titles, held-out plays 72% of 74 (always guessing the usual answer: 57%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
+Automatic Title,Screener,"coach Titles, held-out plays 74% of 46 (always guessing the usual answer: 20%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True
 Automatic Title,Screen defender,"coach reviews 3 of 41 (7%)
-coach Titles, held-out plays 16% of 55 (always guessing the usual answer: 29%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4251,1297,17,70,True
+coach Titles, held-out plays 16% of 55 (always guessing the usual answer: 29%)","plays the model never trained on, or coaches' right/wrong marks",30,5430,22,3310,19,2845,314664,1655,246,4412,1356,17,70,True

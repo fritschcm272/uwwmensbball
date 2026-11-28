@@ -1,20 +1,21 @@
 opponent,day,date,segment,minutes,detail,ties_to,schedule_is_sample,is_sample
-Gustavus Adolphus Golden Gusties,Recovery + film,"Wed, Nov 25",Film,40,Scout film: Motion,Opponent sets,True,True
+Gustavus Adolphus Golden Gusties,Recovery + film,"Wed, Nov 25",Film,40,"Scout film: Motion, Split, BOOTY",Opponent sets,True,True
 Gustavus Adolphus Golden Gusties,Recovery + film,"Wed, Nov 25",Shooting,20,"Form and free throws, no contact","Collin Madson, Isaiah Robinson, Rashad Rogers",True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Warm-up / dynamic,10,,,True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Individual,12,Catch-and-shoot and free-throw reps,"Player flags: Madson, Robinson, Rogers",True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Defensive install,12,Take away their most efficient high-volume actions,Key 4,True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Defensive install,12,Funnel them into their worst high-volume looks,Key 5,True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Defensive install,12,Pressure the actions they turn it over on,Key 6,True,True
-Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Scout team,15,Scout team runs Motion,Opponent sets,True,True
-Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Offensive emphasis,10,Win the rebounding and free throw battles,Key 1,True,True
+Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Scout team,15,"Scout team runs Motion, Split, BOOTY",Opponent sets,True,True
+Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Press reps,8,Skip the press -- pressure only moved their turnover rate -15.4 points; work half-court defense instead,Pressure response,True,True
+Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Offensive emphasis,10,Feature our best look: Motion,Key 1,True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Offensive emphasis,10,Attack their weakest look: Drive to the basket,Key 2,True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Special situations,8,Defend their BLOB/SLOB/ATO,Opponent sets,True,True
 Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Late game,8,End-of-game situations,,True,True
-Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- attack lineup of Quam, Schmitt, Dimler, Barnette, Izuora",Key 14,True,True
+Gustavus Adolphus Golden Gusties,Practice 1,"Thu, Nov 26",Live 5-on-5,15,"Scout team in their personnel; stop on key violations -- attack lineup of Quam, Schmitt, Dimler, Barnette, Izuora",Key 16,True,True
 Gustavus Adolphus Golden Gusties,Practice 2 (light),"Fri, Nov 27",Warm-up / dynamic,10,,,True,True
 Gustavus Adolphus Golden Gusties,Practice 2 (light),"Fri, Nov 27",Defensive walkthrough,10,Take away their most efficient high-volume actions,Key 4,True,True
-Gustavus Adolphus Golden Gusties,Practice 2 (light),"Fri, Nov 27",Scout team,15,Scout team runs Motion,Opponent sets,True,True
-Gustavus Adolphus Golden Gusties,Practice 2 (light),"Fri, Nov 27",Offensive emphasis,10,Win the rebounding and free throw battles,Key 1,True,True
+Gustavus Adolphus Golden Gusties,Practice 2 (light),"Fri, Nov 27",Scout team,15,"Scout team runs Motion, Split, BOOTY",Opponent sets,True,True
+Gustavus Adolphus Golden Gusties,Practice 2 (light),"Fri, Nov 27",Offensive emphasis,10,Feature our best look: Motion,Key 1,True,True
 Gustavus Adolphus Golden Gusties,Practice 2 (light),"Fri, Nov 27",Special situations,8,Defend their BLOB/SLOB/ATO,Opponent sets,True,True
 Gustavus Adolphus Golden Gusties,Game day,"Sat, Nov 28",Shootaround,45,"Walk their sets, matchups and the foul list; 50 game-speed shots each",Matchups,True,True
